@@ -1,0 +1,14 @@
+# Eclipse project files
+.project
+.classpath
+
+# Build results
+target/
+
+# IntelliJ IDEA project files
+/.idea
+*.ipr
+*.iml
+
+# OS-X meta files
+.DS_Store
