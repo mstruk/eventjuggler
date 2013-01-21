@@ -9,6 +9,7 @@ import org.eventjuggler.model.Tag;
 import org.eventjuggler.model.User;
 import org.eventjuggler.model.UserRole;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -24,7 +25,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class JPADeploymentTest {
 
-    @Deployment
+    @Deployment @OverProtocol("Servlet 3.0")
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
             .addClasses(Address.class, Event.class, Group.class, Role.class, RSVP.class, Tag.class, User.class, UserRole.class)
