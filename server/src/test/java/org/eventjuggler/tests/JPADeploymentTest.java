@@ -1,13 +1,5 @@
 package org.eventjuggler.tests;
 
-import org.eventjuggler.model.Address;
-import org.eventjuggler.model.Event;
-import org.eventjuggler.model.Group;
-import org.eventjuggler.model.RSVP;
-import org.eventjuggler.model.Role;
-import org.eventjuggler.model.Tag;
-import org.eventjuggler.model.User;
-import org.eventjuggler.model.UserRole;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
@@ -28,7 +20,7 @@ public class JPADeploymentTest {
     @Deployment @OverProtocol("Servlet 3.0")
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-            .addClasses(Address.class, Event.class, Group.class, Role.class, RSVP.class, Tag.class, User.class, UserRole.class)
+            .addPackage(org.eventjuggler.model.Event.class.getPackage())
             .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
             .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 // Deploy our test datasource
