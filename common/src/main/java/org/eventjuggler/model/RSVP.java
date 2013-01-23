@@ -1,6 +1,8 @@
 package org.eventjuggler.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -17,13 +19,14 @@ public class RSVP {
     @ManyToOne
     private User user;
 
+    @Enumerated(EnumType.STRING)
     private Response response;
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    protected void setId(Long id) {
         this.id = id;
     }
 

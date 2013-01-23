@@ -1,6 +1,7 @@
 package org.eventjuggler.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,7 +12,8 @@ import javax.persistence.Table;
 @Table(name = "AUTH_USER")
 public class User {
 
-    @Id
+    @Id @GeneratedValue
+    private Long id;
     private String login;
     private String password;
 
@@ -20,10 +22,12 @@ public class User {
     private String imageId;
     private String description;
 
-    public User() {}
+    public Long getId() {
+        return id;
+    }
 
-    public User(String login) {
-        this.login = login;
+    protected void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
