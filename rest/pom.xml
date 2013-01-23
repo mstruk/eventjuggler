@@ -51,6 +51,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.eventjuggler</groupId>
             <artifactId>eventjuggler-common</artifactId>
             <scope>provided</scope>
