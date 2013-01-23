@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{addressBean.page}"/>
+		<f:event type="preRenderView" listener="#{addressBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Search Address entities"/>
+
+	<ui:define name="header">
+		Address
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Address entities
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="addressBeanExampleName" value="Name:"/>
+						<h:panelGroup>
+							<h:inputText id="addressBeanExampleName" value="#{addressBean.example.name}"/>
+							<h:message for="addressBeanExampleName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="addressBeanExampleImageId" value="Image Id:"/>
+						<h:panelGroup>
+							<h:inputText id="addressBeanExampleImageId" value="#{addressBean.example.imageId}"/>
+							<h:message for="addressBeanExampleImageId" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="addressBeanExampleStreet" value="Street:"/>
+						<h:panelGroup>
+							<h:inputText id="addressBeanExampleStreet" value="#{addressBean.example.street}"/>
+							<h:message for="addressBeanExampleStreet" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="addressBeanExampleStreetNum" value="Street Num:"/>
+						<h:panelGroup>
+							<h:inputText id="addressBeanExampleStreetNum" value="#{addressBean.example.streetNum}"/>
+							<h:message for="addressBeanExampleStreetNum" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="addressBeanExampleCity" value="City:"/>
+						<h:panelGroup>
+							<h:inputText id="addressBeanExampleCity" value="#{addressBean.example.city}"/>
+							<h:message for="addressBeanExampleCity" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{addressBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{addressBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="addressBeanPageItems" styleClass="data-table" value="#{addressBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<h:link outcome="/address/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemName" value="#{_item.name}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Image Id"/>
+					</f:facet>
+					<h:link outcome="/address/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemImageId" value="#{_item.imageId}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Street"/>
+					</f:facet>
+					<h:link outcome="/address/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemStreet" value="#{_item.street}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Street Num"/>
+					</f:facet>
+					<h:link outcome="/address/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemStreetNum" value="#{_item.streetNum}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="City"/>
+					</f:facet>
+					<h:link outcome="/address/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemCity" value="#{_item.city}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{addressBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

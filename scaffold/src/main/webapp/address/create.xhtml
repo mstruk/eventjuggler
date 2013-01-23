@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{addressBean.id}"/>
+		<f:event type="preRenderView" listener="#{addressBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Create Address"/>
+
+	<ui:define name="header">
+		Address
+	</ui:define>
+
+	<ui:define name="subheader">
+		<c:choose>
+			<c:when test="#{!empty addressBean.id}">
+				Edit existing Address
+			</c:when>
+			<c:otherwise>
+				Create a new Address
+			</c:otherwise>
+		</c:choose>
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="create">
+			<h:messages globalOnly="true" styleClass="error"/>
+
+			<h:panelGrid columnClasses="label,component,required" columns="3">
+				<h:outputLabel for="addressBeanAddressName" value="Name:"/>
+				<h:panelGroup>
+					<h:inputText id="addressBeanAddressName" value="#{addressBean.address.name}"/>
+					<h:message for="addressBeanAddressName" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="addressBeanAddressImageId" value="Image Id:"/>
+				<h:panelGroup>
+					<h:inputText id="addressBeanAddressImageId" value="#{addressBean.address.imageId}"/>
+					<h:message for="addressBeanAddressImageId" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="addressBeanAddressStreet" value="Street:"/>
+				<h:panelGroup>
+					<h:inputText id="addressBeanAddressStreet" value="#{addressBean.address.street}"/>
+					<h:message for="addressBeanAddressStreet" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="addressBeanAddressStreetNum" value="Street Num:"/>
+				<h:panelGroup>
+					<h:inputText id="addressBeanAddressStreetNum" value="#{addressBean.address.streetNum}"/>
+					<h:message for="addressBeanAddressStreetNum" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="addressBeanAddressCity" value="City:"/>
+				<h:panelGroup>
+					<h:inputText id="addressBeanAddressCity" value="#{addressBean.address.city}"/>
+					<h:message for="addressBeanAddressCity" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="addressBeanAddressZip" value="Zip:"/>
+				<h:panelGroup>
+					<h:inputText id="addressBeanAddressZip" value="#{addressBean.address.zip}"/>
+					<h:message for="addressBeanAddressZip" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="addressBeanAddressCountry" value="Country:"/>
+				<h:panelGroup>
+					<h:inputText id="addressBeanAddressCountry" value="#{addressBean.address.country}"/>
+					<h:message for="addressBeanAddressCountry" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="addressBeanAddressLatitude" value="Latitude:"/>
+				<h:panelGroup>
+					<h:inputText id="addressBeanAddressLatitude" value="#{addressBean.address.latitude}"/>
+					<h:message for="addressBeanAddressLatitude" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+				<h:outputLabel for="addressBeanAddressLongitude" value="Longitude:"/>
+				<h:panelGroup>
+					<h:inputText id="addressBeanAddressLongitude" value="#{addressBean.address.longitude}"/>
+					<h:message for="addressBeanAddressLongitude" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText/>
+			</h:panelGrid>
+
+			<div class="buttons">
+				<h:commandLink value="Save" action="#{addressBean.update}" styleClass="btn btn-primary"/>
+				<c:choose>
+					<c:when test="#{!empty addressBean.id}">
+						<h:link value="Cancel" outcome="view" styleClass="btn btn-primary">
+							<f:param name="id" value="#{addressBean.id}"/>
+						</h:link>
+						<h:commandLink value="Delete" action="#{addressBean.delete}" styleClass="btn btn-primary"/>
+					</c:when>
+					<c:otherwise>
+						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

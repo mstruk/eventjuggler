@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{groupBean.page}"/>
+		<f:event type="preRenderView" listener="#{groupBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Search Group entities"/>
+
+	<ui:define name="header">
+		Group
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Group entities
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="groupBeanExampleOwner" value="Owner:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{userBean.converter}" id="groupBeanExampleOwner" value="#{groupBean.example.owner}">
+								<f:selectItem/>
+								<f:selectItems value="#{userBean.all}"/>
+							</h:selectOneMenu>
+							<h:message for="groupBeanExampleOwner" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="groupBeanExampleName" value="Name:"/>
+						<h:panelGroup>
+							<h:inputText id="groupBeanExampleName" value="#{groupBean.example.name}"/>
+							<h:message for="groupBeanExampleName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="groupBeanExampleDescription" value="Description:"/>
+						<h:panelGroup>
+							<h:inputText id="groupBeanExampleDescription" value="#{groupBean.example.description}"/>
+							<h:message for="groupBeanExampleDescription" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="groupBeanExampleImageId" value="Image Id:"/>
+						<h:panelGroup>
+							<h:inputText id="groupBeanExampleImageId" value="#{groupBean.example.imageId}"/>
+							<h:message for="groupBeanExampleImageId" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="groupBeanExampleLocation" value="Location:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{addressBean.converter}" id="groupBeanExampleLocation" value="#{groupBean.example.location}">
+								<f:selectItem/>
+								<f:selectItems value="#{addressBean.all}"/>
+							</h:selectOneMenu>
+							<h:message for="groupBeanExampleLocation" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{groupBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{groupBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="groupBeanPageItems" styleClass="data-table" value="#{groupBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Owner"/>
+					</f:facet>
+					<h:link outcome="/group/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemOwner" value="#{_item.owner}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<h:link outcome="/group/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemName" value="#{_item.name}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Description"/>
+					</f:facet>
+					<h:link outcome="/group/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemDescription" value="#{_item.description}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Image Id"/>
+					</f:facet>
+					<h:link outcome="/group/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemImageId" value="#{_item.imageId}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Location"/>
+					</f:facet>
+					<h:link outcome="/group/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemLocation" value="#{_item.location}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{groupBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>
