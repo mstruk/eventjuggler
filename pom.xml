@@ -121,7 +121,7 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${version.compiler.plugin}</version>
-	            <configuration>
+                    <configuration>
                         <source>1.6</source>
                         <target>1.6</target>
                     </configuration>
@@ -146,6 +146,15 @@
                     </configuration>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ear-plugin</artifactId>
+                    <version>2.7</version>
+                    <configuration>
+                        <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    </configuration>
+                </plugin>
+
                 <!-- The Maven Surefire plugin tests your application. Here we ensure we are using a version compatible with Arquillian -->
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -153,8 +162,7 @@
                 </plugin>
 
                 <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
-                <!-- To use, set the JBOSS_HOME environment variable and run:
-                    mvn package jboss-as:deploy -->
+                <!-- To use, set the JBOSS_HOME environment variable and run: mvn package jboss-as:deploy -->
                 <plugin>
                     <groupId>org.jboss.as.plugins</groupId>
                     <artifactId>jboss-as-maven-plugin</artifactId>
