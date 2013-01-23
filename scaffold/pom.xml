@@ -85,6 +85,15 @@
 
     <build>
         <plugins>
+
+            <!-- We want WEB-INF/lib jars without version in the name -->
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
+                </configuration>
+            </plugin>
+
             <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
             <!-- To use, run: mvn package jboss-as:deploy -->
             <plugin>
