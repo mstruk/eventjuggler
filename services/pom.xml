@@ -41,8 +41,8 @@
         </dependency>
 
         <dependency>
-           <groupId>javax.enterprise</groupId>
-           <artifactId>cdi-api</artifactId>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
         </dependency>
 
         <!-- Needed for running tests (you may also use TestNG) -->
@@ -66,8 +66,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-           <groupId>org.eventjuggler</groupId>
-           <artifactId>eventjuggler-common</artifactId>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-common</artifactId>
         </dependency>
     </dependencies>
 
