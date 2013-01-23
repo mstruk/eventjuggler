@@ -29,7 +29,12 @@
     </licenses>
 
     <modules>
+        <module>common</module>
+        <module>rest</module>
         <module>server</module>
+        <module>services</module>
+        <module>web-js</module>
+        <module>web-jsf</module>
     </modules>
 
     <properties>
@@ -38,6 +43,7 @@
 
         <version.org.jboss.as.plugins.maven.plugin>7.3.Final</version.org.jboss.as.plugins.maven.plugin>
         <version.surefire.plugin>2.10</version.surefire.plugin>
+        <version.ejb.plugin>2.3</version.ejb.plugin>
         <version.war.plugin>2.1.1</version.war.plugin>
         <version.compiler.plugin>2.3.1</version.compiler.plugin>
     </properties>
@@ -73,6 +79,40 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+               <groupId>javax.ws.rs</groupId>
+               <artifactId>jsr311-api</artifactId>
+               <version>1.1.1</version>
+            </dependency>
+            <dependency>
+               <groupId>org.eventjuggler</groupId>
+               <artifactId>eventjuggler-common</artifactId>
+               <version>${project.version}</version>
+            </dependency>
+            <dependency>
+               <groupId>org.eventjuggler</groupId>
+               <artifactId>eventjuggler-rest</artifactId>
+               <version>${project.version}</version>
+               <type>war</type>
+            </dependency>
+            <dependency>
+               <groupId>org.eventjuggler</groupId>
+               <artifactId>eventjuggler-services</artifactId>
+               <version>${project.version}</version>
+               <type>ejb</type>
+            </dependency>
+            <dependency>
+               <groupId>org.eventjuggler</groupId>
+               <artifactId>eventjuggler-web-js</artifactId>
+               <version>${project.version}</version>
+               <type>war</type>               
+            </dependency>
+            <dependency>
+               <groupId>org.eventjuggler</groupId>
+               <artifactId>eventjuggler-web-jsf</artifactId>
+               <version>${project.version}</version>
+               <type>war</type>               
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -86,12 +126,29 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${version.compiler.plugin}</version>
+	            <configuration>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
                 </plugin>
 
                 <!-- War plugin packages deployable war and we need to tell it it's ok that tere is no web.xml for this project -->
                 <plugin>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>${version.war.plugin}</version>
+                    <configuration>
+                        <!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ejb-plugin</artifactId>
+                    <version>${version.ejb.plugin}</version>
+                    <configuration>
+                        <ejbVersion>3.0</ejbVersion>
+                    </configuration>
                 </plugin>
 
                 <!-- The Maven Surefire plugin tests your application. Here we ensure we are using a version compatible with Arquillian -->

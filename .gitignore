@@ -1,6 +1,7 @@
 # Eclipse project files
 .project
 .classpath
+.settings
 
 # Build results
 target/
