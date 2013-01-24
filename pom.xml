@@ -47,6 +47,7 @@
         <version.ejb.plugin>2.3</version.ejb.plugin>
         <version.war.plugin>2.1.1</version.war.plugin>
         <version.compiler.plugin>2.3.1</version.compiler.plugin>
+        <version.checkstyle.plugin>2.9.1</version.checkstyle.plugin>
     </properties>
 
     <scm>
@@ -169,10 +170,36 @@
                     <artifactId>jboss-as-maven-plugin</artifactId>
                     <version>${version.org.jboss.as.plugins.maven.plugin}</version>
                 </plugin>
+
+                <!-- Checkstyle -->
+                <plugin>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${version.checkstyle.plugin}</version>
+                    <configuration>
+                        <configLocation>checkstyle.xml</configLocation>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                        <useFile />
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>check-style</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>checkstyle</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
             <!-- The JBoss AS plugin deploys your apps to a local JBoss AS container -->
             <!-- Disabling it here means that we don't try to deploy this POM! -->
             <plugin>
