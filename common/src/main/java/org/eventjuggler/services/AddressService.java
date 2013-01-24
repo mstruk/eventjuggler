@@ -23,44 +23,21 @@ package org.eventjuggler.services;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.eventjuggler.model.Event;
+import org.eventjuggler.model.Address;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-@Stateless
-public class EventServiceBean implements EventService {
+public interface AddressService {
 
-    @PersistenceContext(unitName = "eventjuggler")
-    private EntityManager em;
+    void create(Address address);
 
-    @Override
-    public void create(Event event) {
-        em.persist(event);
-    }
+    Address getAddress(long id);
 
-    @Override
-    public Event getEvent(long id) {
-        return em.find(Event.class, id);
-    }
+    List<Address> getAddresses();
 
-    @Override
-    public List<Event> getEvents() {
-        return em.createQuery("from Event", Event.class).getResultList();
-    }
+    void remove(Address address);
 
-    @Override
-    public void remove(Event event) {
-        em.remove(em.merge(event));
-    }
-
-    @Override
-    public void update(Event event) {
-        em.merge(event);
-    }
+    void update(Address address);
 
 }

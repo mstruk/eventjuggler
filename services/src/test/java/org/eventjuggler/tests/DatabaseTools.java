@@ -19,48 +19,35 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.eventjuggler.services;
-
-import java.util.List;
+package org.eventjuggler.tests;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import org.eventjuggler.model.Event;
+import javax.persistence.metamodel.EntityType;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
 @Stateless
-public class EventServiceBean implements EventService {
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+public class DatabaseTools {
 
     @PersistenceContext(unitName = "eventjuggler")
     private EntityManager em;
 
-    @Override
-    public void create(Event event) {
-        em.persist(event);
-    }
-
-    @Override
-    public Event getEvent(long id) {
-        return em.find(Event.class, id);
-    }
-
-    @Override
-    public List<Event> getEvents() {
-        return em.createQuery("from Event", Event.class).getResultList();
-    }
-
-    @Override
-    public void remove(Event event) {
-        em.remove(em.merge(event));
-    }
-
-    @Override
-    public void update(Event event) {
-        em.merge(event);
+    public void cleanDatabase() {
+        try {
+            for (EntityType<?> e : em.getMetamodel().getEntities()) {
+                for (Object o : em.createQuery("from " + e.getName()).getResultList()) {
+                    em.remove(o);
+                }
+            }
+        } catch (Throwable t) {
+            throw new AssertionError("Failed to clean database", t);
+        }
     }
 
 }

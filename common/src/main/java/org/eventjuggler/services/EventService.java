@@ -24,20 +24,20 @@ package org.eventjuggler.services;
 import java.util.List;
 
 import org.eventjuggler.model.Event;
-import org.eventjuggler.model.User;
 
+/**
+ * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
+ */
 public interface EventService {
-
-    List<Event> getEvents();
-
-    Event getEvent(long id);
-
-    User getUser(String id);
 
     void create(Event event);
 
-    void update(Event event);
+    Event getEvent(long id);
+
+    List<Event> getEvents();
 
     void remove(Event event);
+
+    void update(Event event);
 
 }

@@ -23,44 +23,38 @@ package org.eventjuggler.services;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import org.eventjuggler.model.Group;
+import org.eventjuggler.model.User;
+import org.eventjuggler.model.UserRole;
 
-import org.eventjuggler.model.Event;
+public interface UserService {
 
-/**
- * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
- */
-@Stateless
-public class EventServiceBean implements EventService {
+    void create(Group group);
 
-    @PersistenceContext(unitName = "eventjuggler")
-    private EntityManager em;
+    void create(User user);
 
-    @Override
-    public void create(Event event) {
-        em.persist(event);
-    }
+    void create(UserRole userRole);
 
-    @Override
-    public Event getEvent(long id) {
-        return em.find(Event.class, id);
-    }
+    Group getGroup(Long id);
 
-    @Override
-    public List<Event> getEvents() {
-        return em.createQuery("from Event", Event.class).getResultList();
-    }
+    List<Group> getGroups();
 
-    @Override
-    public void remove(Event event) {
-        em.remove(em.merge(event));
-    }
+    List<Group> getGroups(User user);
 
-    @Override
-    public void update(Event event) {
-        em.merge(event);
-    }
+    User getUser(String id);
+
+    UserRole getUserRole(Long id);
+
+    void remove(Group group);
+
+    void remove(User user);
+
+    void remove(UserRole userRole);
+
+    void update(Group group);
+
+    void update(User user);
+
+    void update(UserRole userRole);
 
 }
