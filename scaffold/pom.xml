@@ -84,6 +84,7 @@
     </dependencies>
 
     <build>
+        <finalName>${artifactId}</finalName>
         <plugins>
 
             <!-- We want WEB-INF/lib jars without version in the name -->
