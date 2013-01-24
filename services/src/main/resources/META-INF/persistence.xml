@@ -13,7 +13,6 @@
         <class>org.eventjuggler.model.Group</class>
         <class>org.eventjuggler.model.Role</class>
         <class>org.eventjuggler.model.RSVP</class>
-        <class>org.eventjuggler.model.Tag</class>
         <class>org.eventjuggler.model.User</class>
         <class>org.eventjuggler.model.UserRole</class>
 
