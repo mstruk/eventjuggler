@@ -73,8 +73,15 @@ public class UserServiceBean implements UserService {
     }
 
     @Override
-    public User getUser(String id) {
-        return em.find(User.class, id);
+    public User getUser(String login) {
+        List<User> users = em.createQuery("select u from User u where u.login = :login", User.class)
+            .setParameter("login", login)
+            .getResultList();
+
+        if (users.size() > 1)
+            throw new IllegalStateException("More than one user for login: " + login);
+
+        return users.size() == 0 ? null : users.get(0);
     }
 
     @Override
