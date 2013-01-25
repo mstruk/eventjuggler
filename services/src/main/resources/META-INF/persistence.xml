@@ -7,15 +7,7 @@
 
    <persistence-unit name="eventjuggler">
       <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
-
-      <class>org.eventjuggler.model.Address</class>
-      <class>org.eventjuggler.model.Event</class>
-      <class>org.eventjuggler.model.Group</class>
-      <class>org.eventjuggler.model.Role</class>
-      <class>org.eventjuggler.model.RSVP</class>
-      <class>org.eventjuggler.model.User</class>
-      <class>org.eventjuggler.model.UserRole</class>
-
+      <jar-file>lib/eventjuggler-common.jar</jar-file>
       <properties>
          <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
          <property name="hibernate.show_sql" value="true"/>
