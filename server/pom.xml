@@ -10,68 +10,68 @@
     OF ANY KIND, either express or implied. See the License for the specific 
     language governing permissions and limitations under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.eventjuggler</groupId>
-        <artifactId>eventjuggler-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.eventjuggler</groupId>
+      <artifactId>eventjuggler-parent</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+   </parent>
 
-    <artifactId>eventjuggler-server</artifactId>
-    <packaging>ear</packaging>
+   <artifactId>eventjuggler-server</artifactId>
+   <packaging>ear</packaging>
 
-    <name>EventJuggler Server</name>
-    <description>EventJuggler EAR</description>
+   <name>EventJuggler Server</name>
+   <description>EventJuggler EAR</description>
 
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <distribution>repo</distribution>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-        </license>
-    </licenses>
+   <licenses>
+      <license>
+         <name>Apache License, Version 2.0</name>
+         <distribution>repo</distribution>
+         <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      </license>
+   </licenses>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-rest</artifactId>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-web-js</artifactId>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-web-jsf</artifactId>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-services</artifactId>
-            <type>ejb</type>
-        </dependency>
-    </dependencies>
+   <dependencies>
+      <dependency>
+         <groupId>org.eventjuggler</groupId>
+         <artifactId>eventjuggler-common</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.eventjuggler</groupId>
+         <artifactId>eventjuggler-rest</artifactId>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>org.eventjuggler</groupId>
+         <artifactId>eventjuggler-web-js</artifactId>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>org.eventjuggler</groupId>
+         <artifactId>eventjuggler-web-jsf</artifactId>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>org.eventjuggler</groupId>
+         <artifactId>eventjuggler-services</artifactId>
+         <type>ejb</type>
+      </dependency>
+   </dependencies>
 
-    <build>
-        <plugins>
-            <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
-            <!-- To use, run: mvn package jboss-as:deploy -->
-            <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <configuration>
-                    <skip>false</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+   <build>
+      <plugins>
+         <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
+         <!-- To use, run: mvn package jboss-as:deploy -->
+         <plugin>
+            <groupId>org.jboss.as.plugins</groupId>
+            <artifactId>jboss-as-maven-plugin</artifactId>
+            <configuration>
+               <skip>false</skip>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
 </project>
 
 

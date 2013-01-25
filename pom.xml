@@ -10,232 +10,232 @@
     OF ANY KIND, either express or implied. See the License for the specific 
     language governing permissions and limitations under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.eventjuggler</groupId>
-    <artifactId>eventjuggler-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>EventJuggler Parent</name>
-    <description>EventJuggler Demo App Parent</description>
+   <groupId>org.eventjuggler</groupId>
+   <artifactId>eventjuggler-parent</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+   <packaging>pom</packaging>
+   <name>EventJuggler Parent</name>
+   <description>EventJuggler Demo App Parent</description>
 
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <distribution>repo</distribution>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-        </license>
-    </licenses>
+   <licenses>
+      <license>
+         <name>Apache License, Version 2.0</name>
+         <distribution>repo</distribution>
+         <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      </license>
+   </licenses>
 
-    <modules>
-        <module>common</module>
-        <module>rest</module>
-        <module>server</module>
-        <module>services</module>
-        <module>web-js</module>
-        <module>web-jsf</module>
-        <module>scaffold</module>
-    </modules>
+   <modules>
+      <module>common</module>
+      <module>rest</module>
+      <module>server</module>
+      <module>services</module>
+      <module>web-js</module>
+      <module>web-jsf</module>
+      <module>scaffold</module>
+   </modules>
 
-    <properties>
-        <!-- Define the version of the JBoss BOMs we want to import. The JBoss BOMs specify tested stacks. -->
-        <version.org.jboss.bom>1.0.0.Final</version.org.jboss.bom>
+   <properties>
+      <!-- Define the version of the JBoss BOMs we want to import. The JBoss BOMs specify tested stacks. -->
+      <version.org.jboss.bom>1.0.0.Final</version.org.jboss.bom>
 
-        <version.org.jboss.as.plugins.maven.plugin>7.3.Final</version.org.jboss.as.plugins.maven.plugin>
-        <version.surefire.plugin>2.10</version.surefire.plugin>
-        <version.ejb.plugin>2.3</version.ejb.plugin>
-        <version.war.plugin>2.1.1</version.war.plugin>
-        <version.compiler.plugin>2.3.1</version.compiler.plugin>
-        <version.checkstyle.plugin>2.9.1</version.checkstyle.plugin>
-    </properties>
+      <version.org.jboss.as.plugins.maven.plugin>7.3.Final</version.org.jboss.as.plugins.maven.plugin>
+      <version.surefire.plugin>2.10</version.surefire.plugin>
+      <version.ejb.plugin>2.3</version.ejb.plugin>
+      <version.war.plugin>2.1.1</version.war.plugin>
+      <version.compiler.plugin>2.3.1</version.compiler.plugin>
+      <version.checkstyle.plugin>2.9.1</version.checkstyle.plugin>
+   </properties>
 
-    <scm>
-        <connection>scm:git://github.com/mstruk/eventjuggler.git</connection>
-        <developerConnection>scm:git:git@github.com:mstruk/eventjuggler.git</developerConnection>
-        <url>http://github.com/mstruk/eventjuggler</url>
-    </scm>
+   <scm>
+      <connection>scm:git://github.com/mstruk/eventjuggler.git</connection>
+      <developerConnection>scm:git:git@github.com:mstruk/eventjuggler.git</developerConnection>
+      <url>http://github.com/mstruk/eventjuggler</url>
+   </scm>
 
-    <dependencyManagement>
-        <dependencies>
-            <!-- JBoss distributes a complete set of Java EE 6 APIs including
-                a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
-                a collection) of artifacts. We use this here so that we always get the correct
-                versions of artifacts. Here we use the jboss-javaee-6.0-with-tools stack
-                (you can read this as the JBoss stack of the Java EE 6 APIs, with some extras
-                tools for your project, such as Arquillian for testing) and the jboss-javaee-6.0-with-hibernate
-                stack you can read this as the JBoss stack of the Java EE 6 APIs, with extras
-                from the Hibernate family of projects) -->
-            <dependency>
-                <groupId>org.jboss.bom</groupId>
-                <artifactId>jboss-javaee-6.0-with-tools</artifactId>
-                <version>${version.org.jboss.bom}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+   <dependencyManagement>
+      <dependencies>
+         <!-- JBoss distributes a complete set of Java EE 6 APIs including
+   a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
+   a collection) of artifacts. We use this here so that we always get the correct
+   versions of artifacts. Here we use the jboss-javaee-6.0-with-tools stack
+   (you can read this as the JBoss stack of the Java EE 6 APIs, with some extras
+   tools for your project, such as Arquillian for testing) and the jboss-javaee-6.0-with-hibernate
+   stack you can read this as the JBoss stack of the Java EE 6 APIs, with extras
+   from the Hibernate family of projects) -->
+         <dependency>
+            <groupId>org.jboss.bom</groupId>
+            <artifactId>jboss-javaee-6.0-with-tools</artifactId>
+            <version>${version.org.jboss.bom}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
 
-            <dependency>
-                <groupId>org.jboss.bom</groupId>
-                <artifactId>jboss-javaee-6.0-with-hibernate</artifactId>
-                <version>${version.org.jboss.bom}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.eventjuggler</groupId>
-                <artifactId>eventjuggler-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eventjuggler</groupId>
-                <artifactId>eventjuggler-rest</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>org.eventjuggler</groupId>
-                <artifactId>eventjuggler-services</artifactId>
-                <version>${project.version}</version>
-                <type>ejb</type>
-            </dependency>
-            <dependency>
-                <groupId>org.eventjuggler</groupId>
-                <artifactId>eventjuggler-web-js</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>org.eventjuggler</groupId>
-                <artifactId>eventjuggler-web-jsf</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+         <dependency>
+            <groupId>org.jboss.bom</groupId>
+            <artifactId>jboss-javaee-6.0-with-hibernate</artifactId>
+            <version>${version.org.jboss.bom}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-common</artifactId>
+            <version>${project.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-rest</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+         </dependency>
+         <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-services</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+         </dependency>
+         <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-web-js</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+         </dependency>
+         <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-web-jsf</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
 
 
-    <build>
+   <build>
 
-        <!-- Define plugin versions required for Deployment and Testing Tools -->
-        <pluginManagement>
-            <plugins>
-                <!-- Compiler plugin enforces Java 1.6 compatibility and activates annotation processors -->
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${version.compiler.plugin}</version>
-                    <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
-                    </configuration>
-                </plugin>
-
-                <!-- War plugin packages deployable war and we need to tell it it's ok that tere is no web.xml for this project -->
-                <plugin>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>${version.war.plugin}</version>
-                    <configuration>
-                        <!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-ejb-plugin</artifactId>
-                    <version>${version.ejb.plugin}</version>
-                    <configuration>
-                        <ejbVersion>3.0</ejbVersion>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-ear-plugin</artifactId>
-                    <version>2.7</version>
-                    <configuration>
-                        <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    </configuration>
-                </plugin>
-
-                <!-- The Maven Surefire plugin tests your application. Here we ensure we are using a version compatible with Arquillian -->
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${version.surefire.plugin}</version>
-                </plugin>
-
-                <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
-                <!-- To use, set the JBOSS_HOME environment variable and run: mvn package jboss-as:deploy -->
-                <plugin>
-                    <groupId>org.jboss.as.plugins</groupId>
-                    <artifactId>jboss-as-maven-plugin</artifactId>
-                    <version>${version.org.jboss.as.plugins.maven.plugin}</version>
-                </plugin>
-
-                <!-- Checkstyle -->
-                <plugin>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${version.checkstyle.plugin}</version>
-                    <configuration>
-                        <configLocation>checkstyle.xml</configLocation>
-                        <consoleOutput>true</consoleOutput>
-                        <failsOnError>true</failsOnError>
-                        <useFile />
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>check-style</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>checkstyle</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.apache.maven.plugins</groupId>
-                                        <artifactId>maven-checkstyle-plugin</artifactId>
-                                        <versionRange>[2.5,)</versionRange>
-                                        <goals>
-                                            <goal>checkstyle</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore />
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-
-        <plugins>
+      <!-- Define plugin versions required for Deployment and Testing Tools -->
+      <pluginManagement>
+         <plugins>
+            <!-- Compiler plugin enforces Java 1.6 compatibility and activates annotation processors -->
             <plugin>
-                <artifactId>maven-checkstyle-plugin</artifactId>
+               <artifactId>maven-compiler-plugin</artifactId>
+               <version>${version.compiler.plugin}</version>
+               <configuration>
+                  <source>1.6</source>
+                  <target>1.6</target>
+               </configuration>
             </plugin>
 
-            <!-- The JBoss AS plugin deploys your apps to a local JBoss AS container -->
-            <!-- Disabling it here means that we don't try to deploy this POM! -->
+            <!-- War plugin packages deployable war and we need to tell it it's ok that tere is no web.xml for this project -->
             <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <inherited>true</inherited>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
+               <artifactId>maven-war-plugin</artifactId>
+               <version>${version.war.plugin}</version>
+               <configuration>
+                  <!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
+                  <failOnMissingWebXml>false</failOnMissingWebXml>
+               </configuration>
             </plugin>
-        </plugins>
-    </build>
+
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-ejb-plugin</artifactId>
+               <version>${version.ejb.plugin}</version>
+               <configuration>
+                  <ejbVersion>3.0</ejbVersion>
+               </configuration>
+            </plugin>
+
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-ear-plugin</artifactId>
+               <version>2.7</version>
+               <configuration>
+                  <defaultLibBundleDir>lib</defaultLibBundleDir>
+               </configuration>
+            </plugin>
+
+            <!-- The Maven Surefire plugin tests your application. Here we ensure we are using a version compatible with Arquillian -->
+            <plugin>
+               <artifactId>maven-surefire-plugin</artifactId>
+               <version>${version.surefire.plugin}</version>
+            </plugin>
+
+            <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
+            <!-- To use, set the JBOSS_HOME environment variable and run: mvn package jboss-as:deploy -->
+            <plugin>
+               <groupId>org.jboss.as.plugins</groupId>
+               <artifactId>jboss-as-maven-plugin</artifactId>
+               <version>${version.org.jboss.as.plugins.maven.plugin}</version>
+            </plugin>
+
+            <!-- Checkstyle -->
+            <plugin>
+               <artifactId>maven-checkstyle-plugin</artifactId>
+               <version>${version.checkstyle.plugin}</version>
+               <configuration>
+                  <configLocation>checkstyle.xml</configLocation>
+                  <consoleOutput>true</consoleOutput>
+                  <failsOnError>true</failsOnError>
+                  <useFile/>
+               </configuration>
+               <executions>
+                  <execution>
+                     <id>check-style</id>
+                     <phase>compile</phase>
+                     <goals>
+                        <goal>checkstyle</goal>
+                     </goals>
+                  </execution>
+               </executions>
+            </plugin>
+
+            <plugin>
+               <groupId>org.eclipse.m2e</groupId>
+               <artifactId>lifecycle-mapping</artifactId>
+               <version>1.0.0</version>
+               <configuration>
+                  <lifecycleMappingMetadata>
+                     <pluginExecutions>
+                        <pluginExecution>
+                           <pluginExecutionFilter>
+                              <groupId>org.apache.maven.plugins</groupId>
+                              <artifactId>maven-checkstyle-plugin</artifactId>
+                              <versionRange>[2.5,)</versionRange>
+                              <goals>
+                                 <goal>checkstyle</goal>
+                              </goals>
+                           </pluginExecutionFilter>
+                           <action>
+                              <ignore/>
+                           </action>
+                        </pluginExecution>
+                     </pluginExecutions>
+                  </lifecycleMappingMetadata>
+               </configuration>
+            </plugin>
+         </plugins>
+      </pluginManagement>
+
+      <plugins>
+         <plugin>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+         </plugin>
+
+         <!-- The JBoss AS plugin deploys your apps to a local JBoss AS container -->
+         <!-- Disabling it here means that we don't try to deploy this POM! -->
+         <plugin>
+            <groupId>org.jboss.as.plugins</groupId>
+            <artifactId>jboss-as-maven-plugin</artifactId>
+            <inherited>true</inherited>
+            <configuration>
+               <skip>true</skip>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
 
 </project>
 
