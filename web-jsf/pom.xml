@@ -46,6 +46,11 @@
          <scope>provided</scope>
       </dependency>
 
+      <dependency>
+         <groupId>org.eventjuggler</groupId>
+         <artifactId>eventjuggler-common</artifactId>
+      </dependency>
+
       <!-- Needed for running tests (you may also use TestNG) -->
       <dependency>
          <groupId>junit</groupId>

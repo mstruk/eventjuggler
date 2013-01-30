@@ -1,14 +1,15 @@
-package org.eventjuggler.web.controller;
+package org.eventjuggler.web.model;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:marko.strukelj@gmail.com">Marko Strukelj</a>
  */
 @RequestScoped
 @Named("credentials")
-public class Credentials {
+public class Credentials implements Serializable {
 
     private String username;
     private String password;
