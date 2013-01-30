@@ -31,9 +31,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.eventjuggler.services.EventQuery;
 import org.eventjuggler.services.EventService;
+import org.eventjuggler.services.EventProperty;
 import org.eventjuggler.services.UserService;
 
 /**
@@ -58,8 +61,27 @@ public class EventResource {
 
     @GET
     @Path("/")
-    public List<Event> getEvents() {
-        return ObjectFactory.createEvent(eventService.getEvents());
+    public List<Event> getEvents(@QueryParam("first") Integer firstResult, @QueryParam("max") Integer maxResult,
+            @QueryParam("query") String query, @QueryParam("sort") String sortBy, @QueryParam("order") String order) {
+        EventQuery q = eventService.query();
+
+        if (firstResult != null) {
+            q.firstResult(firstResult);
+        }
+
+        if (maxResult != null) {
+            q.maxResult(maxResult);
+        }
+
+        if (query != null) {
+            q.query(query);
+        }
+
+        if (sortBy != null) {
+            q.sortBy(EventProperty.valueOf(sortBy), order == null || order.equals("asc") || order.equals("ascending"));
+        }
+
+        return ObjectFactory.createEvent(q.getEvents());
     }
 
     @GET
@@ -86,16 +108,16 @@ public class EventResource {
         // TODO
     }
 
-//    @Context
-//    private SecurityContext securityContext;
-//
-//    private User getUser() {
-//        if (securityContext.getUserPrincipal() == null) {
-//            return null;
-//        }
-//
-//        String id = securityContext.getUserPrincipal().getName();
-//        return userService.getUser(id);
-//    }
+    // @Context
+    // private SecurityContext securityContext;
+    //
+    // private User getUser() {
+    // if (securityContext.getUserPrincipal() == null) {
+    // return null;
+    // }
+    //
+    // String id = securityContext.getUserPrincipal().getName();
+    // return userService.getUser(id);
+    // }
 
 }
