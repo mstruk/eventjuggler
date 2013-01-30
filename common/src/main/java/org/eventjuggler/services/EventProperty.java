@@ -21,6 +21,9 @@
  */
 package org.eventjuggler.services;
 
+/**
+ * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
+ */
 public enum EventProperty {
     TITLE, TIME
 }

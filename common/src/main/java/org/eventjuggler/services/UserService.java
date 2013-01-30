@@ -27,6 +27,9 @@ import org.eventjuggler.model.Group;
 import org.eventjuggler.model.User;
 import org.eventjuggler.model.UserRole;
 
+/**
+ * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
+ */
 public interface UserService {
 
     void create(Group group);
