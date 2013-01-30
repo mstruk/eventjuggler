@@ -26,11 +26,11 @@
                <ul class="nav">
                   <li><a href="#/events">Explore events</a></li>
                   <li><a href="#/events/mine">Your events</a></li>
-                  <li><a href="#/events/create">Create event</a></li>                  
+                  <li><a href="#/events/create">Create event</a></li>
                </ul>
-               <div class="input-append pull-right">
-                  <input class="span2" id="searchEvents" type="text" placeholder="Search events">
-                  <button class="btn" type="button"><i class="icon-search"></i></button>
+               <div class="input-append pull-right" ng-controller="EventSearchCtrl">
+                  <input class="span2" id="searchEvents" type="text" placeholder="Search events" ng-model="query"></input>
+                  <button class="btn" type="button" ng-click="search()"><i class="icon-search"></i></button>
                </div>
             </div>
          </div>

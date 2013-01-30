@@ -78,7 +78,7 @@ public class InitializeData {
         e.setLocation(a);
         e.setOrganizer(u);
         e.setOrganizerGroup(g);
-        e.setTags("meetings, events");
+        e.setTags("meetings, events, tech");
         cal.set(2013, 06, 01, 12, 00);
         e.setTime(cal.getTimeInMillis());
         em.persist(e);
@@ -117,7 +117,7 @@ public class InitializeData {
         e.setLocation(a);
         e.setOrganizer(u);
         e.setOrganizerGroup(g);
-        e.setTags("os, linux");
+        e.setTags("os, linux, tech");
         cal.set(2013, 03, 07, 16, 30);
         e.setTime(cal.getTimeInMillis());
         em.persist(e);

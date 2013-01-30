@@ -1,2 +1,11 @@
 <h1>{{event.title}}</h1>
+<h2>{{event.time | date:'mediumDate'}}</h2>
+<h3>{{event.time | date:'shortTime'}}</h3>
 <p>{{event.description}}</p>
+
+<p>Organizer: {{event.organizer}}</p>
+<p>Organizer group: {{event.organizerGroup}}</p>
+
+<p><img ng-src="images/{{event.imageId}}.jpg"></img></p>
+
+<p><a ng-repeat="tag in event.tags" class="btn" href="#/events?tags={{tag}}" >{{tag}}</a></p>
