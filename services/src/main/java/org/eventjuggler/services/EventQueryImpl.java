@@ -68,7 +68,7 @@ public class EventQueryImpl implements EventQuery {
     }
 
     public EventQueryImpl query(String query) {
-        this.query = "%" + query + "%";
+        this.query = "%" + query.toUpperCase() + "%";
         return this;
     }
 
@@ -78,7 +78,7 @@ public class EventQueryImpl implements EventQuery {
         Root<Event> e = c.from(Event.class);
 
         if (query != null) {
-            c.where(b.or(b.like(e.get(Event_.title), query), b.like(e.get(Event_.description), query)));
+            c.where(b.or(b.like(b.upper(e.get(Event_.title)), query), b.like(b.upper(e.get(Event_.description)), query)));
         }
 
         if (sort != null) {

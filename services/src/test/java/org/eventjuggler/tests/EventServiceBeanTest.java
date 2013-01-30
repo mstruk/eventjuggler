@@ -104,6 +104,7 @@ public class EventServiceBeanTest {
         assertEquals(10, service.query().getEvents().size());
 
         assertEquals(1, service.query().query("title2").getEvents().size());
+        assertEquals(1, service.query().query("TiTlE2").getEvents().size());
         assertEquals(1, service.query().query("description2").getEvents().size());
 
         List<Event> events = service.query().sortBy(EventProperty.TIME, false).firstResult(2).maxResult(2).getEvents();
