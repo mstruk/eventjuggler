@@ -2,6 +2,7 @@
 .project
 .classpath
 .settings
+.externalToolBuilders
 
 # Build results
 target/
