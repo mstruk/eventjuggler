@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+   <title>#{pageTitle} | EventJuggler</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <meta name="description" content="eventjuggler"/>
+   <meta name="keywords" content="eventjuggler"/>
+   <meta name="robots" content="index,follow"/>
+   <meta name="revisit-after" content="7 days"/>
+   <link type="text/css" rel="stylesheet" media="screen,projection" href="/_common/css/default.css"/>
+   <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+</head>
+<body>
+<div id="site">
+   <div id="header">
+      <div class="w">
+         <ul class="toplinks">
+            <li class="edit"><h:link outcome="profile">My profile</h:link></li>
+            <li class="logout"><a href="#">Logout</a></li>
+         </ul>
+         <form method="post" action="/searchresults.html" class="searchform">
+            <fieldset>
+               <label for="query">Search:</label>
+               <input type="text" id="query"/>
+               <input type="submit" value="Search"/>
+            </fieldset>
+         </form>
+      </div>
+      <hr class="hidden"/>
+   </div>
+
+   <div id="body">
+      <div class="w">
+         <div id="sidebar">
+            <ui:insert name="sidebar"/>
+         </div>
+
+         <div id="content">
+            <ui:insert name="content"/>
+         </div>
+
+      </div>
+   </div>
+
+   <div id="footer">
+      <div class="w">
+         <hr class="hidden"/>
+         <h6>&#169; EventJuggler</h6>
+
+         <ul>
+            <li><a rel="external" href="/about.html">About</a></li>
+            <li><a rel="external" href="/terms.html">Terms of Service</a></li>
+         </ul>
+      </div>
+   </div>
+</div>
+</body>
+</html>
