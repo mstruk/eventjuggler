@@ -4,7 +4,6 @@ function EventListCtrl($scope, Event, $routeParams) {
     $scope.events = Event.query($routeParams);
 }
 
-
 function EventSearchCtrl($scope, Event, $location) {
     $scope.query = "",
         

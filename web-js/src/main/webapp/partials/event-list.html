@@ -1,7 +1,9 @@
-<div ng-repeat="event in events">
-   <img ng-src="images/{{event.imageId}}.jpg"></img>
-   <h1><a href="#/events/{{event.id}}">{{event.title}}</a></h1>
+<div ng-repeat="event in events" class="well clearfix media">
+   <img ng-src="images/{{event.imageId}}.jpg" class="media-object pull-left"></img>
+   <div class="media-body">
+   <h2><a href="#/events/{{event.id}}">{{event.title}}</a></h2>
    <p>{{event.time | date}}</p>
    <p>{{event.description}}</p>
    <p ng-show="{{event.attending > 0}}">{{event.attending}}  attending</p>
+   </div>
 </div>
