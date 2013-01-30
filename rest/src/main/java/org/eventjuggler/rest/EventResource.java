@@ -62,7 +62,8 @@ public class EventResource {
     @GET
     @Path("/")
     public List<Event> getEvents(@QueryParam("first") Integer firstResult, @QueryParam("max") Integer maxResult,
-            @QueryParam("query") String query, @QueryParam("sort") String sortBy, @QueryParam("order") String order) {
+            @QueryParam("query") String query, @QueryParam("tags") String tags, @QueryParam("sort") String sortBy,
+            @QueryParam("order") String order) {
         EventQuery q = eventService.query();
 
         if (firstResult != null) {
@@ -77,8 +78,12 @@ public class EventResource {
             q.query(query);
         }
 
+        if (tags != null) {
+            q.tags(ObjectFactory.createTags(tags));
+        }
+
         if (sortBy != null) {
-            q.sortBy(EventProperty.valueOf(sortBy), order == null || order.equals("asc") || order.equals("ascending"));
+            q.sortBy(EventProperty.valueOf(sortBy.toUpperCase()), order == null || order.equals("asc"));
         }
 
         return ObjectFactory.createEvent(q.getEvents());

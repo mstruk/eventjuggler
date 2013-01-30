@@ -38,14 +38,16 @@ import org.eventjuggler.model.Event_;
  */
 public class EventQueryImpl implements EventQuery {
 
-    private EntityManager em;
-
-    private int firstResult = -1;
-    private int maxResult = -1;
-
-    private EventProperty sort;
     private boolean ascending;
+
+    private EntityManager em;
+    private int firstResult = -1;
+
+    private int maxResult = -1;
     private String query;
+    private EventProperty sort;
+
+    private String[] tags;
 
     public EventQueryImpl(EntityManager em) {
         this.em = em;
@@ -56,22 +58,6 @@ public class EventQueryImpl implements EventQuery {
         return this;
     }
 
-    public EventQueryImpl maxResult(int maxResult) {
-        this.maxResult = maxResult;
-        return this;
-    }
-
-    public EventQueryImpl sortBy(EventProperty sort, boolean ascending) {
-        this.sort = sort;
-        this.ascending = ascending;
-        return this;
-    }
-
-    public EventQueryImpl query(String query) {
-        this.query = "%" + query.toUpperCase() + "%";
-        return this;
-    }
-
     public List<Event> getEvents() {
         CriteriaBuilder b = em.getCriteriaBuilder();
         CriteriaQuery<Event> c = b.createQuery(Event.class);
@@ -79,6 +65,12 @@ public class EventQueryImpl implements EventQuery {
 
         if (query != null) {
             c.where(b.or(b.like(b.upper(e.get(Event_.title)), query), b.like(b.upper(e.get(Event_.description)), query)));
+        }
+
+        if (tags != null) {
+            for (String t : tags) {
+                c.where(b.like(b.upper(e.get(Event_.tags)), "%" + t.toUpperCase() + "%"));
+            }
         }
 
         if (sort != null) {
@@ -108,6 +100,28 @@ public class EventQueryImpl implements EventQuery {
         }
 
         return q.getResultList();
+    }
+
+    public EventQueryImpl maxResult(int maxResult) {
+        this.maxResult = maxResult;
+        return this;
+    }
+
+    public EventQueryImpl query(String query) {
+        this.query = "%" + query.toUpperCase() + "%";
+        return this;
+    }
+
+    public EventQueryImpl sortBy(EventProperty sort, boolean ascending) {
+        this.sort = sort;
+        this.ascending = ascending;
+        return this;
+    }
+
+    @Override
+    public EventQuery tags(String... tags) {
+        this.tags = tags;
+        return this;
     }
 
 }

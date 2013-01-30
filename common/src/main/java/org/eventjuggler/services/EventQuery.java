@@ -40,4 +40,6 @@ public interface EventQuery {
 
     EventQuery sortBy(EventProperty property, boolean ascending);
 
+    EventQuery tags(String... tags);
+
 }

@@ -98,6 +98,7 @@ public class EventServiceBeanTest {
             e.setTitle("title" + i);
             e.setDescription("description" + i);
             e.setTime(i * 1000);
+            e.setTags("tag" + i);
             service.create(e);
         }
 
@@ -106,6 +107,7 @@ public class EventServiceBeanTest {
         assertEquals(1, service.query().query("title2").getEvents().size());
         assertEquals(1, service.query().query("TiTlE2").getEvents().size());
         assertEquals(1, service.query().query("description2").getEvents().size());
+        assertEquals(1, service.query().tags("tag2").getEvents().size());
 
         List<Event> events = service.query().sortBy(EventProperty.TIME, false).firstResult(2).maxResult(2).getEvents();
         assertEquals(2, events.size());
