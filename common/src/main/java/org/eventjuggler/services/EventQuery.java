@@ -23,49 +23,21 @@ package org.eventjuggler.services;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.eventjuggler.model.Event;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-@Stateless
-public class EventServiceBean implements EventService {
+public interface EventQuery {
 
-    @PersistenceContext(unitName = "eventjuggler")
-    private EntityManager em;
+    EventQuery firstResult(int firstResult);
 
-    @Override
-    public void create(Event event) {
-        em.persist(event);
-    }
+    List<Event> getEvents();
 
-    @Override
-    public Event getEvent(long id) {
-        return em.find(Event.class, id);
-    }
+    EventQuery maxResult(int maxResult);
 
-    @Override
-    public List<Event> getEvents() {
-        return em.createQuery("from Event", Event.class).getResultList();
-    }
+    EventQuery query(String query);
 
-    @Override
-    public void remove(Event event) {
-        em.remove(em.merge(event));
-    }
-
-    @Override
-    public void update(Event event) {
-        em.merge(event);
-    }
-
-    @Override
-    public EventQueryImpl query() {
-        return new EventQueryImpl(em);
-    }
+    EventQuery sortBy(EventProperty property, boolean ascending);
 
 }

@@ -4,11 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 
 import org.eventjuggler.model.Event;
+import org.eventjuggler.services.EventQuery;
+import org.eventjuggler.services.EventQueryImpl;
 import org.eventjuggler.services.EventService;
 import org.eventjuggler.services.EventServiceBean;
+import org.eventjuggler.services.EventProperty;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
@@ -23,10 +28,11 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class EventServiceBeanTest {
 
-    @Deployment @OverProtocol("Servlet 3.0")
+    @Deployment
+    @OverProtocol("Servlet 3.0")
     public static WebArchive createTestArchive() {
-        return JPADeploymentTest.createTestArchive()
-                .addClasses(EventService.class, EventServiceBean.class, DatabaseTools.class);
+        return JPADeploymentTest.createTestArchive().addClasses(EventService.class, EventServiceBean.class, EventQuery.class,
+                EventProperty.class, EventQueryImpl.class, DatabaseTools.class);
     }
 
     @EJB
@@ -83,5 +89,26 @@ public class EventServiceBeanTest {
 
         event = service.getEvent(event.getId());
         assertEquals("new-title", event.getTitle());
+    }
+
+    @Test
+    public void query() throws Exception {
+        for (int i = 0; i < 10; i++) {
+            Event e = new Event();
+            e.setTitle("title" + i);
+            e.setDescription("description" + i);
+            e.setTime(i * 1000);
+            service.create(e);
+        }
+
+        assertEquals(10, service.query().getEvents().size());
+
+        assertEquals(1, service.query().query("title2").getEvents().size());
+        assertEquals(1, service.query().query("description2").getEvents().size());
+
+        List<Event> events = service.query().sortBy(EventProperty.TIME, false).firstResult(2).maxResult(2).getEvents();
+        assertEquals(2, events.size());
+        assertEquals("title7", events.get(0).getTitle());
+        assertEquals("title6", events.get(1).getTitle());
     }
 }

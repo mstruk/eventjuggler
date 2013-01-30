@@ -36,6 +36,8 @@ public interface EventService {
 
     List<Event> getEvents();
 
+    EventQuery query();
+
     void remove(Event event);
 
     void update(Event event);
