@@ -16,9 +16,15 @@
 <script src="js/app.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/services.js"></script>
+
+<style type="text/css">
+body {
+   padding-top: 60px;
+   padding-bottom: 40px;
+}
+</style>
 </head>
 <body>
-
    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
          <div class="container">
@@ -28,16 +34,19 @@
                   <li><a href="#/events/mine">Your events</a></li>
                   <li><a href="#/events/create">Create event</a></li>
                </ul>
-               <div class="input-append pull-right" ng-controller="EventSearchCtrl">
+               <form class="navbar-form pull-right">
                   <input class="span2" id="searchEvents" type="text" placeholder="Search events" ng-model="query"></input>
-                  <button class="btn" type="button" ng-click="search()"><i class="icon-search"></i></button>
-               </div>
+                  <button class="btn" type="button" ng-click="search()">
+                     <i class="icon-search"></i>
+                  </button>
+               </form>
             </div>
          </div>
       </div>
    </div>
 
-   <div style="margin: 5em;" ng-view></div>
-
+   <div class="container">
+      <div ng-view></div>
+   </div>
 </body>
 </html>
