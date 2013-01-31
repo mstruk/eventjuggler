@@ -1,5 +1,6 @@
 package org.eventjuggler.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +21,8 @@ public class User {
     private String name;
     private String lastName;
     private String imageId;
+
+    @Column(length = 20000)
     private String description;
 
     public Long getId() {
