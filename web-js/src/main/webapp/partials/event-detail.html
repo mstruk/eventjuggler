@@ -1,12 +1,22 @@
 <h1>{{event.title}}</h1>
 <h2>{{event.time | date:'mediumDate'}}</h2>
 <h3>{{event.time | date:'shortTime'}}</h3>
+<p><img ng-src="{{event.imageId}}"></img></p>
 <div ng-bind-html-unsafe="event.description"></div>
 
-<p>Organizer: {{event.organizer}}</p>
-<p>Organizer group: {{event.organizerGroup}}</p>
+<hr/>
 
+<h2>{{event.location.name}}</h2>
+{{event.location.streetNum}} {{event.location.street}}<br/>
+{{event.location.zip}} {{event.location.cirty}}<br/>
+{{event.location.country}}
 
-<p><img ng-src="{{event.imageId}}"></img></p>
+<hr/>
+
+<h2>{{event.organizerGroup.name}}</h2>
+
+<div ng-bind-html-unsafe="event.organizerGroup.description"></div>
+
+<hr/>
 
 <p><a ng-repeat="tag in event.tags" class="btn" href="#/events?tags={{tag}}" >{{tag}}</a></p>

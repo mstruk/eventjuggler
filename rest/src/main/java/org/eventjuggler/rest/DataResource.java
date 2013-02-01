@@ -21,6 +21,7 @@
  */
 package org.eventjuggler.rest;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -68,6 +69,12 @@ public class DataResource {
     @Path("/steal")
     public List<Event> stealFromMeetup(@QueryParam("category") String category, @QueryParam("page") String page,
             @QueryParam("key") String key) {
-        return ObjectFactory.createEvent(dataService.stealFromMeetup(category, page, key));
+        List<org.eventjuggler.model.Event> events = dataService.stealFromMeetup(category, page, key);
+
+        List<Event> l = new LinkedList<Event>();
+        for (org.eventjuggler.model.Event e : events) {
+            l.add(new Event(e));
+        }
+        return l;
     }
 }

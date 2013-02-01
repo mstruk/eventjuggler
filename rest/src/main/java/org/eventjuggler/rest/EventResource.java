@@ -21,6 +21,7 @@
  */
 package org.eventjuggler.rest;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -55,8 +56,8 @@ public class EventResource {
 
     @GET
     @Path("/{id}")
-    public Event getEvent(@PathParam("id") long eventId) {
-        return ObjectFactory.createEvent(eventService.getEvent(eventId));
+    public EventDetails getEvent(@PathParam("id") long eventId) {
+        return new EventDetails(eventService.getEvent(eventId));
     }
 
     @GET
@@ -86,7 +87,11 @@ public class EventResource {
             q.sortBy(EventProperty.valueOf(sortBy.toUpperCase()), order == null || order.equals("asc"));
         }
 
-        return ObjectFactory.createEvent(q.getEvents());
+        List<Event> events = new LinkedList<Event>();
+        for (org.eventjuggler.model.Event e : q.getEvents()) {
+            events.add(new Event(e));
+        }
+        return events;
     }
 
     @GET
@@ -98,7 +103,7 @@ public class EventResource {
     @PUT
     @Path("/")
     public void createEvent(Event event) {
-        eventService.create(ObjectFactory.createEvent(event));
+        eventService.create(event.toInternal());
     }
 
     @DELETE

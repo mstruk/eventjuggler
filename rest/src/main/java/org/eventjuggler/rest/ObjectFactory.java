@@ -47,35 +47,6 @@ class ObjectFactory {
         return a;
     }
 
-    public static org.eventjuggler.model.Event createEvent(Event event) {
-        org.eventjuggler.model.Event e = new org.eventjuggler.model.Event();
-        e.setDescription(event.getDescription());
-        e.setImageId(event.getImageId());
-        e.setTags(createTags(event.getTags()));
-        e.setTime(event.getTime());
-        e.setTitle(event.getTitle());
-        return e;
-    }
-
-    public static List<Event> createEvent(List<org.eventjuggler.model.Event> events) {
-        List<Event> l = new LinkedList<Event>();
-        for (org.eventjuggler.model.Event e : events) {
-            l.add(createEvent(e));
-        }
-        return l;
-    }
-
-    public static Event createEvent(org.eventjuggler.model.Event event) {
-        Event e = new Event();
-        e.setDescription(event.getDescription());
-        e.setId(event.getId());
-        e.setImageId(event.getImageId());
-        e.setTags(createTags(event.getTags()));
-        e.setTime(event.getTime());
-        e.setTitle(event.getTitle());
-        return e;
-    }
-
     public static String createString(Enum<?> e) {
         return e.toString().toLowerCase().replace('_', ' ');
     }

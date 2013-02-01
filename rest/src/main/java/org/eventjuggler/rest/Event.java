@@ -32,8 +32,8 @@ class Event {
     private String description;
     private Long id;
     private String imageId;
-    private String organizer;
-    private Long organizerGroup;
+    private Long organizerGroupId;
+    private Long organizerId;
 
     private String[] tags;
 
@@ -41,6 +41,17 @@ class Event {
     private String title;
 
     public Event() {
+    }
+
+    public Event(org.eventjuggler.model.Event e) {
+        this.description = e.getDescription();
+        this.id = e.getId();
+        this.imageId = e.getImageId();
+        this.organizerId = e.getOrganizer() != null ? e.getOrganizer().getId() : null;
+        this.organizerGroupId = e.getOrganizerGroup() != null ? e.getOrganizerGroup().getId() : null;
+        this.tags = ObjectFactory.createTags(e.getTags());
+        this.time = e.getTime();
+        this.title = e.getTitle();
     }
 
     public String getDescription() {
@@ -55,12 +66,12 @@ class Event {
         return imageId;
     }
 
-    public String getOrganizer() {
-        return organizer;
+    public Long getOrganizerGroupId() {
+        return organizerGroupId;
     }
 
-    public Long getOrganizerGroup() {
-        return organizerGroup;
+    public Long getOrganizerId() {
+        return organizerId;
     }
 
     public String[] getTags() {
@@ -75,36 +86,14 @@ class Event {
         return title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
-    }
-
-    public void setOrganizer(String organizer) {
-        this.organizer = organizer;
-    }
-
-    public void setOrganizerGroup(Long organizerGroup) {
-        this.organizerGroup = organizerGroup;
-    }
-
-    public void setTags(String[] tags) {
-        this.tags = tags;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public org.eventjuggler.model.Event toInternal() {
+        org.eventjuggler.model.Event e = new org.eventjuggler.model.Event();
+        e.setDescription(description);
+        e.setImageId(imageId);
+        e.setTags(ObjectFactory.createTags(tags));
+        e.setTime(time);
+        e.setTitle(title);
+        return e;
     }
 
 }
