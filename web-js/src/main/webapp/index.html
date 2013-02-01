@@ -34,7 +34,7 @@ body {
                   <li><a href="#/events/mine">Your events</a></li>
                   <li><a href="#/events/create">Create event</a></li>
                </ul>
-               <form class="navbar-form pull-right">
+               <form class="navbar-form pull-right" ng-controller="EventSearchCtrl">
                   <input class="span2" id="searchEvents" type="text" placeholder="Search events" ng-model="query"></input>
                   <button class="btn" type="button" ng-click="search()">
                      <i class="icon-search"></i>
