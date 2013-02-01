@@ -1,12 +1,14 @@
 package org.eventjuggler.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import java.util.List;
 
 /**
  * @author <a href="mailto:marko.strukelj@gmail.com">Marko Strukelj</a>
@@ -17,13 +19,13 @@ public class Event {
     @Id @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     private Group organizerGroup;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     private User organizer;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     private Address location;
 
     private long time;
