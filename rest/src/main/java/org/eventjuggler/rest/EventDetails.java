@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 class EventDetails extends Event {
-    
+
     private Address location;
     private Group organizerGroup;
 
@@ -37,17 +37,17 @@ class EventDetails extends Event {
 
     public EventDetails(org.eventjuggler.model.Event event) {
         super(event);
-        
+
         location = new Address(event.getLocation());
         organizerGroup = new Group(event.getOrganizerGroup());
-    }       
-    
+    }
+
     public Address getLocation() {
         return location;
     }
-    
+
     public Group getOrganizerGroup() {
         return organizerGroup;
     }
-    
+
 }

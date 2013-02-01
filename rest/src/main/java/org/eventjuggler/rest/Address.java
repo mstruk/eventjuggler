@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Address {
-    
+
     private Long id;
 
     private String name;
@@ -16,7 +16,7 @@ public class Address {
     private String country;
     private String latitude;
     private String longitude;
-    
+
     public Address() {
     }
 
@@ -71,5 +71,5 @@ public class Address {
     public String getLongitude() {
         return longitude;
     }
-    
+
 }
