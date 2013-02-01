@@ -39,14 +39,10 @@ public class DatabaseTools {
     private EntityManager em;
 
     public void cleanDatabase() {
-        try {
-            for (EntityType<?> e : em.getMetamodel().getEntities()) {
-                for (Object o : em.createQuery("from " + e.getName()).getResultList()) {
-                    em.remove(o);
-                }
+        for (EntityType<?> e : em.getMetamodel().getEntities()) {
+            for (Object o : em.createQuery("from " + e.getName()).getResultList()) {
+                em.remove(o);
             }
-        } catch (Throwable t) {
-            throw new AssertionError("Failed to clean database", t);
         }
     }
 

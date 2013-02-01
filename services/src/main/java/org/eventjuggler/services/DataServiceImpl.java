@@ -51,7 +51,7 @@ public class DataServiceImpl implements DataService {
     @PersistenceContext(unitName = "eventjuggler")
     private EntityManager em;
 
-    @Resource(lookup = "java:jboss/datasources/ExampleDS")
+    @Resource(name = "java:jboss/datasources/ExampleDS")
     private DataSource dataSource;
 
     @Override
