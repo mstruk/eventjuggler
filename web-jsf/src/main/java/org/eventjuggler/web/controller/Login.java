@@ -4,8 +4,10 @@ import org.eventjuggler.model.User;
 import org.eventjuggler.services.AuthenticationService;
 import org.eventjuggler.web.model.Credentials;
 
+import java.io.IOException;
 import java.io.Serializable;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
@@ -22,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 @Named
 public class Login implements Serializable {
 
+    private static Logger log = Logger.getLogger(Login.class.getName());
+
     @Inject
     private Credentials credentials;
 
@@ -32,18 +36,20 @@ public class Login implements Serializable {
 
     private String redirectedUri;
 
-    public String login() {
-
+    public void login() {
         boolean success = authenticationService.login(credentials.getUsername(), credentials.getPassword());
         if (success) {
             User user = new User();
             user.setLogin(credentials.getUsername());
             this.user = user;
-            return redirectedUri;
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect(redirectedUri);
+            } catch (IOException e) {
+                log.log(Level.SEVERE, "Failed to redirect back from login", e);
+            }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Authentication failed!"));
         }
-        return null;
     }
 
     public String logout() {
