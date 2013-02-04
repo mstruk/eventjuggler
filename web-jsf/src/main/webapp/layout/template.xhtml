@@ -18,7 +18,16 @@
       <div class="w">
          <ul class="toplinks">
             <li class="edit"><h:link outcome="profile">My profile</h:link></li>
-            <li class="logout"><a href="#">Logout</a></li>
+
+            <ui:fragment rendered="#{login.loggedIn}">
+            <h:form id="logout">
+            <li class="logout"><h:commandLink action="#{login.logout}">Logout</h:commandLink></li>
+            </h:form>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{!login.loggedIn}">
+               <li class="login"><h:link outcome="login">Login</h:link></li>
+            </ui:fragment>
          </ul>
          <form method="post" action="/searchresults.html" class="searchform">
             <fieldset>

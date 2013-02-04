@@ -13,12 +13,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author <a href="mailto:marko.strukelj@gmail.com">Marko Strukelj</a>
  */
 @SessionScoped
-@Named("login")
+@Named
 public class Login implements Serializable {
 
     @Inject
@@ -29,17 +30,35 @@ public class Login implements Serializable {
 
     private User user;
 
-    public void login() {
+    private String redirectedUri;
+
+    public String login() {
 
         boolean success = authenticationService.login(credentials.getUsername(), credentials.getPassword());
         if (success) {
             User user = new User();
             user.setLogin(credentials.getUsername());
             this.user = user;
+            return redirectedUri;
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Authentication failed!"));
         }
+        return null;
+    }
 
+    public String logout() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.getExternalContext().invalidateSession();
+
+        return "/home.xhtml?faces-redirect=true";
+    }
+
+    public boolean isAuthRequired(HttpServletRequest request) {
+        String uri = getUri(request);
+        return !uri.startsWith("/login") &&
+            !uri.startsWith("/register") &&
+            !uri.startsWith("/home") &&
+            !uri.startsWith("/javax.faces.resource/");
     }
 
     @Produces
@@ -50,5 +69,13 @@ public class Login implements Serializable {
 
     public boolean isLoggedIn() {
         return user != null;
+    }
+
+    public void setRedirectedUri(HttpServletRequest req) {
+        redirectedUri = req.getRequestURI();
+    }
+
+    private String getUri(HttpServletRequest req) {
+        return req.getRequestURI().substring(req.getContextPath().length());
     }
 }
