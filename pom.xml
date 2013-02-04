@@ -9,8 +9,7 @@
     License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
     OF ANY KIND, either express or implied. See the License for the specific 
     language governing permissions and limitations under the License. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
 
    <groupId>org.eventjuggler</groupId>
@@ -49,6 +48,8 @@
       <version.ear.plugin>2.7</version.ear.plugin>
       <version.compiler.plugin>2.3.1</version.compiler.plugin>
       <version.checkstyle.plugin>2.9.1</version.checkstyle.plugin>
+
+      <jboss.as.deploy.skip>true</jboss.as.deploy.skip>
    </properties>
 
    <scm>
@@ -90,6 +91,12 @@
          <dependency>
             <groupId>org.eventjuggler</groupId>
             <artifactId>eventjuggler-rest</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+         </dependency>
+         <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-scaffold</artifactId>
             <version>${project.version}</version>
             <type>war</type>
          </dependency>
@@ -147,6 +154,8 @@
                <configuration>
                   <!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
                   <failOnMissingWebXml>false</failOnMissingWebXml>
+                  <!-- We want WEB-INF/lib jars without version in the name -->
+                  <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
                </configuration>
             </plugin>
 
@@ -166,6 +175,7 @@
                <configuration>
                   <defaultLibBundleDir>lib</defaultLibBundleDir>
                   <fileNameMapping>no-version</fileNameMapping>
+                  <skinnyWars>true</skinnyWars>
                </configuration>
             </plugin>
 
@@ -191,7 +201,7 @@
                   <configLocation>checkstyle.xml</configLocation>
                   <consoleOutput>true</consoleOutput>
                   <failsOnError>true</failsOnError>
-                  <useFile/>
+                  <useFile />
                </configuration>
                <executions>
                   <execution>
@@ -221,7 +231,7 @@
                               </goals>
                            </pluginExecutionFilter>
                            <action>
-                              <ignore/>
+                              <ignore />
                            </action>
                         </pluginExecution>
                      </pluginExecutions>
@@ -236,14 +246,12 @@
             <artifactId>maven-checkstyle-plugin</artifactId>
          </plugin>
 
-         <!-- The JBoss AS plugin deploys your apps to a local JBoss AS container -->
-         <!-- Disabling it here means that we don't try to deploy this POM! -->
          <plugin>
             <groupId>org.jboss.as.plugins</groupId>
             <artifactId>jboss-as-maven-plugin</artifactId>
             <inherited>true</inherited>
             <configuration>
-               <skip>true</skip>
+               <skip>${jboss.as.deploy.skip}</skip>
             </configuration>
          </plugin>
       </plugins>

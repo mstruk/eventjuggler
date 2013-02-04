@@ -45,6 +45,20 @@
          <scope>provided</scope>
       </dependency>
    </dependencies>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.jboss.as.plugins</groupId>
+            <artifactId>jboss-as-maven-plugin</artifactId>
+            <inherited>true</inherited>
+            <configuration>
+               <skip>${jboss.as.deploy.skip}</skip>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+   
 </project>
 
 
