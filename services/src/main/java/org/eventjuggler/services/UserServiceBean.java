@@ -47,6 +47,9 @@ public class UserServiceBean implements UserService {
 
     @Override
     public void create(User user) {
+        User existing = getUser(user.getLogin());
+        if (existing != null)
+            throw new IllegalArgumentException("User exists already for login: " + user.getLogin());
         em.persist(user);
     }
 
