@@ -86,7 +86,7 @@ public class Register implements Serializable {
         this.password = password;
     }
 
-    public void register() {
+    public String register() {
         User u = new User();
         u.setName(name);
         u.setLastName(lastName);
@@ -95,9 +95,11 @@ public class Register implements Serializable {
 
         try {
             userService.create(u);
+            return "/login.xhtml";
         } catch (IllegalArgumentException e) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("The username is not available. Try choose another."));
         }
+        return null;
     }
 }
