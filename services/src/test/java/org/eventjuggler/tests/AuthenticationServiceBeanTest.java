@@ -3,6 +3,7 @@ package org.eventjuggler.tests;
 import org.eventjuggler.model.User;
 import org.eventjuggler.services.AuthenticationService;
 import org.eventjuggler.services.AuthenticationServiceBean;
+import org.eventjuggler.services.DuplicateLoginException;
 import org.eventjuggler.services.UserService;
 import org.eventjuggler.services.UserServiceBean;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -26,7 +27,7 @@ public class AuthenticationServiceBeanTest {
     @Deployment
     @OverProtocol("Servlet 3.0")
     public static WebArchive createTestArchive() {
-        return JPADeploymentTest.createTestArchive().addClasses(UserService.class, UserServiceBean.class,
+        return JPADeploymentTest.createTestArchive().addClasses(UserService.class, UserServiceBean.class, DuplicateLoginException.class,
             AuthenticationService.class, AuthenticationServiceBean.class, DatabaseTools.class);
     }
 

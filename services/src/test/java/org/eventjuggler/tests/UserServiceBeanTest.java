@@ -12,6 +12,7 @@ import org.eventjuggler.model.Group;
 import org.eventjuggler.model.Role;
 import org.eventjuggler.model.User;
 import org.eventjuggler.model.UserRole;
+import org.eventjuggler.services.DuplicateLoginException;
 import org.eventjuggler.services.UserService;
 import org.eventjuggler.services.UserServiceBean;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -31,7 +32,8 @@ public class UserServiceBeanTest {
     @Deployment
     @OverProtocol("Servlet 3.0")
     public static WebArchive createTestArchive() {
-        return JPADeploymentTest.createTestArchive().addClasses(UserService.class, UserServiceBean.class, DatabaseTools.class);
+        return JPADeploymentTest.createTestArchive().addClasses(UserService.class, UserServiceBean.class,
+            DuplicateLoginException.class, DatabaseTools.class);
     }
 
     @EJB
@@ -70,6 +72,7 @@ public class UserServiceBeanTest {
     public void createUser() {
         User user = new User();
         user.setLogin("login");
+        user.setPassword("password");
         service.create(user);
     }
 
