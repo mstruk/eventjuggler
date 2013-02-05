@@ -36,6 +36,6 @@ public interface DataService {
 
     void importData(String data);
 
-    List<Event> stealFromMeetup(String category, String pages, String meetupApiKey);
+    List<Event> importDataFromMeetup(String category, String pages, String meetupApiKey);
 
 }

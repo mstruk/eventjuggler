@@ -66,15 +66,16 @@ public class DataResource {
     }
 
     @GET
-    @Path("/steal")
-    public List<Event> stealFromMeetup(@QueryParam("category") String category, @QueryParam("page") String page,
+    @Path("/meetup")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> importDataFromMeetup(@QueryParam("category") String category, @QueryParam("page") String page,
             @QueryParam("key") String key) {
-        List<org.eventjuggler.model.Event> events = dataService.stealFromMeetup(category, page, key);
+        List<org.eventjuggler.model.Event> events = dataService.importDataFromMeetup(category, page, key);
 
-        List<Event> l = new LinkedList<Event>();
+        List<String> titles = new LinkedList<String>();
         for (org.eventjuggler.model.Event e : events) {
-            l.add(new Event(e));
+            titles.add(e.getTitle());
         }
-        return l;
+        return titles;
     }
 }

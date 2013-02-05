@@ -104,10 +104,10 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Event> stealFromMeetup(String category, String page, String key) {
-        MeetupThief thief = new MeetupThief(em);
+    public List<Event> importDataFromMeetup(String category, String page, String key) {
+        Meetup meetup = new Meetup(em);
         try {
-            return thief.steal(category, page, key);
+            return meetup.importData(category, page, key);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

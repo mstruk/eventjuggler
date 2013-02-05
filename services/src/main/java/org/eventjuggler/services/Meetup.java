@@ -38,42 +38,20 @@ import org.json.JSONObject;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
+ *
+ * TODO Set missing fields when importing from Meetup
  */
-public class MeetupThief {
+public class Meetup {
 
     private EntityManager em;
 
-    public MeetupThief(EntityManager em) {
+    public Meetup(EntityManager em) {
         this.em = em;
     }
 
-    public static void main(String[] args) throws Exception {
-
-        String key = "36481225492e147265b6652452d767";
-        String category = "34";
-        String page = "1";
-
+    public List<Event> importData(String category, String page, String key) throws Exception {
         URL openEventsUrl = new URL("https://api.meetup.com/2/open_events?key=" + key + "&category=" + category + "&page="
                 + page);
-
-        JSONObject o = get(openEventsUrl);
-        JSONArray eventsJson = o.getJSONArray("results");
-        for (int i = 0; i < eventsJson.length(); i++) {
-            JSONObject eventJson = eventsJson.getJSONObject(i);
-
-            String groupId = eventJson.getJSONObject("group").getString("id");
-
-            URL groupUrl = new URL("https://api.meetup.com/2/groups?key=" + key + "&group_id=" + groupId);
-            JSONObject groupJson = get(groupUrl).getJSONArray("results").getJSONObject(0);
-
-            eventJson.put("group", groupJson);
-
-            System.out.println(groupJson.opt("topics"));
-        }
-    }
-
-    public List<Event> steal(String category, String page, String key) throws Exception {
-        URL openEventsUrl = new URL("https://api.meetup.com/2/open_events?key=" + key + "&category=" + category + "&page=" + page);
 
         JSONObject o = get(openEventsUrl);
         JSONArray eventsJson = o.getJSONArray("results");
@@ -91,7 +69,9 @@ public class MeetupThief {
             eventJson.put("group", groupJson);
 
             Event event = createEvent(eventJson);
-            events.add(event);
+            if (event != null) {
+                events.add(event);
+            }
         }
 
         return events;
@@ -122,12 +102,12 @@ public class MeetupThief {
         List<Event> r = em.createQuery("from Event e where e.title = :title", Event.class)
                 .setParameter("title", j.getString("name")).getResultList();
         if (!r.isEmpty()) {
-            return r.get(0);
+            return null;
         }
 
         Event e = new Event();
 
-        // TODO e.setAttendance();
+        // e.setAttendance();
         e.setDescription(j.optString("description"));
 
         if (j.getJSONObject("group").optJSONObject("group_photo") != null) {
@@ -135,15 +115,13 @@ public class MeetupThief {
         }
 
         e.setLocation(createAddress(j.optJSONObject("venue")));
-        // TODO e.setOrganizer();
+        // e.setOrganizer();
         e.setOrganizerGroup(createGroup(j.getJSONObject("group")));
         e.setTags(createTags(j));
         e.setTime(j.getLong("time"));
         e.setTitle(j.getString("name"));
 
         em.persist(e);
-
-        System.out.println("Created event: " + e.getTitle());
 
         return e;
     }
@@ -173,15 +151,13 @@ public class MeetupThief {
 
         Group g = new Group();
         g.setDescription(j.optString("description"));
-        // TODO g.setImageId();
+        // g.setImageId();
         g.setName(j.getString("name"));
-        // TODO g.setLocation();
-        // TODO g.setMembers();
-        // TODO g.setOwner();
+        // g.setLocation();
+        // g.setMembers();
+        // g.setOwner();
 
         em.persist(g);
-
-        System.out.println("Created group: " + g.getName());
 
         return g;
     }
@@ -200,17 +176,15 @@ public class MeetupThief {
         Address a = new Address();
         a.setCity(j.optString("city"));
         a.setCountry(j.optString("country"));
-        // TODO a.setImageId();
+        // a.setImageId();
         a.setLatitude(j.optString("lat"));
         a.setLongitude(j.optString("lon"));
         a.setName(j.getString("name"));
-        // TODO a.setStreet();
-        // TODO a.setStreetNum();
+        // a.setStreet();
+        // a.setStreetNum();
         a.setZip(j.optString("zip"));
 
         em.persist(a);
-
-        System.out.println("Created address: " + a.getName());
 
         return a;
     }
