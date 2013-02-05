@@ -49,7 +49,7 @@ public class UserServiceBean implements UserService {
     public void create(User user) {
         User existing = getUser(user.getLogin());
         if (existing != null)
-            throw new IllegalArgumentException("User exists already for login: " + user.getLogin());
+            throw new DuplicateLoginException("User exists already for login: " + user.getLogin());
         em.persist(user);
     }
 

@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.eventjuggler.model.User;
+import org.eventjuggler.services.DuplicateLoginException;
 import org.eventjuggler.services.UserService;
 
 /**
@@ -96,9 +97,9 @@ public class Register implements Serializable {
         try {
             userService.create(u);
             return "/login.xhtml";
-        } catch (IllegalArgumentException e) {
+        } catch (DuplicateLoginException e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("The username is not available. Try choose another."));
+                new FacesMessage("The username is already taken. Try choose another."));
         }
         return null;
     }
