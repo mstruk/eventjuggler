@@ -29,4 +29,12 @@ public class Credentials implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean isUsernameEmpty() {
+        return username == null || username.trim().length() == 0;
+    }
+
+    public boolean isPasswordEmpty() {
+        return password == null || password.trim().length() == 0;
+    }
 }
