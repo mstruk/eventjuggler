@@ -61,10 +61,13 @@ public class Login implements Serializable {
 
     public boolean isAuthRequired(HttpServletRequest request) {
         String uri = getUri(request);
-        return !uri.startsWith("/login") &&
+        boolean authRequired = !uri.equals("/") &&
+            !uri.startsWith("/login") &&
+            !uri.startsWith("/index") &&
             !uri.startsWith("/register") &&
             !uri.startsWith("/home") &&
             !uri.startsWith("/javax.faces.resource/");
+        return authRequired;
     }
 
     @Produces
