@@ -46,6 +46,11 @@
       </dependency>
 
       <dependency>
+         <groupId>org.eventjuggler</groupId>
+         <artifactId>eventjuggler-common</artifactId>
+      </dependency>
+
+      <dependency>
          <groupId>org.dbunit</groupId>
          <artifactId>dbunit</artifactId>
          <exclusions>
@@ -69,6 +74,17 @@
          <artifactId>json</artifactId>
       </dependency>
 
+      <dependency>
+         <groupId>org.jboss</groupId>
+         <artifactId>jboss-common-core</artifactId>
+      </dependency>
+
+      <dependency>
+         <groupId>javax.enterprise</groupId>
+         <artifactId>cdi-api</artifactId>
+         <scope>provided</scope>
+      </dependency>
+
       <!-- Needed for running tests (you may also use TestNG) -->
       <dependency>
          <groupId>junit</groupId>
@@ -89,10 +105,7 @@
          <artifactId>arquillian-protocol-servlet</artifactId>
          <scope>test</scope>
       </dependency>
-      <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-common</artifactId>
-      </dependency>
+
    </dependencies>
 
    <profiles>

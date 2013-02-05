@@ -1,6 +1,7 @@
 package org.eventjuggler.web;
 
 import org.eventjuggler.model.User;
+import org.eventjuggler.services.PasswordHashService;
 import org.eventjuggler.services.UserService;
 
 import javax.annotation.PostConstruct;
@@ -18,18 +19,27 @@ public class Initialization {
     @Inject
     private UserService userService;
 
+    @Inject
+    private PasswordHashService passwordHashService;
+
     @PostConstruct
     public void initialize() {
+
+        passwordHashService.init();
 
         User user = userService.getUser("test");
         if (user == null) {
             user = new User();
             user.setLogin("test");
-            user.setPassword("tester");
+            user.setPassword(hash("tester"));
             user.setDescription("Test user");
             user.setName("John");
             user.setLastName("Doe");
             userService.create(user);
         }
+    }
+
+    private String hash(String password) {
+        return passwordHashService.hash(password);
     }
 }

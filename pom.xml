@@ -48,7 +48,7 @@
       <version.ear.plugin>2.7</version.ear.plugin>
       <version.compiler.plugin>2.3.1</version.compiler.plugin>
       <version.checkstyle.plugin>2.9.1</version.checkstyle.plugin>
-
+      <version.jboss.common.core>2.2.20.GA</version.jboss.common.core>
       <jboss.as.deploy.skip>true</jboss.as.deploy.skip>
    </properties>
 
@@ -127,6 +127,17 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20090211</version>
+         </dependency>
+         <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-common-core</artifactId>
+            <version>${version.jboss.common.core}</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>org.jboss.logging</groupId>
+                  <artifactId>jboss-logging-spi</artifactId>
+               </exclusion>
+            </exclusions>
          </dependency>
       </dependencies>
    </dependencyManagement>

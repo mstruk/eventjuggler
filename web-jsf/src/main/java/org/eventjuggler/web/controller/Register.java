@@ -6,10 +6,12 @@ import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eventjuggler.model.User;
 import org.eventjuggler.services.DuplicateLoginException;
+import org.eventjuggler.services.PasswordHashService;
 import org.eventjuggler.services.UserService;
 
 /**

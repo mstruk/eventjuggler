@@ -2,15 +2,16 @@ package org.eventjuggler.web.controller;
 
 import org.eventjuggler.model.User;
 import org.eventjuggler.services.AuthenticationService;
+import org.eventjuggler.services.PasswordHashService;
 import org.eventjuggler.web.model.Credentials;
+import org.eventjuggler.web.model.Session;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Produces;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author <a href="mailto:marko.strukelj@gmail.com">Marko Strukelj</a>
  */
-@SessionScoped
+@ApplicationScoped
 @Named
 public class Login implements Serializable {
 
@@ -29,27 +30,33 @@ public class Login implements Serializable {
     @Inject
     private Credentials credentials;
 
+    @Inject
+    private Session session;
+
+    @Inject
+    private PasswordHashService passwordHashService;
+
     @EJB
     private AuthenticationService authenticationService;
 
-    private User user;
-
-    private String redirectedUri;
-
     public void login() {
-        boolean success = authenticationService.login(credentials.getUsername(), credentials.getPassword());
+        boolean success = authenticationService.login(credentials.getUsername(), hash(credentials.getPassword()));
         if (success) {
             User user = new User();
             user.setLogin(credentials.getUsername());
-            this.user = user;
+            session.setUser(user);
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect(redirectedUri);
+                FacesContext.getCurrentInstance().getExternalContext().redirect(session.getRedirectedUri());
             } catch (IOException e) {
                 log.log(Level.SEVERE, "Failed to redirect back from login", e);
             }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Authentication failed!"));
         }
+    }
+
+    private String hash(String password) {
+        return passwordHashService.hash(password);
     }
 
     public String logout() {
@@ -70,18 +77,12 @@ public class Login implements Serializable {
         return authRequired;
     }
 
-    @Produces
-    @Named("currentUser")
-    public User getCurrentUser() {
-        return user;
-    }
-
     public boolean isLoggedIn() {
-        return user != null;
+        return session.getCurrentUser() != null;
     }
 
     public void setRedirectedUri(HttpServletRequest req) {
-        redirectedUri = req.getRequestURI();
+        session.setRedirectedUri(req.getRequestURI());
     }
 
     private String getUri(HttpServletRequest req) {
