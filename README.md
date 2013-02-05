@@ -80,6 +80,22 @@ Until we have some sample data of our own it is possible to import data from Mee
 this you have to sign-up to Meetup and get an api key from http://www.meetup.com/meetup_api/key/. 
 You'll also need the id of the category of events you want to import (34 is tech), the list of
 categories can be retrieved from http://api.meetup.com/2/categories?key=<api key>. After importing
-an array containing the title of the imported events is returned. 
+an array containing the titles of the imported events is returned. 
 
 curl 'http://localhost:8080/eventjuggler-rest/data/meetup&key=<api key>&category=<category>&page=<number of events>'
+
+
+Functional Tests
+================
+
+There are some functional tests that runs Arquillian. These tests require JBoss AS to run and are not 
+executed by default.
+
+To run the tests with a managed JBoss AS, use the following command:
+
+export JBOSS_HOME=<JBOSS HOME>
+mvn -Parq-jbossas-managed test
+
+To run with a remote JBoss AS, start JBoss AS before running the tests, and use this command: 
+
+mvn -Parq-jbossas-remote test
