@@ -30,11 +30,21 @@ function EventMineCtrl($scope, Event) {
     $scope.events = Event.getEventsUser();
 }
 
-function EventDetailCtrl($scope, $routeParams, Event) {
+function EventDetailCtrl($scope, $routeParams, Event, User) {
     $scope.event = Event.getEvent($routeParams.eventId);
     
     $scope.attend = function() {
-        Event.attend($scope.event.id, function() { alert("attending"); });
+        Event.attend($scope.event.id, function() {
+            $scope.event = Event.getEvent($routeParams.eventId);
+            alert("attending");
+        });
+    };
+
+    $scope.resign = function() {
+        Event.resign($scope.event.id, function() {
+            $scope.event = Event.getEvent($routeParams.eventId);
+            alert("resigned");
+        });
     };
 }
 
@@ -61,6 +71,8 @@ function UserCtrl($scope, User) {
             $scope.user = user;
             delete $scope.username;
             delete $scope.password;
+        }, function() {
+            alert("failed to login");
         });
     };
 
@@ -72,8 +84,12 @@ function UserCtrl($scope, User) {
 
 function RegisterCtrl($scope, User) {
     $scope.user = {};
-    
+
     $scope.register = function() {
-        User.register($scope.user, function() { alert("registered"); },  function() { alert("failed to register"); });
+        User.register($scope.user, function() {
+            alert("registered");
+        }, function() {
+            alert("failed to register");
+        });
     };
 }

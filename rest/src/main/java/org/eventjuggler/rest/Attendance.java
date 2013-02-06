@@ -32,10 +32,21 @@ class Attendance {
     private String description;
     private String imageId;
     private String lastName;
+    private String login;
     private String name;
     private String response;
 
     public Attendance() {
+    }
+
+    public Attendance(org.eventjuggler.model.RSVP rsvp) {
+        description = rsvp.getUser().getDescription();
+        imageId = rsvp.getUser().getImageId();
+
+        response = ObjectFactory.createString(rsvp.getResponse());
+        lastName = rsvp.getUser().getLastName();
+        login = rsvp.getUser().getLogin();
+        name = rsvp.getUser().getName();
     }
 
     public String getDescription() {
@@ -48,6 +59,10 @@ class Attendance {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getLogin() {
+        return login;
     }
 
     public String getName() {

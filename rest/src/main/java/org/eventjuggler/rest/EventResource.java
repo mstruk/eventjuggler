@@ -98,12 +98,6 @@ public class EventResource {
         return events;
     }
 
-    @GET
-    @Path("/{id}/rsvp")
-    public List<Attendance> getRSVP(@PathParam("id") long eventId) {
-        return ObjectFactory.createAttendance(eventService.getEvent(eventId).getAttendance());
-    }
-
     @PUT
     @Path("/")
     public void createEvent(Event event) {

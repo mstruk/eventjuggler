@@ -21,31 +21,10 @@
  */
 package org.eventjuggler.rest;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
 class ObjectFactory {
-
-    public static List<Attendance> createAttendance(List<org.eventjuggler.model.RSVP> rsvp) {
-        List<Attendance> l = new LinkedList<Attendance>();
-        for (org.eventjuggler.model.RSVP r : rsvp) {
-            l.add(createAttendance(r));
-        }
-        return l;
-    }
-
-    public static Attendance createAttendance(org.eventjuggler.model.RSVP rsvp) {
-        Attendance a = new Attendance();
-        a.setResponse(createString(rsvp.getResponse()));
-        a.setDescription(rsvp.getUser().getDescription());
-        a.setImageId(rsvp.getUser().getImageId());
-        a.setLastName(rsvp.getUser().getLastName());
-        a.setName(rsvp.getUser().getName());
-        return a;
-    }
 
     public static String createString(Enum<?> e) {
         return e.toString().toLowerCase().replace('_', ' ');

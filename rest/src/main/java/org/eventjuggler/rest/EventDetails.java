@@ -21,7 +21,12 @@
  */
 package org.eventjuggler.rest;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.eventjuggler.model.RSVP;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
@@ -31,6 +36,7 @@ class EventDetails extends Event {
 
     private Address location;
     private Group organizerGroup;
+    private List<Attendance> attendance;
 
     public EventDetails() {
     }
@@ -40,6 +46,15 @@ class EventDetails extends Event {
 
         location = new Address(event.getLocation());
         organizerGroup = new Group(event.getOrganizerGroup());
+
+        attendance = new LinkedList<Attendance>();
+        for (RSVP r : event.getAttendance()) {
+            attendance.add(new Attendance(r));
+        }
+    }
+
+    public List<Attendance> getAttendance() {
+        return attendance;
     }
 
     public Address getLocation() {

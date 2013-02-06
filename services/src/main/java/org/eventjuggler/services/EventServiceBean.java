@@ -103,10 +103,11 @@ public class EventServiceBean implements EventService {
             RSVP r = itr.next();
             if (r.getUser().getId().equals(user.getId())) {
                 itr.remove();
-                update(event);
                 em.remove(r);
             }
         }
+
+        update(event);
     }
 
 }
