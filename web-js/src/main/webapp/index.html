@@ -8,6 +8,7 @@
 <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet">
 
 <script src="lib/angular/angular.js"></script>
+<script src="lib/angular/angular-cookies.js"></script>
 <script src="lib/angular/angular-resource.js"></script>
 
 <script src="lib/jquery/jquery-1.9.0.js"></script>
@@ -19,28 +20,52 @@
 
 <style type="text/css">
 body {
-   padding-top: 60px;
-   padding-bottom: 40px;
+	padding-top: 60px;
+	padding-bottom: 40px;
 }
 </style>
 </head>
-<body>
+<body ng-controller="UserCtrl">
    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
          <div class="container">
-            <div class="nav-collapse collapse">
-               <ul class="nav">
-                  <li><a href="#/events">Explore events</a></li>
-                  <li><a href="#/events/mine">Your events</a></li>
-                  <li><a href="#/events/create">Create event</a></li>
-               </ul>
-               <form class="navbar-form pull-right" ng-controller="EventSearchCtrl">
-                  <input class="span2" id="searchEvents" type="text" placeholder="Search events" ng-model="query"></input>
-                  <button class="btn" type="button" ng-click="search()">
-                     <i class="icon-search"></i>
-                  </button>
-               </form>
-            </div>
+            <ul class="nav">
+               <li>
+                  <a href="#/events">Explore events</a>
+               </li>
+               <li ng-show="user != null">
+                  <a href="#/events/mine">Your events</a>
+               </li>
+               <li>
+                  <a href="#/events/create">Create event</a>
+               </li>
+            </ul>
+            <ul class="nav pull-right">
+               <li>
+                  <form class="navbar-form" ng-controller="EventSearchCtrl">
+                     <input class="span2" id="searchEvents" type="text" placeholder="Search events" ng-model="query"></input>
+                     <button class="btn" type="button" ng-click="search()">
+                        <i class="icon-search"></i>
+                     </button>
+                  </form>
+               </li>
+               <li ng-show="!user">
+                  <form class="navbar-form">
+                     <input class="span2" type="text" placeholder="Username" ng-model="username"></input>
+                     <input class="span2" type="text" placeholder="Password" ng-model="password"></input>
+                     <button class="btn" type="button" ng-click="login()">Login</button>
+                  </form>
+               </li>
+               <li ng-show="!user">
+                  <a href="#/register">Register</a>
+               </li>
+               <li ng-show="user">
+                  <a>{{user.login}}</a>
+               </li>
+               <li ng-show="user != null">
+                  <a ng-click="logout()">Logout</a>
+               </li>
+            </ul>
          </div>
       </div>
    </div>

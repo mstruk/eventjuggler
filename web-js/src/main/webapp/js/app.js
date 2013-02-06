@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('eventjuggler', [ 'eventjugglerServices' ]).config([ '$routeProvider', function($routeProvider) {
+angular.module('eventjuggler', [ 'eventjugglerServices', 'ngCookies' ]).config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/events', {
         templateUrl : 'partials/event-list.html',
         controller : EventListCtrl
@@ -13,6 +13,9 @@ angular.module('eventjuggler', [ 'eventjugglerServices' ]).config([ '$routeProvi
     }).when('/events/:eventId', {
         templateUrl : 'partials/event-detail.html',
         controller : EventDetailCtrl
+    }).when('/register', {
+        templateUrl : 'partials/register.html',
+        controller : RegisterCtrl
     }).otherwise({
         redirectTo : '/events'
     });

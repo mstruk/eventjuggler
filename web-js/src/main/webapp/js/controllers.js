@@ -1,50 +1,20 @@
 'use strict';
 
 function EventListCtrl($scope, Event, $routeParams) {
-    var first = 0;
-    var max = 10;
-    var loading = false;
-
-    $scope.events = [];
-
-    $scope.loadMore = function() {
-        if (loading)
-            return;
-
-        loading = true;
-
-        var parameters = {
-            "first" : first,
-            "max" : max,
-            "sort" : "time"
-        };
-        
-        if ( $routeParams.query ) {
-            parameters.query = $routeParams.query;
-        }
-
-        Event.query(parameters, function(data) {
-            if (data.length == 0) {
-                return;
+    var loadUntilPageIsFull = function(events) {
+        $scope.events = events;
+        $scope.$watch('events', function() {
+            if ($("body").height() < $(window).height()) {
+                $scope.events.loadNext(loadUntilPageIsFull);
             }
-
-            $scope.events = $scope.events.concat(data);
-            first += max;
-            loading = false;
-
-            $scope.$watch('events', function() {
-                if ($("body").height() < $(window).height()) {
-                    $scope.loadMore();
-                }
-            });
         });
     };
 
-    $scope.loadMore();
+    $scope.events = Event.getEvents(loadUntilPageIsFull);
 
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-            $scope.loadMore();
+            $scope.events.loadNext();
         }
     });
 }
@@ -57,18 +27,15 @@ function EventSearchCtrl($scope, Event, $location) {
 }
 
 function EventMineCtrl($scope, Event) {
-    $scope.events = Event.query({
-        paramDefaults : {
-            max : 1
-        },
-        params : $routeParams
-    });
+    $scope.events = Event.getEventsUser();
 }
 
 function EventDetailCtrl($scope, $routeParams, Event) {
-    $scope.event = Event.get({
-        eventId : $routeParams.eventId
-    });
+    $scope.event = Event.getEvent($routeParams.eventId);
+    
+    $scope.attend = function() {
+        Event.attend($scope.event.id, function() { alert("attending"); });
+    };
 }
 
 function EventCreateCtrl($scope, Event, $location) {
@@ -81,5 +48,32 @@ function EventCreateCtrl($scope, Event, $location) {
         Event.put($scope.event, function() {
             $location.path("#/events");
         });
+    };
+}
+
+function UserCtrl($scope, User) {
+    User.getUser(function(user) {
+        $scope.user = user;
+    });
+
+    $scope.login = function() {
+        User.login($scope.username, $scope.password, function(user) {
+            $scope.user = user;
+            delete $scope.username;
+            delete $scope.password;
+        });
+    };
+
+    $scope.logout = function() {
+        User.logout();
+        delete $scope.user;
+    };
+}
+
+function RegisterCtrl($scope, User) {
+    $scope.user = {};
+    
+    $scope.register = function() {
+        User.register($scope.user, function() { alert("registered"); },  function() { alert("failed to register"); });
     };
 }
