@@ -30,7 +30,7 @@ public class Event {
 
     private long time;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     private List<RSVP> attendance;
 
     private String title;
