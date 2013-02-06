@@ -2,6 +2,8 @@
 <h2>{{event.time | date:'mediumDate'}}</h2>
 <h3>{{event.time | date:'shortTime'}}</h3>
 
+<p>{{event.attendingCount}} attending</p>
+
 <p ng-show="user && !event.attending"><button class="btn" ng-click="attend()">Attend</button></p>
 <p ng-show="user && event.attending"><button class="btn" ng-click="resign()">Resign</button></p>
 
