@@ -22,12 +22,16 @@
 package org.eventjuggler.services;
 
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.eventjuggler.model.Event;
+import org.eventjuggler.model.RSVP;
+import org.eventjuggler.model.RSVP.Response;
+import org.eventjuggler.model.User;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
@@ -54,6 +58,13 @@ public class EventServiceBean implements EventService {
     }
 
     @Override
+    public List<Event> getEvents(User user) {
+        return em.createQuery("select e from Event e join e.attendance a where a.user = :user", Event.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
+    @Override
     public void remove(Event event) {
         em.remove(em.merge(event));
     }
@@ -66,6 +77,36 @@ public class EventServiceBean implements EventService {
     @Override
     public EventQueryImpl query() {
         return new EventQueryImpl(em);
+    }
+
+    @Override
+    public RSVP attend(long eventId, User user) {
+        Event event = getEvent(eventId);
+
+        RSVP rsvp = new RSVP();
+        rsvp.setResponse(Response.WILL_ATTEND);
+        rsvp.setUser(user);
+        em.persist(rsvp);
+
+        event.getAttendance().add(rsvp);
+        update(event);
+
+        return rsvp;
+    }
+
+    @Override
+    public void resign(long eventId, User user) {
+        Event event = getEvent(eventId);
+
+        ListIterator<RSVP> itr = event.getAttendance().listIterator();
+        while (itr.hasNext()) {
+            RSVP r = itr.next();
+            if (r.getUser().getId().equals(user.getId())) {
+                itr.remove();
+                update(event);
+                em.remove(r);
+            }
+        }
     }
 
 }
