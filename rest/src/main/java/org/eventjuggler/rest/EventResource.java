@@ -45,8 +45,6 @@ import org.eventjuggler.services.UserService;
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
 @Path("/event")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class EventResource {
 
     @Inject
@@ -60,12 +58,14 @@ public class EventResource {
 
     @GET
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public EventDetails getEvent(@PathParam("id") long eventId) {
         return new EventDetails(eventService.getEvent(eventId));
     }
 
     @GET
     @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Event> getEvents(@QueryParam("first") Integer firstResult, @QueryParam("max") Integer maxResult,
             @QueryParam("query") String query, @QueryParam("tags") String tags, @QueryParam("sort") String sortBy,
             @QueryParam("order") String order) {
@@ -100,6 +100,7 @@ public class EventResource {
 
     @PUT
     @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
     public void createEvent(Event event) {
         eventService.create(event.toInternal());
     }
@@ -112,6 +113,7 @@ public class EventResource {
 
     @GET
     @Path("/{id}/rsvp")
+    @Produces(MediaType.APPLICATION_JSON)
     public void createRSVP(@PathParam("id") long eventId, @QueryParam("username") String username,
             @QueryParam("password") String password) {
         if (authenticationService.login(username, password)) {
@@ -121,6 +123,7 @@ public class EventResource {
 
     @GET
     @Path("/mine")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Event> getEvents(@QueryParam("username") String username, @QueryParam("password") String password) {
         if (authenticationService.login(username, password)) {
             List<Event> events = new LinkedList<Event>();

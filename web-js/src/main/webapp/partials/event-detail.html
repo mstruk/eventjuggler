@@ -4,8 +4,8 @@
 
 <p>{{event.attendingCount}} attending</p>
 
-<p ng-show="user && !event.attending"><button class="btn" ng-click="attend()">Attend</button></p>
-<p ng-show="user && event.attending"><button class="btn" ng-click="resign()">Resign</button></p>
+<p ng-show="user.loggedIn && !event.attending"><button class="btn" ng-click="attend()">Attend</button></p>
+<p ng-show="user.loggedIn && event.attending"><button class="btn" ng-click="resign()">Resign</button></p>
 
 <p><img ng-src="{{event.imageId}}"></img></p>
 <div ng-bind-html-unsafe="event.description"></div>

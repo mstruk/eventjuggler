@@ -1,32 +1,50 @@
-<form novalidate class="form-horizontal">
+<div class="alert alert-block alert-success" ng-show="registered">
+   <p>User registered!</p>
+   <p><a href="#loginModal" data-toggle="modal" class="btn">Login</a></p>
+</div>
+<div class="alert alert-block alert-error" ng-show="failed">Failed to register user!</div>
+
+<form class="form-horizontal" ng-submit="register()" name="registerForm" ng-show="!registered">
+
    <div class="control-group">
-      <label class="control-label" for="Login">Login</label>
+      <label class="control-label" for="email">E-mail</label>
       <div class="controls">
-         <input type="text" ng-model="user.login" placeholder="Login">
-      </div>
-   </div>
-   <div class="control-group">
-      <label class="control-label" for="Password">Password</label>
-      <div class="controls">
-         <input type="text" ng-model="user.password" placeholder="Password">
+         <input type="text" id="email" ng-model="user.login" placeholder="E-mail" required>
       </div>
    </div>
 
    <div class="control-group">
-      <label class="control-label" for="Name">Name</label>
+      <label class="control-label" for="password">Password</label>
       <div class="controls">
-         <input type="text" ng-model="user.name" placeholder="Name">
+         <input type="password" id="password" ng-model="user.password" placeholder="Password" required>
       </div>
    </div>
+
+   <div class="control-group">
+      <label class="control-label" for="firstName">First name</label>
+      <div class="controls">
+         <input type="text" id="firstName" ng-model="user.name" placeholder="First name">
+      </div>
+   </div>
+
+   <div class="control-group">
+      <label class="control-label" for="lastName">Last name</label>
+      <div class="controls">
+         <input type="text" id="lastName" ng-model="user.lastName" placeholder="Last name">
+      </div>
+   </div>
+
    <div class="control-group">
       <label class="control-label" for="description">Description</label>
       <div class="controls">
-         <textarea ng-model="user.description" placeholder="Description"></textarea>
+         <textarea id="description" ng-model="user.description" placeholder="Description"></textarea>
       </div>
    </div>
+
    <div class="control-group">
       <div class="controls">
-         <button type="submit" class="btn btn-primary" ng-click="register()">Register</button>
+         <button type="submit" class="btn btn-primary">Register</button>
       </div>
    </div>
+
 </form>

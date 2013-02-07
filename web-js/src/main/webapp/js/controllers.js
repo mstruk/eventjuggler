@@ -1,16 +1,14 @@
 'use strict';
 
 function EventListCtrl($scope, Event, $routeParams) {
-    var loadUntilPageIsFull = function(events) {
+    $scope.events = Event.getEvents(function loadUntilPageIsFull(events) {
         $scope.events = events;
         $scope.$watch('events', function() {
             if ($("body").height() < $(window).height()) {
                 $scope.events.loadNext(loadUntilPageIsFull);
             }
         });
-    };
-
-    $scope.events = Event.getEvents(loadUntilPageIsFull);
+    });
 
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
@@ -32,64 +30,37 @@ function EventMineCtrl($scope, Event) {
 
 function EventDetailCtrl($scope, $routeParams, Event, User) {
     $scope.event = Event.getEvent($routeParams.eventId);
-    
+
     $scope.attend = function() {
         Event.attend($scope.event.id, function() {
             $scope.event = Event.getEvent($routeParams.eventId);
-            alert("attending");
         });
     };
 
     $scope.resign = function() {
         Event.resign($scope.event.id, function() {
             $scope.event = Event.getEvent($routeParams.eventId);
-            alert("resigned");
-        });
-    };
-}
-
-function EventCreateCtrl($scope, Event, $location) {
-    $scope.event = {
-        title : "",
-        description : ""
-    };
-
-    $scope.save = function() {
-        Event.put($scope.event, function() {
-            $location.path("#/events");
         });
     };
 }
 
 function UserCtrl($scope, User) {
-    User.getUser(function(user) {
-        $scope.user = user;
-    });
-
+    $scope.user = User;
+    
     $scope.login = function() {
-        User.login($scope.username, $scope.password, function(user) {
-            $scope.user = user;
-            delete $scope.username;
-            delete $scope.password;
-        }, function() {
-            alert("failed to login");
-        });
-    };
+        $scope.failed = false;
 
-    $scope.logout = function() {
-        User.logout();
-        delete $scope.user;
+        User.login(function() { $('#loginModal').modal('hide'); }, function() { $scope.failed = true; });
     };
 }
 
 function RegisterCtrl($scope, User) {
-    $scope.user = {};
+    $scope.user = { login : User.username, password : User.password };
 
     $scope.register = function() {
-        User.register($scope.user, function() {
-            alert("registered");
-        }, function() {
-            alert("failed to register");
-        });
+        $scope.registered = false;
+        $scope.failed = false;
+        
+        User.register($scope.user, function() { $scope.registered = true; }, function() { $scope.failed = true; });
     };
 }
