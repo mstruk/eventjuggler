@@ -44,7 +44,7 @@ public interface UserService {
 
     List<Group> getGroups(User user);
 
-    User getUser(String id);
+    User getUser(String login);
 
     UserRole getUserRole(Long id);
 

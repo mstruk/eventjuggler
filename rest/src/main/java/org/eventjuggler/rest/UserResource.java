@@ -21,40 +21,46 @@
  */
 package org.eventjuggler.rest;
 
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import org.eventjuggler.services.AuthenticationService;
+import org.eventjuggler.services.UserService;
+
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-class ObjectFactory {
+@Path("/user")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class UserResource {
 
-    public static String createString(Enum<?> e) {
-        return e.toString().toLowerCase().replace('_', ' ');
-    }
+    @Inject
+    private AuthenticationService authenticationService;
 
-    public static String[] createTags(String tags) {
-        if (tags == null) {
+    @Inject
+    private UserService userService;
+
+    @GET
+    @Path("/")
+    public User getUser(@QueryParam("username") String username, @QueryParam("password") String password) {
+        if (authenticationService.login(username, password)) {
+            return new User(userService.getUser(username));
+        } else {
             return null;
         }
-
-        String[] t = tags.split(",");
-        for (int i = 0; i < t.length; i++) {
-            t[i] = t[i].trim();
-        }
-        return t;
     }
 
-    public static String createTags(String[] tags) {
-        if (tags == null) {
-            return null;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < tags.length; i++) {
-            if (i > 0) {
-                sb.append(", ");
-            }
-            sb.append(tags[i]);
-        }
-        return sb.toString();
+    @POST
+    @Path("/")
+    public void register(User user) {
+        userService.create(user.toInternal());
     }
 
 }

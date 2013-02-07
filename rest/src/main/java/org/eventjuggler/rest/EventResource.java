@@ -35,18 +35,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.eventjuggler.services.AuthenticationService;
+import org.eventjuggler.services.EventProperty;
 import org.eventjuggler.services.EventQuery;
 import org.eventjuggler.services.EventService;
-import org.eventjuggler.services.EventProperty;
 import org.eventjuggler.services.UserService;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
 @Path("/event")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class EventResource {
+
+    @Inject
+    private AuthenticationService authenticationService;
 
     @Inject
     private EventService eventService;
@@ -56,12 +58,14 @@ public class EventResource {
 
     @GET
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public EventDetails getEvent(@PathParam("id") long eventId) {
         return new EventDetails(eventService.getEvent(eventId));
     }
 
     @GET
     @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Event> getEvents(@QueryParam("first") Integer firstResult, @QueryParam("max") Integer maxResult,
             @QueryParam("query") String query, @QueryParam("tags") String tags, @QueryParam("sort") String sortBy,
             @QueryParam("order") String order) {
@@ -94,14 +98,9 @@ public class EventResource {
         return events;
     }
 
-    @GET
-    @Path("/{id}/rsvp")
-    public List<Attendance> getRSVP(@PathParam("id") long eventId) {
-        return ObjectFactory.createAttendance(eventService.getEvent(eventId).getAttendance());
-    }
-
     @PUT
     @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
     public void createEvent(Event event) {
         eventService.create(event.toInternal());
     }
@@ -112,22 +111,37 @@ public class EventResource {
         eventService.remove(eventService.getEvent(eventId));
     }
 
-    @PUT
+    @GET
     @Path("/{id}/rsvp")
-    public void createRSVP(@PathParam("id") long eventId, String response) {
-        // TODO
+    @Produces(MediaType.APPLICATION_JSON)
+    public void createRSVP(@PathParam("id") long eventId, @QueryParam("username") String username,
+            @QueryParam("password") String password) {
+        if (authenticationService.login(username, password)) {
+            eventService.attend(eventId, userService.getUser(username));
+        }
     }
 
-    // @Context
-    // private SecurityContext securityContext;
-    //
-    // private User getUser() {
-    // if (securityContext.getUserPrincipal() == null) {
-    // return null;
-    // }
-    //
-    // String id = securityContext.getUserPrincipal().getName();
-    // return userService.getUser(id);
-    // }
+    @GET
+    @Path("/mine")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Event> getEvents(@QueryParam("username") String username, @QueryParam("password") String password) {
+        if (authenticationService.login(username, password)) {
+            List<Event> events = new LinkedList<Event>();
+            for (org.eventjuggler.model.Event e : eventService.getEvents(userService.getUser(username))) {
+                events.add(new Event(e));
+            }
+            return events;
+        }
+        return null;
+    }
+
+    @DELETE
+    @Path("/{id}/rsvp")
+    public void deleteRSVP(@PathParam("id") long eventId, @QueryParam("username") String username,
+            @QueryParam("username") String password) {
+        if (authenticationService.login(username, password)) {
+            eventService.resign(eventId, userService.getUser(username));
+        }
+    }
 
 }

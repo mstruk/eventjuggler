@@ -1,1 +1,14 @@
-My events
+<div class="container">
+   <div ng-repeat="event in events" class="span5 well">
+      <div class="span1">
+         <img ng-src="{{event.imageId}}"></img>
+      </div>
+      <div class="span3">
+         <p>
+            <a href="#/events/{{event.id}}">{{event.title}}</a>
+         </p>
+         <p>{{event.time | date}}</p>
+         <p ng-show="{{event.attending > 0}}">{{event.attending}} attending</p>
+      </div>
+   </div>
+</div>

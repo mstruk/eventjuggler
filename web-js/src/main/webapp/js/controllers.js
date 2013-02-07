@@ -1,50 +1,18 @@
 'use strict';
 
 function EventListCtrl($scope, Event, $routeParams) {
-    var first = 0;
-    var max = 10;
-    var loading = false;
-
-    $scope.events = [];
-
-    $scope.loadMore = function() {
-        if (loading)
-            return;
-
-        loading = true;
-
-        var parameters = {
-            "first" : first,
-            "max" : max,
-            "sort" : "time"
-        };
-        
-        if ( $routeParams.query ) {
-            parameters.query = $routeParams.query;
-        }
-
-        Event.query(parameters, function(data) {
-            if (data.length == 0) {
-                return;
+    $scope.events = Event.getEvents(function loadUntilPageIsFull(events) {
+        $scope.events = events;
+        $scope.$watch('events', function() {
+            if ($("body").height() < $(window).height()) {
+                $scope.events.loadNext(loadUntilPageIsFull);
             }
-
-            $scope.events = $scope.events.concat(data);
-            first += max;
-            loading = false;
-
-            $scope.$watch('events', function() {
-                if ($("body").height() < $(window).height()) {
-                    $scope.loadMore();
-                }
-            });
         });
-    };
-
-    $scope.loadMore();
+    });
 
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-            $scope.loadMore();
+            $scope.events.loadNext();
         }
     });
 }
@@ -57,29 +25,42 @@ function EventSearchCtrl($scope, Event, $location) {
 }
 
 function EventMineCtrl($scope, Event) {
-    $scope.events = Event.query({
-        paramDefaults : {
-            max : 1
-        },
-        params : $routeParams
-    });
+    $scope.events = Event.getEventsUser();
 }
 
-function EventDetailCtrl($scope, $routeParams, Event) {
-    $scope.event = Event.get({
-        eventId : $routeParams.eventId
-    });
-}
+function EventDetailCtrl($scope, $routeParams, Event, User) {
+    $scope.event = Event.getEvent($routeParams.eventId);
 
-function EventCreateCtrl($scope, Event, $location) {
-    $scope.event = {
-        title : "",
-        description : ""
+    $scope.attend = function() {
+        Event.attend($scope.event.id, function() {
+            $scope.event = Event.getEvent($routeParams.eventId);
+        });
     };
 
-    $scope.save = function() {
-        Event.put($scope.event, function() {
-            $location.path("#/events");
+    $scope.resign = function() {
+        Event.resign($scope.event.id, function() {
+            $scope.event = Event.getEvent($routeParams.eventId);
         });
+    };
+}
+
+function UserCtrl($scope, User) {
+    $scope.user = User;
+    
+    $scope.login = function() {
+        $scope.failed = false;
+
+        User.login(function() { $('#loginModal').modal('hide'); }, function() { $scope.failed = true; });
+    };
+}
+
+function RegisterCtrl($scope, User) {
+    $scope.user = { login : User.username, password : User.password };
+
+    $scope.register = function() {
+        $scope.registered = false;
+        $scope.failed = false;
+        
+        User.register($scope.user, function() { $scope.registered = true; }, function() { $scope.failed = true; });
     };
 }

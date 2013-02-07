@@ -40,6 +40,8 @@ class Event {
     private long time;
     private String title;
 
+    private long attendingCount;
+
     public Event() {
     }
 
@@ -52,6 +54,11 @@ class Event {
         this.tags = ObjectFactory.createTags(e.getTags());
         this.time = e.getTime();
         this.title = e.getTitle();
+        this.attendingCount = e.getAttendance().size();
+    }
+
+    public long getAttendingCount() {
+        return attendingCount;
     }
 
     public String getDescription() {

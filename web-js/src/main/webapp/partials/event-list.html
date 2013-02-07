@@ -14,7 +14,8 @@
             <a href="#/events/{{event.id}}">{{event.title}}</a>
          </p>
          <p>{{event.time | date}}</p>
-         <p ng-show="{{event.attending > 0}}">{{event.attending}} attending</p>
+         
+         <p ng-show="event.attendingCount > 0">{{event.attendingCount}} attending</p>
       </div>
    </div>
 </div>

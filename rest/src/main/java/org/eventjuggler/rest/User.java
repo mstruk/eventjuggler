@@ -27,26 +27,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
 @XmlRootElement
-class Attendance {
+public class User {
 
     private String description;
     private String imageId;
     private String lastName;
     private String login;
     private String name;
-    private String response;
+    private String password;
 
-    public Attendance() {
+    public User() {
     }
 
-    public Attendance(org.eventjuggler.model.RSVP rsvp) {
-        description = rsvp.getUser().getDescription();
-        imageId = rsvp.getUser().getImageId();
-
-        response = ObjectFactory.createString(rsvp.getResponse());
-        lastName = rsvp.getUser().getLastName();
-        login = rsvp.getUser().getLogin();
-        name = rsvp.getUser().getName();
+    public User(org.eventjuggler.model.User u) {
+        this.description = u.getDescription();
+        this.imageId = u.getImageId();
+        this.lastName = u.getLastName();
+        this.login = u.getLogin();
+        this.name = u.getName();
+        this.password = u.getPassword();
     }
 
     public String getDescription() {
@@ -69,28 +68,20 @@ class Attendance {
         return name;
     }
 
-    public String getResponse() {
-        return response;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setResponse(String response) {
-        this.response = response;
+    public org.eventjuggler.model.User toInternal() {
+        org.eventjuggler.model.User u = new org.eventjuggler.model.User();
+        u.setDescription(description);
+        u.setImageId(imageId);
+        u.setLastName(lastName);
+        u.setLogin(login);
+        u.setName(name);
+        u.setPassword(password);
+        return u;
     }
 
 }
