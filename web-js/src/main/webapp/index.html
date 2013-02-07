@@ -41,10 +41,10 @@ body {
                </li>
                <li class="divider-vertical"></li>
                <li>
-                  <form class="navbar-form" ng-controller="EventSearchCtrl">
+                  <form class="navbar-form" ng-controller="EventSearchCtrl" ng-submit="search()">
                      <div class="input-append">
                         <input class="span2" id="searchEvents" type="text" placeholder="Search events" ng-model="query"></input>
-                        <button class="btn" type="button" ng-click="search()">
+                        <button class="btn" type="button">
                            <i class="icon-search"></i>
                         </button>
                      </div>
@@ -79,8 +79,8 @@ body {
       </div>
       <div class="modal-body">
          <div class="alert alert-block alert-error" ng-show="failed">Failed to login!</div>
-         
-         <form class="form-horizontal" name="loginForm">
+
+         <form class="form-horizontal" name="loginForm" ng-submit="login()">
             <div class="control-group">
                <label class="control-label" for="email">Email</label>
                <div class="controls">
@@ -94,10 +94,13 @@ body {
                   <input type="text" id="password" ng-model="user.password" placeholder="Password">
                </div>
             </div>
+            
+            <div class="control-group">
+               <div class="controls">
+                  <button class="btn btn-primary" ng-click="login()">Login</button>
+               </div>
+            </div>
          </form>
-      </div>
-      <div class="modal-footer">
-         <button class="btn btn-primary" ng-click="login()">Login</button>
       </div>
    </div>
 </body>
