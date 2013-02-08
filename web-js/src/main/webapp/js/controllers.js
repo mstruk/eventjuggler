@@ -1,6 +1,6 @@
 'use strict';
 
-function EventListCtrl($scope, Event, $routeParams) {
+function EventListCtrl($scope, Event, $routeParams, $location) {
     $scope.events = Event.getEvents(function loadUntilPageIsFull(events) {
         $scope.events = events;
         $scope.$watch('events', function() {
@@ -14,6 +14,13 @@ function EventListCtrl($scope, Event, $routeParams) {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
             $scope.events.loadNext();
         }
+    });
+    
+    var currentPath = $location.path();
+    $scope.$watch(function() { return $location.path(); }, function() {
+            if ($location.path() != currentPath) {
+                $(window).unbind("scroll");
+            };
     });
 }
 
