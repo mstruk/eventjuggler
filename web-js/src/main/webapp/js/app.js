@@ -19,3 +19,23 @@ eventjugglerModule.config([ '$routeProvider', function($routeProvider) {
         redirectTo : '/events'
     });
 } ]);
+
+eventjugglerModule.filter('substring', function() {
+    return function(text, length) {
+        if (!text) {
+            return text;
+        }
+        
+        if (!length) {
+            length = 100;
+        }
+        
+        text = text.replace(/<(?:.|\n)*?>/gm, '');
+        
+        if (text.length < 100) {
+            return text;
+        } else {
+            return text.substring(0, length) + "...";
+        }
+    };
+});
