@@ -21,10 +21,6 @@
  */
 package org.eventjuggler.services;
 
-import java.util.List;
-
-import org.eventjuggler.model.Event;
-
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
@@ -35,7 +31,5 @@ public interface DataService {
     String exportData();
 
     void importData(String data);
-
-    List<Event> importDataFromMeetup(String category, String pages, String meetupApiKey);
 
 }

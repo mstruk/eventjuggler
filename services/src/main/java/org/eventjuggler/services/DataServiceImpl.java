@@ -24,7 +24,6 @@ package org.eventjuggler.services;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -39,7 +38,6 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlProducer;
 import org.dbunit.operation.DatabaseOperation;
-import org.eventjuggler.model.Event;
 import org.xml.sax.InputSource;
 
 /**
@@ -98,16 +96,6 @@ public class DataServiceImpl implements DataService {
             DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
 
             jdbcConnection.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public List<Event> importDataFromMeetup(String category, String page, String key) {
-        Meetup meetup = new Meetup(em);
-        try {
-            return meetup.importData(category, page, key);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

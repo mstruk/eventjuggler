@@ -21,16 +21,12 @@
  */
 package org.eventjuggler.rest;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.eventjuggler.services.DataService;
@@ -39,8 +35,6 @@ import org.eventjuggler.services.DataService;
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
 @Path("/data")
-@Produces(MediaType.APPLICATION_XML)
-@Consumes(MediaType.APPLICATION_XML)
 public class DataResource {
 
     @Inject
@@ -48,6 +42,7 @@ public class DataResource {
 
     @GET
     @Path("/clear")
+    @Produces(MediaType.APPLICATION_XML)
     public String clear() {
         dataService.clear();
         return "";
@@ -55,27 +50,16 @@ public class DataResource {
 
     @GET
     @Path("/")
+    @Produces(MediaType.APPLICATION_XML)
     public String exportData() {
         return dataService.exportData();
     }
 
     @POST
     @Path("/")
+    @Consumes(MediaType.APPLICATION_XML)
     public void importData(String data) {
         dataService.importData(data);
     }
 
-    @GET
-    @Path("/meetup")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<String> importDataFromMeetup(@QueryParam("category") String category, @QueryParam("page") String page,
-            @QueryParam("key") String key) {
-        List<org.eventjuggler.model.Event> events = dataService.importDataFromMeetup(category, page, key);
-
-        List<String> titles = new LinkedList<String>();
-        for (org.eventjuggler.model.Event e : events) {
-            titles.add(e.getTitle());
-        }
-        return titles;
-    }
 }

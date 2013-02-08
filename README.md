@@ -52,13 +52,13 @@ Import Data
 ===========
 
 There is a data import and export service available. This uses DBUnit to import and export the 
-database to XML. Some initial data is available in "initial-data.xml".
+database to XML.
 
 
 Import data from XML (using DBUnit)
 -----------------------------------
 
-curl -H "Content-Type: application/xml" -X POST -d @initial-data.xml http://localhost:8080/eventjuggler-rest/data
+curl -H "Content-Type: application/xml" -X POST -d @export.xml http://localhost:8080/eventjuggler-rest/data
 
 
 Export data to XML (using DBUnit)
@@ -71,18 +71,6 @@ Clear database
 --------------
 
 curl http://localhost:8080/eventjuggler-rest/data/clear
-
-
-Import data from Meetup
------------------------
-
-Until we have some sample data of our own it is possible to import data from Meetup. Before doing
-this you have to sign-up to Meetup and get an api key from http://www.meetup.com/meetup_api/key/. 
-You'll also need the id of the category of events you want to import (34 is tech), the list of
-categories can be retrieved from http://api.meetup.com/2/categories?key=<api key>. After importing
-an array containing the titles of the imported events is returned. 
-
-curl 'http://localhost:8080/eventjuggler-rest/data/meetup&key=<api key>&category=<category>&page=<number of events>'
 
 
 Functional Tests
