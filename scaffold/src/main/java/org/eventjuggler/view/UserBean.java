@@ -70,7 +70,7 @@ public class UserBean implements Serializable
    @Inject
    private Conversation conversation;
 
-   @PersistenceContext(type = PersistenceContextType.EXTENDED)
+   @PersistenceContext(unitName = "eventjuggler", type = PersistenceContextType.EXTENDED)
    private EntityManager entityManager;
 
    public String create()

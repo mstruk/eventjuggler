@@ -11,7 +11,7 @@ import java.util.List;
 @Stateless
 public class AuthenticationServiceBean implements AuthenticationService {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "eventjuggler")
     private EntityManager em;
 
     public boolean login(String username, String password) {

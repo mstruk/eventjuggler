@@ -54,6 +54,23 @@
          <groupId>org.eventjuggler</groupId>
          <artifactId>eventjuggler-common</artifactId>
       </dependency>
+
+      <dependency>
+         <groupId>org.picketlink.extensions</groupId>
+         <artifactId>picketlink-extensions-core</artifactId>
+      </dependency>
+
+      <dependency>
+         <groupId>org.jboss.resteasy</groupId>
+         <artifactId>resteasy-jaxrs</artifactId>
+         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>org.jboss.spec.javax.annotation</groupId>
+         <artifactId>jboss-annotations-api_1.1_spec</artifactId>
+         <scope>provided</scope>
+      </dependency>      
    </dependencies>
 
    <build>
@@ -88,5 +105,3 @@
    </profiles>
 
 </project>
-
-

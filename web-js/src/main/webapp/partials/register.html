@@ -2,28 +2,31 @@
    <p>User registered!</p>
    <p><a href="#loginModal" data-toggle="modal" class="btn">Login</a></p>
 </div>
-<div class="alert alert-block alert-error" ng-show="failed">Failed to register user!</div>
+
+<div class="alert alert-block alert-error" ng-show="failed">{{failedMessage}}</div>
 
 <form class="form-horizontal" ng-submit="register()" name="registerForm" ng-show="!registered">
 
    <div class="control-group">
-      <label class="control-label" for="email">E-mail</label>
+      <label class="control-label" for="userName">User Name</label>
       <div class="controls">
-         <input type="text" id="email" ng-model="user.login" placeholder="E-mail" required>
+         <input type="text" id="email" ng-model="user.userName" placeholder="User Name" required>
       </div>
    </div>
-
+   
    <div class="control-group">
       <label class="control-label" for="password">Password</label>
       <div class="controls">
          <input type="password" id="password" ng-model="user.password" placeholder="Password" required>
       </div>
    </div>
-
+   
+   <hr/>
+   
    <div class="control-group">
       <label class="control-label" for="firstName">First name</label>
       <div class="controls">
-         <input type="text" id="firstName" ng-model="user.name" placeholder="First name">
+         <input type="text" id="firstName" ng-model="user.firstName" placeholder="First name">
       </div>
    </div>
 
@@ -35,11 +38,22 @@
    </div>
 
    <div class="control-group">
+      <label class="control-label" for="email">E-mail</label>
+      <div class="controls">
+         <input type="text" id="email" ng-model="user.email" placeholder="E-mail">
+      </div>
+   </div>
+
+   <hr/>
+
+   <div class="control-group">
       <label class="control-label" for="description">Description</label>
       <div class="controls">
          <textarea id="description" ng-model="user.description" placeholder="Description"></textarea>
       </div>
    </div>
+
+   <hr/>
 
    <div class="control-group">
       <div class="controls">

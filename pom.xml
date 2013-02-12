@@ -49,6 +49,9 @@
       <version.compiler.plugin>2.3.1</version.compiler.plugin>
       <version.checkstyle.plugin>2.9.1</version.checkstyle.plugin>
       <version.jboss.common.core>2.2.20.GA</version.jboss.common.core>
+      <version.org.picketlink>3.0.0-2013Feb01</version.org.picketlink>
+      <version.org.jboss.resteasy>2.3.3.Final</version.org.jboss.resteasy>
+
       <jboss.as.deploy.skip>true</jboss.as.deploy.skip>
    </properties>
 
@@ -133,6 +136,16 @@
                   <artifactId>jboss-logging-spi</artifactId>
                </exclusion>
             </exclusions>
+         </dependency>
+         <dependency>
+            <groupId>org.picketlink.extensions</groupId>
+            <artifactId>picketlink-extensions-core</artifactId>
+            <version>${version.org.picketlink}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>${version.org.jboss.resteasy}</version>
          </dependency>
       </dependencies>
    </dependencyManagement>
@@ -262,6 +275,24 @@
          </plugin>
       </plugins>
    </build>
+
+   <repositories>
+      <!-- Required for PicketBox/PicketLink timed releases -->
+      <repository>
+         <id>jboss-public-repository-group</id>
+         <name>JBoss Public Maven Repository Group</name>
+         <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+         <layout>default</layout>
+         <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+         </snapshots>
+      </repository>
+   </repositories>
 
 </project>
 

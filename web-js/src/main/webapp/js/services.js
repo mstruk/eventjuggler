@@ -2,37 +2,53 @@
 
 var eventjugglerServices = angular.module('eventjugglerServices', [ 'ngResource' ]);
 
+eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
+    var accregisterRes = $resource('/eventjuggler-rest/accregister');
+    var signinRes = $resource('/eventjuggler-rest/signin');
+    var userInfoRes = $resource('/eventjuggler-rest/userinfo');
+    var logoutRes = $resource('/eventjuggler-rest/logout');
 
-eventjugglerServices.service('User', function($resource, $cookieStore) {
-    var res = $resource('/eventjuggler-rest/user');
-    
-    var user = { username : null, password : null, loggedIn : false };
+    var user = {
+        username : null,
+        password : null,
+        roles : null,
+        loggedIn : false
+    };
 
-    user.login = function(success, error) {
-        res.get({ username: user.username, password: user.password }, function(data) {
-            if (data.login) {
-                user.loggedIn = true;
-                
-                if (data.name) {
-                    user.name = data.name;
-                    
-                    if (data.lastName) {
-                        user.name += " " + data.lastName;
-                    }
-                } else {
-                    user.name = user.username;
+    var loadUserInfo = function(success) {
+        userInfoRes.get(function(userInfo) {
+            if (userInfo.userId) {
+                user.username = userInfo.userId;
+                user.name = userInfo.userId;
+
+                if (userInfo.fullName && userInfo.fullName != "null null") {
+                    user.name = userInfo.fullName;
                 }
 
-                $cookieStore.put("user-username", user.username);
-                $cookieStore.put("user-password", user.password);
-                
+                user.roles = userInfo.roles;
+                user.loggedIn = true;
+
                 if (success) {
                     success();
                 }
+            }
+        });
+    };
+
+    user.login = function(success, error) {
+        signinRes.save({
+            userId : user.username,
+            password : user.password
+        }, function(response) {
+            if (response.loggedIn) {
+                $http.defaults.headers.common['Auth-Token'] = response.token;
+                sessionStorage.setItem("auth-token", response.token);
+
+                loadUserInfo(success);
             } else if (error) {
                 error();
             }
-        }, error); 
+        }, error);
     };
 
     user.logout = function() {
@@ -40,55 +56,34 @@ eventjugglerServices.service('User', function($resource, $cookieStore) {
         user.password = null;
         user.loggedIn = false;
 
-        $cookieStore.remove("user-username");
-        $cookieStore.remove("user-password");
+        logoutRes.get();
+        sessionStorage.removeItem("auth-token");
     };
-        
+
     user.register = function(user, success, error) {
-        res.save(user, success, error);
+        accregisterRes.save(user, function(response) {
+            if (response.registered) {
+                success();
+            } else {
+                error(response.status);
+            }
+        }, error);
     };
-    
-    if (!user.loggedIn && $cookieStore.get("user-username") && $cookieStore.get("user-password")) {
-        user.username = $cookieStore.get("user-username");
-        user.password = $cookieStore.get("user-password");
-        
-        user.login();
+
+    if (!user.loggedIn && sessionStorage.getItem("auth-token")) {
+        $http.defaults.headers.common['Auth-Token'] = sessionStorage.getItem("auth-token");
+
+        loadUserInfo();
     }
-    
+
     return user;
 });
 
+eventjugglerServices.service('Event', function($resource, User, $http, $routeParams) {
+    var eventsRes = $resource('/eventjuggler-rest/event/:eventId');
+    var mineRes = $resource('/eventjuggler-rest/event/mine');
+    var rsvpRes = $resource('/eventjuggler-rest/event/:eventId/rsvp');
 
-eventjugglerServices.factory('Resource', function($resource, User) {
-    return function(url) {
-        var r = {};
-        var addUserCredentials = function(parameters) {
-            if (User.loggedIn) {
-                if (!parameters) {
-                    parameters = {};
-                }
-                parameters.username = User.username;
-                parameters.password = User.password;
-            }
-            return parameters;
-        };
-        
-        r.res = $resource(url);
-        
-        r.get = function(parameters, success, error) { return r.res.get(addUserCredentials(parameters), success, error); }; 
-        r.query = function(parameters, success, error) { return r.res.query(addUserCredentials(parameters), success, error); };
-        r.remove = function(parameters, success, error) { return r.res['delete'](addUserCredentials(parameters), success, error); };
-        
-        return r;
-    };
-});
-
-
-eventjugglerServices.service('Event', function(Resource, User, $http, $routeParams) {
-    var eventsRes = Resource('/eventjuggler-rest/event/:eventId');
-    var mineRes = Resource('/eventjuggler-rest/event/mine');
-    var rsvpRes = Resource('/eventjuggler-rest/event/:eventId/rsvp');
-    
     this.getEvents = function(success) {
         var events = [];
 
@@ -103,7 +98,7 @@ eventjugglerServices.service('Event', function(Resource, User, $http, $routePara
         if ($routeParams.query) {
             events.parameters.query = $routeParams.query;
         }
-        
+
         events.loadNext = function(success) {
             eventsRes.query(events.parameters, function(data) {
                 if (events.loading)
@@ -136,7 +131,9 @@ eventjugglerServices.service('Event', function(Resource, User, $http, $routePara
 
     this.getEvent = function(eventId, success) {
         var event = {};
-        eventsRes.get({ "eventId" : eventId }, function(data) {
+        eventsRes.get({
+            "eventId" : eventId
+        }, function(data) {
             for ( var i in data) {
                 event[i] = data[i];
             }
@@ -172,10 +169,14 @@ eventjugglerServices.service('Event', function(Resource, User, $http, $routePara
     };
 
     this.attend = function(eventId, success) {
-        rsvpRes.get({ "eventId" : eventId }, success);
+        rsvpRes.get({
+            "eventId" : eventId
+        }, success);
     };
-    
+
     this.resign = function(eventId, success) {
-        rsvpRes.remove({ "eventId" : eventId }, success);
-    };  
+        rsvpRes['delete']({
+            "eventId" : eventId
+        }, success);
+    };
 });

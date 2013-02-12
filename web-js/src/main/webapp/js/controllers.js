@@ -15,12 +15,15 @@ function EventListCtrl($scope, Event, $routeParams, $location) {
             $scope.events.loadNext();
         }
     });
-    
+
     var currentPath = $location.path();
-    $scope.$watch(function() { return $location.path(); }, function() {
-            if ($location.path() != currentPath) {
-                $(window).unbind("scroll");
-            };
+    $scope.$watch(function() {
+        return $location.path();
+    }, function() {
+        if ($location.path() != currentPath) {
+            $(window).unbind("scroll");
+        }
+        ;
     });
 }
 
@@ -53,21 +56,33 @@ function EventDetailCtrl($scope, $routeParams, Event, User) {
 
 function UserCtrl($scope, User) {
     $scope.user = User;
-    
+
     $scope.login = function() {
         $scope.failed = false;
 
-        User.login(function() { $('#loginModal').modal('hide'); }, function() { $scope.failed = true; });
+        User.login(function() {
+            $('#loginModal').modal('hide');
+        }, function() {
+            $scope.failed = true;
+        });
     };
 }
 
 function RegisterCtrl($scope, User) {
-    $scope.user = { login : User.username, password : User.password };
+    $scope.user = {
+        userName : User.userName,
+        password : User.password
+    };
 
     $scope.register = function() {
         $scope.registered = false;
         $scope.failed = false;
-        
-        User.register($scope.user, function() { $scope.registered = true; }, function() { $scope.failed = true; });
+
+        User.register($scope.user, function(response) {
+            $scope.registered = true;
+        }, function(status) {
+            $scope.failed = true;
+            $scope.failedMessage = status;
+        });
     };
 }

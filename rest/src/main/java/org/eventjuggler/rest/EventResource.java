@@ -35,11 +35,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.eventjuggler.services.AuthenticationService;
+import org.eventjuggler.model.User;
 import org.eventjuggler.services.EventProperty;
 import org.eventjuggler.services.EventQuery;
 import org.eventjuggler.services.EventService;
 import org.eventjuggler.services.UserService;
+import org.picketlink.extensions.core.pbox.PicketBoxIdentity;
+import org.picketlink.extensions.core.pbox.authorization.UserLoggedIn;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
@@ -48,13 +50,41 @@ import org.eventjuggler.services.UserService;
 public class EventResource {
 
     @Inject
-    private AuthenticationService authenticationService;
-
-    @Inject
     private EventService eventService;
 
     @Inject
+    private PicketBoxIdentity identity;
+
+    @Inject
     private UserService userService;
+
+    @PUT
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void createEvent(Event event) {
+        eventService.create(event.toInternal());
+    }
+
+    @GET
+    @Path("/{id}/rsvp")
+    @Produces(MediaType.APPLICATION_JSON)
+    @UserLoggedIn
+    public void createRSVP(@PathParam("id") long eventId) {
+        eventService.attend(eventId, getUser());
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteEvent(@PathParam("id") long eventId) {
+        eventService.remove(eventService.getEvent(eventId));
+    }
+
+    @DELETE
+    @Path("/{id}/rsvp")
+    @UserLoggedIn
+    public void deleteRSVP(@PathParam("id") long eventId) {
+        eventService.resign(eventId, getUser());
+    }
 
     @GET
     @Path("/{id}")
@@ -98,50 +128,20 @@ public class EventResource {
         return events;
     }
 
-    @PUT
-    @Path("/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void createEvent(Event event) {
-        eventService.create(event.toInternal());
-    }
-
-    @DELETE
-    @Path("/{id}")
-    public void deleteEvent(@PathParam("id") long eventId) {
-        eventService.remove(eventService.getEvent(eventId));
-    }
-
-    @GET
-    @Path("/{id}/rsvp")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void createRSVP(@PathParam("id") long eventId, @QueryParam("username") String username,
-            @QueryParam("password") String password) {
-        if (authenticationService.login(username, password)) {
-            eventService.attend(eventId, userService.getUser(username));
-        }
-    }
-
     @GET
     @Path("/mine")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Event> getEvents(@QueryParam("username") String username, @QueryParam("password") String password) {
-        if (authenticationService.login(username, password)) {
-            List<Event> events = new LinkedList<Event>();
-            for (org.eventjuggler.model.Event e : eventService.getEvents(userService.getUser(username))) {
-                events.add(new Event(e));
-            }
-            return events;
+    @UserLoggedIn
+    public List<Event> getMyEvents() {
+        List<Event> events = new LinkedList<Event>();
+        for (org.eventjuggler.model.Event e : eventService.getEvents(getUser())) {
+            events.add(new Event(e));
         }
-        return null;
+        return events;
     }
 
-    @DELETE
-    @Path("/{id}/rsvp")
-    public void deleteRSVP(@PathParam("id") long eventId, @QueryParam("username") String username,
-            @QueryParam("username") String password) {
-        if (authenticationService.login(username, password)) {
-            eventService.resign(eventId, userService.getUser(username));
-        }
+    private User getUser() {
+        return userService.getUser(identity.getUser().getLoginName());
     }
 
 }
