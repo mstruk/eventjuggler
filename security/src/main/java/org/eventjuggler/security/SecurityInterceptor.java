@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.eventjuggler.security;
 
 import java.util.List;
@@ -42,17 +41,12 @@ import org.picketlink.extensions.core.pbox.authorization.RolesAllowed;
 import org.picketlink.extensions.core.pbox.authorization.UserLoggedIn;
 
 /**
- * <p>
- * Implementation of {@link PreProcessInterceptor} that checks the existence of the authentication token before invoking the
- * destination endpoint.
- * </p>
- * <p>
- * If the token is valid, the {@link PicketBoxIdentity} will be restored with all user information. This can be done given that
- * PicketBox is configured to manage internal sessions. That said, each token maps to a specific session.
- * </p>
- *
- * @author <a href="mailto:psilva@redhat.com">Pedro Silva</a>
- *
+ * There's an implementation of this provided in picketlink-extensions (
+ * {@link org.picketlink.extensions.core.rest.interceptors.SecurityInterceptor}), but the requiresAuthentication method is not
+ * valid as it causes all rest resources (except the picketlink-extensions) to require authentication. This is a copy of that
+ * class with a fixed implementation of the requiresAuthentication method
+ * 
+ * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
 @ApplicationScoped
 @ServerInterceptor
@@ -63,12 +57,6 @@ public class SecurityInterceptor implements PreProcessInterceptor {
     @Inject
     private PicketBoxIdentity identity;
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.jboss.resteasy.spi.interception.PreProcessInterceptor#preProcess(org.jboss.resteasy.spi.HttpRequest,
-     * org.jboss.resteasy.core.ResourceMethod)
-     */
     @Override
     public ServerResponse preProcess(HttpRequest request, ResourceMethod method) throws Failure, WebApplicationException {
         ServerResponse response = null;
@@ -99,14 +87,6 @@ public class SecurityInterceptor implements PreProcessInterceptor {
         return response;
     }
 
-    /**
-     * <p>
-     * Retrieve the token from the request, if present.
-     * </p>
-     *
-     * @param request
-     * @return
-     */
     private String getToken(HttpRequest request) {
         List<String> tokenHeader = request.getHttpHeaders().getRequestHeader(AUTH_TOKEN_HEADER_NAME);
         String token = null;
@@ -118,14 +98,6 @@ public class SecurityInterceptor implements PreProcessInterceptor {
         return token;
     }
 
-    /**
-     * <p>
-     * Checks if the {@link ResourceMethod} requires authentication.
-     * </p>
-     *
-     * @param method
-     * @return
-     */
     private boolean requiresAuthentication(ResourceMethod method) {
         return method.getMethod().getAnnotation(RolesAllowed.class) != null
                 || method.getMethod().getAnnotation(UserLoggedIn.class) != null;
