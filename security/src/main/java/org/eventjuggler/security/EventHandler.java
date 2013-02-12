@@ -1,4 +1,4 @@
-package org.eventjuggler.services.security;
+package org.eventjuggler.security;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;

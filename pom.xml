@@ -30,6 +30,7 @@
    <modules>
       <module>common</module>
       <module>rest</module>
+      <module>security</module>
       <module>server</module>
       <module>services</module>
       <module>web-js</module>
@@ -102,6 +103,11 @@
             <artifactId>eventjuggler-scaffold</artifactId>
             <version>${project.version}</version>
             <type>war</type>
+         </dependency>
+         <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-security</artifactId>
+            <version>${project.version}</version>
          </dependency>
          <dependency>
             <groupId>org.eventjuggler</groupId>
@@ -194,7 +200,6 @@
                <configuration>
                   <defaultLibBundleDir>lib</defaultLibBundleDir>
                   <fileNameMapping>no-version</fileNameMapping>
-                  <skinnyWars>true</skinnyWars>
                </configuration>
             </plugin>
 

@@ -19,25 +19,6 @@
          <property name="hibernate.format_sql" value="true" />
       </properties>
    </persistence-unit>
-   
-   <persistence-unit name="eventjuggler-idm" transaction-type="JTA">
-      <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
-
-      <class>org.picketlink.idm.jpa.schema.IdentityObject</class>
-      <class>org.picketlink.idm.jpa.schema.PartitionObject</class>
-      <class>org.picketlink.idm.jpa.schema.RelationshipObject</class>
-      <class>org.picketlink.idm.jpa.schema.RelationshipIdentityObject</class>
-      <class>org.picketlink.idm.jpa.schema.RelationshipObjectAttribute</class>
-      <class>org.picketlink.idm.jpa.schema.IdentityObjectAttribute</class>
-      <class>org.picketlink.idm.jpa.schema.CredentialObject</class>
-      <class>org.picketlink.idm.jpa.schema.CredentialObjectAttribute</class>
-
-      <properties>
-         <property name="hibernate.hbm2ddl.auto" value="update" />
-         <property name="hibernate.show_sql" value="true" />
-         <property name="hibernate.format_sql" value="true" />
-      </properties>
-   </persistence-unit>   
 
 </persistence>
 

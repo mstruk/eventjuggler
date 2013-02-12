@@ -45,11 +45,11 @@
          <artifactId>eventjuggler-rest</artifactId>
          <type>war</type>
       </dependency>
-      <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-scaffold</artifactId>
-         <type>war</type>
-      </dependency>
+<!--       <dependency> -->
+<!--          <groupId>org.eventjuggler</groupId> -->
+<!--          <artifactId>eventjuggler-scaffold</artifactId> -->
+<!--          <type>war</type> -->
+<!--       </dependency> -->
       <dependency>
          <groupId>org.eventjuggler</groupId>
          <artifactId>eventjuggler-services</artifactId>
@@ -60,11 +60,11 @@
          <artifactId>eventjuggler-web-js</artifactId>
          <type>war</type>
       </dependency>
-      <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-web-jsf</artifactId>
-         <type>war</type>
-      </dependency>
+<!--       <dependency> -->
+<!--          <groupId>org.eventjuggler</groupId> -->
+<!--          <artifactId>eventjuggler-web-jsf</artifactId> -->
+<!--          <type>war</type> -->
+<!--       </dependency> -->
    </dependencies>
 
    <build>

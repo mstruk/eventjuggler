@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.eventjuggler.rest.security;
+package org.eventjuggler.security;
 
 import java.util.List;
 
