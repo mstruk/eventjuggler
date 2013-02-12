@@ -46,7 +46,7 @@
 						<h:outputText/>
 						<h:outputLabel for="groupBeanExampleDescription" value="Description:"/>
 						<h:panelGroup>
-							<h:inputText id="groupBeanExampleDescription" value="#{groupBean.example.description}"/>
+							<h:inputText id="groupBeanExampleDescription" maxLength="20000" value="#{groupBean.example.description}"/>
 							<h:message for="groupBeanExampleDescription" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>

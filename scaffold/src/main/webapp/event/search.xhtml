@@ -64,7 +64,7 @@
 						<h:outputText/>
 						<h:outputLabel for="eventBeanExampleDescription" value="Description:"/>
 						<h:panelGroup>
-							<h:inputText id="eventBeanExampleDescription" value="#{eventBean.example.description}"/>
+							<h:inputText id="eventBeanExampleDescription" maxLength="20000" value="#{eventBean.example.description}"/>
 							<h:message for="eventBeanExampleDescription" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>

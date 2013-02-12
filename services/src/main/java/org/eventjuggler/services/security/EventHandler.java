@@ -19,31 +19,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.eventjuggler.security;
+package org.eventjuggler.services.security;
 
-import javax.enterprise.inject.Produces;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import org.picketbox.core.config.ConfigurationBuilder;
-import org.picketbox.core.identity.jpa.EntityManagerLookupStrategy;
+import org.apache.log4j.Logger;
+import org.eventjuggler.services.UserService;
+import org.picketbox.core.authentication.event.UserAuthenticatedEvent;
+import org.picketlink.idm.model.User;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-public class PicketBoxConfigurer {
+@ApplicationScoped
+public class EventHandler {
+
+    private final Logger log = Logger.getLogger(EventHandler.class);
 
     @Inject
-    private EntityManagerLookupStrategy entityManagerLookupStrategy;
+    private UserService userService;
 
-    @Produces
-    public ConfigurationBuilder produceConfiguration() {
-        ConfigurationBuilder builder = new ConfigurationBuilder();
+    public void onUserAuthenticatedEvent(@Observes UserAuthenticatedEvent event) {
+        User user = event.getUserContext().getUser();
 
-        builder.identityManager().jpaStore().entityManagerLookupStrategy(this.entityManagerLookupStrategy);
+        if (userService.getUser(user.getLoginName()) == null) {
+            org.eventjuggler.model.User u = new org.eventjuggler.model.User();
 
-        builder.sessionManager().inMemorySessionStore();
+            u.setLogin(user.getLoginName());
+            u.setName(user.getFirstName());
+            u.setLastName(user.getLastName());
 
-        return builder;
+            userService.create(u);
+
+            log.info("Created user '" + u.getLogin() + "'");
+        }
     }
 
 }

@@ -19,9 +19,6 @@ public class User {
     @Column(unique = true, nullable = false, updatable = false)
     private String login;
 
-    @Column(nullable = false)
-    private String password;
-
     private String name;
     private String lastName;
     private String imageId;
@@ -77,11 +74,4 @@ public class User {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

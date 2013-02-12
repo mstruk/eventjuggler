@@ -47,9 +47,6 @@ public class UserServiceBean implements UserService {
 
     @Override
     public void create(User user) {
-        User existing = getUser(user.getLogin());
-        if (existing != null)
-            throw new DuplicateLoginException("User exists already for login: " + user.getLogin());
         em.persist(user);
     }
 
@@ -78,8 +75,8 @@ public class UserServiceBean implements UserService {
     @Override
     public User getUser(String login) {
         List<User> users = em.createQuery("select u from User u where u.login = :login", User.class)
-            .setParameter("login", login)
-            .getResultList();
+                .setParameter("login", login)
+                .getResultList();
 
         if (users.size() > 1)
             throw new IllegalStateException("More than one user for login: " + login);

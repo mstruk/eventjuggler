@@ -19,43 +19,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.eventjuggler.security;
+package org.eventjuggler.services.security;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-
-import org.apache.log4j.Logger;
-import org.eventjuggler.services.UserService;
-import org.picketbox.core.authentication.event.UserAuthenticatedEvent;
-import org.picketlink.idm.model.User;
+import javax.enterprise.inject.Produces;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-@ApplicationScoped
-public class EventHandler {
+public class EntityManagerProducer {
 
-    private final Logger log = Logger.getLogger(EventHandler.class);
-
-    @Inject
-    private UserService userService;
-
-    public void onUserAuthenticatedEvent(@Observes UserAuthenticatedEvent event) {
-        User user = event.getUserContext().getUser();
-
-        if (userService.getUser(user.getLoginName()) == null) {
-            org.eventjuggler.model.User u = new org.eventjuggler.model.User();
-
-            u.setLogin(user.getLoginName());
-            u.setName(user.getFirstName());
-            u.setLastName(user.getLastName());
-            u.setPassword("NOT USED");
-
-            userService.create(u);
-
-            log.info("Created user '" + u.getLogin() + "'");
-        }
-    }
+    @Produces
+    @PersistenceContext(unitName = "eventjuggler-idm")
+    private EntityManager em;
 
 }

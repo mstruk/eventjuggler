@@ -49,7 +49,7 @@
 						<h:outputText/>
 						<h:outputLabel for="userBeanExampleDescription" value="Description:"/>
 						<h:panelGroup>
-							<h:inputText id="userBeanExampleDescription" value="#{userBean.example.description}"/>
+							<h:inputText id="userBeanExampleDescription" maxLength="20000" value="#{userBean.example.description}"/>
 							<h:message for="userBeanExampleDescription" styleClass="error"/>
 						</h:panelGroup>
 						<h:outputText/>
@@ -68,42 +68,6 @@
 			</f:validateBean>
 			
 			<h:dataTable id="userBeanPageItems" styleClass="data-table" value="#{userBean.pageItems}" var="_item">
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Name"/>
-					</f:facet>
-					<h:link outcome="/user/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemName" value="#{_item.name}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Last Name"/>
-					</f:facet>
-					<h:link outcome="/user/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemLastName" value="#{_item.lastName}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Image Id"/>
-					</f:facet>
-					<h:link outcome="/user/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemImageId" value="#{_item.imageId}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Description"/>
-					</f:facet>
-					<h:link outcome="/user/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemDescription" value="#{_item.description}"/>
-					</h:link>
-				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Login"/>

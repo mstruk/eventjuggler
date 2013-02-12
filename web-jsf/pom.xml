@@ -66,6 +66,13 @@
       <dependency>
          <groupId>org.eventjuggler</groupId>
          <artifactId>eventjuggler-common</artifactId>
+         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>org.picketlink.extensions</groupId>
+         <artifactId>picketlink-extensions-core</artifactId>
+         <scope>provided</scope>
       </dependency>
 
       <!-- Needed for running tests (you may also use TestNG) -->
@@ -74,6 +81,8 @@
          <artifactId>junit</artifactId>
          <scope>test</scope>
       </dependency>
+
+
    </dependencies>
 
    <build>
@@ -96,8 +105,18 @@
          <id>standalone</id>
          <properties>
             <jboss.as.deploy.skip>false</jboss.as.deploy.skip>
-         </properties>         
+         </properties>
          <dependencies>
+            <dependency>
+               <groupId>org.eventjuggler</groupId>
+               <artifactId>eventjuggler-common</artifactId>
+               <scope>compile</scope>
+            </dependency>
+            <dependency>
+               <groupId>org.picketlink.extensions</groupId>
+               <artifactId>picketlink-extensions-core</artifactId>
+               <scope>compile</scope>
+            </dependency>
             <dependency>
                <groupId>org.eventjuggler</groupId>
                <artifactId>eventjuggler-services</artifactId>
@@ -108,5 +127,3 @@
    </profiles>
 
 </project>
-
-

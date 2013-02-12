@@ -30,7 +30,6 @@
    <modules>
       <module>common</module>
       <module>rest</module>
-      <module>security</module>
       <module>server</module>
       <module>services</module>
       <module>web-js</module>
@@ -49,7 +48,7 @@
       <version.ear.plugin>2.7</version.ear.plugin>
       <version.compiler.plugin>2.3.1</version.compiler.plugin>
       <version.checkstyle.plugin>2.9.1</version.checkstyle.plugin>
-      <version.jboss.common.core>2.2.20.GA</version.jboss.common.core>
+      <version.org.picketbox>5.0.0-2013Feb01</version.org.picketbox>
       <version.org.picketlink>3.0.0-2013Feb01</version.org.picketlink>
       <version.org.jboss.resteasy>2.3.3.Final</version.org.jboss.resteasy>
 
@@ -106,11 +105,6 @@
          </dependency>
          <dependency>
             <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-security</artifactId>
-            <version>${project.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.eventjuggler</groupId>
             <artifactId>eventjuggler-services</artifactId>
             <version>${project.version}</version>
             <type>ejb</type>
@@ -131,17 +125,6 @@
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
             <version>2.4.9</version>
-         </dependency>
-         <dependency>
-            <groupId>org.jboss</groupId>
-            <artifactId>jboss-common-core</artifactId>
-            <version>${version.jboss.common.core}</version>
-            <exclusions>
-               <exclusion>
-                  <groupId>org.jboss.logging</groupId>
-                  <artifactId>jboss-logging-spi</artifactId>
-               </exclusion>
-            </exclusions>
          </dependency>
          <dependency>
             <groupId>org.picketlink.extensions</groupId>

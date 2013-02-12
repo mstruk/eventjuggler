@@ -19,19 +19,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.eventjuggler.security;
+package org.eventjuggler.services.security;
 
 import javax.enterprise.inject.Produces;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
+
+import org.picketbox.core.config.ConfigurationBuilder;
+import org.picketbox.core.identity.jpa.EntityManagerLookupStrategy;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-public class EntityManagerProducer {
+public class PicketBoxConfigurer {
+
+    @Inject
+    private EntityManagerLookupStrategy entityManagerLookupStrategy;
 
     @Produces
-    @PersistenceContext(unitName = "eventjuggler-idm")
-    private EntityManager em;
+    public ConfigurationBuilder produceConfiguration() {
+        ConfigurationBuilder builder = new ConfigurationBuilder();
+
+        builder.identityManager().jpaStore().entityManagerLookupStrategy(this.entityManagerLookupStrategy);
+
+        builder.sessionManager().inMemorySessionStore();
+
+        return builder;
+    }
 
 }

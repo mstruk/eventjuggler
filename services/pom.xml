@@ -49,7 +49,18 @@
          <groupId>org.eventjuggler</groupId>
          <artifactId>eventjuggler-common</artifactId>
       </dependency>
+               
+      <dependency>
+         <groupId>org.picketlink.extensions</groupId>
+         <artifactId>picketlink-extensions-core</artifactId>
+      </dependency>
 
+      <dependency>
+         <groupId>org.jboss.resteasy</groupId>
+         <artifactId>resteasy-jaxrs</artifactId>
+         <scope>provided</scope>
+      </dependency>     
+      
       <dependency>
          <groupId>org.dbunit</groupId>
          <artifactId>dbunit</artifactId>
@@ -70,14 +81,14 @@
       </dependency>
 
       <dependency>
-         <groupId>org.jboss</groupId>
-         <artifactId>jboss-common-core</artifactId>
-      </dependency>
-
-      <dependency>
          <groupId>javax.enterprise</groupId>
          <artifactId>cdi-api</artifactId>
          <scope>provided</scope>
+      </dependency>
+      
+      <dependency>
+         <groupId>org.jboss.spec.javax.transaction</groupId>
+         <artifactId>jboss-transaction-api_1.1_spec</artifactId>
       </dependency>
 
       <!-- Needed for running tests (you may also use TestNG) -->

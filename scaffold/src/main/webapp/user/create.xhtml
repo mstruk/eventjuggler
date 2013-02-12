@@ -56,22 +56,16 @@
 				<h:outputText/>
 				<h:outputLabel for="userBeanUserDescription" value="Description:"/>
 				<h:panelGroup>
-					<h:inputText id="userBeanUserDescription" value="#{userBean.user.description}"/>
+					<h:inputText id="userBeanUserDescription" maxLength="20000" value="#{userBean.user.description}"/>
 					<h:message for="userBeanUserDescription" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText/>
 				<h:outputLabel for="userBeanUserLogin" value="Login:"/>
 				<h:panelGroup>
-					<h:inputText id="userBeanUserLogin" value="#{userBean.user.login}"/>
+					<h:inputText id="userBeanUserLogin" required="true" value="#{userBean.user.login}"/>
 					<h:message for="userBeanUserLogin" styleClass="error"/>
 				</h:panelGroup>
-				<h:outputText/>
-				<h:outputLabel for="userBeanUserPassword" value="Password:"/>
-				<h:panelGroup>
-					<h:inputText id="userBeanUserPassword" value="#{userBean.user.password}"/>
-					<h:message for="userBeanUserPassword" styleClass="error"/>
-				</h:panelGroup>
-				<h:outputText/>
+				<h:outputText value="*"/>
 			</h:panelGrid>
 
 			<div class="buttons">

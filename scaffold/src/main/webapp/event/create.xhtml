@@ -112,7 +112,7 @@
 				<h:outputText/>
 				<h:outputLabel for="eventBeanEventDescription" value="Description:"/>
 				<h:panelGroup>
-					<h:inputText id="eventBeanEventDescription" value="#{eventBean.event.description}"/>
+					<h:inputText id="eventBeanEventDescription" maxLength="20000" value="#{eventBean.event.description}"/>
 					<h:message for="eventBeanEventDescription" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText/>
@@ -124,7 +124,7 @@
 				<h:outputText/>
 				<h:outputLabel for="eventBeanEventTags" value="Tags:"/>
 				<h:panelGroup>
-					<h:inputText id="eventBeanEventTags" value="#{eventBean.event.tags}"/>
+					<h:inputText id="eventBeanEventTags" maxLength="2000" value="#{eventBean.event.tags}"/>
 					<h:message for="eventBeanEventTags" styleClass="error"/>
 				</h:panelGroup>
 				<h:outputText/>

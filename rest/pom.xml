@@ -57,8 +57,9 @@
       </dependency>
 
       <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-security</artifactId>
+         <groupId>org.picketlink.extensions</groupId>
+         <artifactId>picketlink-extensions-core</artifactId>
+         <scope>provided</scope>
       </dependency>
 
       <dependency>
@@ -94,6 +95,11 @@
             <dependency>
                <groupId>org.eventjuggler</groupId>
                <artifactId>eventjuggler-common</artifactId>
+               <scope>compile</scope>
+            </dependency>
+            <dependency>
+               <groupId>org.picketlink.extensions</groupId>
+               <artifactId>picketlink-extensions-core</artifactId>
                <scope>compile</scope>
             </dependency>
             <dependency>

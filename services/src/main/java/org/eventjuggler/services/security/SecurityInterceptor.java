@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.eventjuggler.security;
+package org.eventjuggler.services.security;
 
 import java.util.List;
 
@@ -44,8 +44,8 @@ import org.picketlink.extensions.core.pbox.authorization.UserLoggedIn;
  * There's an implementation of this provided in picketlink-extensions (
  * {@link org.picketlink.extensions.core.rest.interceptors.SecurityInterceptor}), but the requiresAuthentication method is not
  * valid as it causes all rest resources (except the picketlink-extensions) to require authentication. This is a copy of that
- * class with a fixed implementation of the requiresAuthentication method
- * 
+ * class with a fixed implementation of the requiresAuthentication method. Until this issue is resolved this is a work-around
+ *
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
 @ApplicationScoped

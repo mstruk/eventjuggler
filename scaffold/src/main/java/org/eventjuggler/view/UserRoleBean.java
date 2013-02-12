@@ -24,9 +24,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.eventjuggler.model.UserRole;
 import org.eventjuggler.model.Role;
 import org.eventjuggler.model.User;
+import org.eventjuggler.model.UserRole;
 
 /**
  * Backing bean for UserRole entities.
@@ -44,268 +44,268 @@ import org.eventjuggler.model.User;
 public class UserRoleBean implements Serializable
 {
 
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-   /*
-    * Support creating and retrieving UserRole entities
-    */
+    /*
+     * Support creating and retrieving UserRole entities
+     */
 
-   private Long id;
+    private Long id;
 
-   public Long getId()
-   {
-      return this.id;
-   }
+    public Long getId()
+    {
+        return this.id;
+    }
 
-   public void setId(Long id)
-   {
-      this.id = id;
-   }
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
 
-   private UserRole userRole;
+    private UserRole userRole;
 
-   public UserRole getUserRole()
-   {
-      return this.userRole;
-   }
+    public UserRole getUserRole()
+    {
+        return this.userRole;
+    }
 
-   @Inject
-   private Conversation conversation;
+    @Inject
+    private Conversation conversation;
 
-   @PersistenceContext(unitName = "eventjuggler", type = PersistenceContextType.EXTENDED)
-   private EntityManager entityManager;
+    @PersistenceContext(unitName = "eventjuggler", type = PersistenceContextType.EXTENDED)
+    private EntityManager entityManager;
 
-   public String create()
-   {
+    public String create()
+    {
 
-      this.conversation.begin();
-      return "create?faces-redirect=true";
-   }
+        this.conversation.begin();
+        return "create?faces-redirect=true";
+    }
 
-   public void retrieve()
-   {
+    public void retrieve()
+    {
 
-      if (FacesContext.getCurrentInstance().isPostback())
-      {
-         return;
-      }
+        if (FacesContext.getCurrentInstance().isPostback())
+        {
+            return;
+        }
 
-      if (this.conversation.isTransient())
-      {
-         this.conversation.begin();
-      }
+        if (this.conversation.isTransient())
+        {
+            this.conversation.begin();
+        }
 
-      if (this.id == null)
-      {
-         this.userRole = this.example;
-      }
-      else
-      {
-         this.userRole = findById(getId());
-      }
-   }
+        if (this.id == null)
+        {
+            this.userRole = this.example;
+        }
+        else
+        {
+            this.userRole = findById(getId());
+        }
+    }
 
-   public UserRole findById(Long id)
-   {
+    public UserRole findById(Long id)
+    {
 
-      return this.entityManager.find(UserRole.class, id);
-   }
+        return this.entityManager.find(UserRole.class, id);
+    }
 
-   /*
-    * Support updating and deleting UserRole entities
-    */
+    /*
+     * Support updating and deleting UserRole entities
+     */
 
-   public String update()
-   {
-      this.conversation.end();
+    public String update()
+    {
+        this.conversation.end();
 
-      try
-      {
-         if (this.id == null)
-         {
-            this.entityManager.persist(this.userRole);
-            return "search?faces-redirect=true";
-         }
-         else
-         {
-            this.entityManager.merge(this.userRole);
-            return "view?faces-redirect=true&id=" + this.userRole.getId();
-         }
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
-
-   public String delete()
-   {
-      this.conversation.end();
-
-      try
-      {
-         this.entityManager.remove(findById(getId()));
-         this.entityManager.flush();
-         return "search?faces-redirect=true";
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
-
-   /*
-    * Support searching UserRole entities with pagination
-    */
-
-   private int page;
-   private long count;
-   private List<UserRole> pageItems;
-
-   private UserRole example = new UserRole();
-
-   public int getPage()
-   {
-      return this.page;
-   }
-
-   public void setPage(int page)
-   {
-      this.page = page;
-   }
-
-   public int getPageSize()
-   {
-      return 10;
-   }
-
-   public UserRole getExample()
-   {
-      return this.example;
-   }
-
-   public void setExample(UserRole example)
-   {
-      this.example = example;
-   }
-
-   public void search()
-   {
-      this.page = 0;
-   }
-
-   public void paginate()
-   {
-
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-
-      // Populate this.count
-
-      CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<UserRole> root = countCriteria.from(UserRole.class);
-      countCriteria = countCriteria.select(builder.count(root)).where(getSearchPredicates(root));
-      this.count = this.entityManager.createQuery(countCriteria).getSingleResult();
-
-      // Populate this.pageItems
-
-      CriteriaQuery<UserRole> criteria = builder.createQuery(UserRole.class);
-      root = criteria.from(UserRole.class);
-      TypedQuery<UserRole> query = this.entityManager.createQuery(criteria.select(root).where(getSearchPredicates(root)));
-      query.setFirstResult(this.page * getPageSize()).setMaxResults(getPageSize());
-      this.pageItems = query.getResultList();
-   }
-
-   private Predicate[] getSearchPredicates(Root<UserRole> root)
-   {
-
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-      List<Predicate> predicatesList = new ArrayList<Predicate>();
-
-      User user = this.example.getUser();
-      if (user != null)
-      {
-         predicatesList.add(builder.equal(root.get("user"), user));
-      }
-      Role role = this.example.getRole();
-      if (role != null)
-      {
-         predicatesList.add(builder.equal(root.get("role"), role));
-      }
-
-      return predicatesList.toArray(new Predicate[predicatesList.size()]);
-   }
-
-   public List<UserRole> getPageItems()
-   {
-      return this.pageItems;
-   }
-
-   public long getCount()
-   {
-      return this.count;
-   }
-
-   /*
-    * Support listing and POSTing back UserRole entities (e.g. from inside an
-    * HtmlSelectOneMenu)
-    */
-
-   public List<UserRole> getAll()
-   {
-
-      CriteriaQuery<UserRole> criteria = this.entityManager.getCriteriaBuilder().createQuery(UserRole.class);
-      return this.entityManager.createQuery(criteria.select(criteria.from(UserRole.class))).getResultList();
-   }
-
-   @Resource
-   private SessionContext sessionContext;
-
-   public Converter getConverter()
-   {
-
-      final UserRoleBean ejbProxy = this.sessionContext.getBusinessObject(UserRoleBean.class);
-
-      return new Converter()
-      {
-
-         @Override
-         public Object getAsObject(FacesContext context, UIComponent component, String value)
-         {
-
-            return ejbProxy.findById(Long.valueOf(value));
-         }
-
-         @Override
-         public String getAsString(FacesContext context, UIComponent component, Object value)
-         {
-
-            if (value == null)
+        try
+        {
+            if (this.id == null)
             {
-               return "";
+                this.entityManager.persist(this.userRole);
+                return "search?faces-redirect=true";
+            }
+            else
+            {
+                this.entityManager.merge(this.userRole);
+                return "view?faces-redirect=true&id=" + this.userRole.getId();
+            }
+        }
+        catch (Exception e)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return null;
+        }
+    }
+
+    public String delete()
+    {
+        this.conversation.end();
+
+        try
+        {
+            this.entityManager.remove(findById(getId()));
+            this.entityManager.flush();
+            return "search?faces-redirect=true";
+        }
+        catch (Exception e)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return null;
+        }
+    }
+
+    /*
+     * Support searching UserRole entities with pagination
+     */
+
+    private int page;
+    private long count;
+    private List<UserRole> pageItems;
+
+    private UserRole example = new UserRole();
+
+    public int getPage()
+    {
+        return this.page;
+    }
+
+    public void setPage(int page)
+    {
+        this.page = page;
+    }
+
+    public int getPageSize()
+    {
+        return 10;
+    }
+
+    public UserRole getExample()
+    {
+        return this.example;
+    }
+
+    public void setExample(UserRole example)
+    {
+        this.example = example;
+    }
+
+    public void search()
+    {
+        this.page = 0;
+    }
+
+    public void paginate()
+    {
+
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+
+        // Populate this.count
+
+        CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
+        Root<UserRole> root = countCriteria.from(UserRole.class);
+        countCriteria = countCriteria.select(builder.count(root)).where(getSearchPredicates(root));
+        this.count = this.entityManager.createQuery(countCriteria).getSingleResult();
+
+        // Populate this.pageItems
+
+        CriteriaQuery<UserRole> criteria = builder.createQuery(UserRole.class);
+        root = criteria.from(UserRole.class);
+        TypedQuery<UserRole> query = this.entityManager.createQuery(criteria.select(root).where(getSearchPredicates(root)));
+        query.setFirstResult(this.page * getPageSize()).setMaxResults(getPageSize());
+        this.pageItems = query.getResultList();
+    }
+
+    private Predicate[] getSearchPredicates(Root<UserRole> root)
+    {
+
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        List<Predicate> predicatesList = new ArrayList<Predicate>();
+
+        User user = this.example.getUser();
+        if (user != null)
+        {
+            predicatesList.add(builder.equal(root.get("user"), user));
+        }
+        Role role = this.example.getRole();
+        if (role != null)
+        {
+            predicatesList.add(builder.equal(root.get("role"), role));
+        }
+
+        return predicatesList.toArray(new Predicate[predicatesList.size()]);
+    }
+
+    public List<UserRole> getPageItems()
+    {
+        return this.pageItems;
+    }
+
+    public long getCount()
+    {
+        return this.count;
+    }
+
+    /*
+     * Support listing and POSTing back UserRole entities (e.g. from inside an
+     * HtmlSelectOneMenu)
+     */
+
+    public List<UserRole> getAll()
+    {
+
+        CriteriaQuery<UserRole> criteria = this.entityManager.getCriteriaBuilder().createQuery(UserRole.class);
+        return this.entityManager.createQuery(criteria.select(criteria.from(UserRole.class))).getResultList();
+    }
+
+    @Resource
+    private SessionContext sessionContext;
+
+    public Converter getConverter()
+    {
+
+        final UserRoleBean ejbProxy = this.sessionContext.getBusinessObject(UserRoleBean.class);
+
+        return new Converter()
+        {
+
+            @Override
+            public Object getAsObject(FacesContext context, UIComponent component, String value)
+            {
+
+                return ejbProxy.findById(Long.valueOf(value));
             }
 
-            return String.valueOf(((UserRole) value).getId());
-         }
-      };
-   }
+            @Override
+            public String getAsString(FacesContext context, UIComponent component, Object value)
+            {
 
-   /*
-    * Support adding children to bidirectional, one-to-many tables
-    */
+                if (value == null)
+                {
+                    return "";
+                }
 
-   private UserRole add = new UserRole();
+                return String.valueOf(((UserRole) value).getId());
+            }
+        };
+    }
 
-   public UserRole getAdd()
-   {
-      return this.add;
-   }
+    /*
+     * Support adding children to bidirectional, one-to-many tables
+     */
 
-   public UserRole getAdded()
-   {
-      UserRole added = this.add;
-      this.add = new UserRole();
-      return added;
-   }
+    private UserRole add = new UserRole();
+
+    public UserRole getAdd()
+    {
+        return this.add;
+    }
+
+    public UserRole getAdded()
+    {
+        UserRole added = this.add;
+        this.add = new UserRole();
+        return added;
+    }
 }
