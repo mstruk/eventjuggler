@@ -4,7 +4,7 @@ function EventListCtrl($scope, Event, $routeParams, $location) {
     $scope.events = Event.getEvents(function loadUntilPageIsFull(events) {
         $scope.events = events;
         $scope.$watch('events', function() {
-            if ($("body").height() < $(window).height()) {
+            if ($("body").height() < $(window).height() && !$scope.events.completed) {
                 $scope.events.loadNext(loadUntilPageIsFull);
             }
         });
@@ -12,6 +12,7 @@ function EventListCtrl($scope, Event, $routeParams, $location) {
 
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            $scope.loading = true;
             $scope.events.loadNext();
         }
     });
@@ -23,7 +24,6 @@ function EventListCtrl($scope, Event, $routeParams, $location) {
         if ($location.path() != currentPath) {
             $(window).unbind("scroll");
         }
-        ;
     });
 }
 

@@ -25,17 +25,38 @@ eventjugglerModule.filter('substring', function() {
         if (!text) {
             return text;
         }
-        
+
         if (!length) {
             length = 100;
         }
-        
+
         text = text.replace(/<(?:.|\n)*?>/gm, '');
-        
+
         if (text.length < 100) {
             return text;
         } else {
             return text.substring(0, length) + "...";
         }
+    };
+});
+
+eventjugglerModule.config(function($httpProvider) {
+    $httpProvider.responseInterceptors.push('loadingInterceptor');
+    var spinnerFunction = function(data, headersGetter) {
+        $('#loading').show();
+        return data;
+    };
+    $httpProvider.defaults.transformRequest.push(spinnerFunction);
+});
+
+eventjugglerModule.factory('loadingInterceptor', function($q, $window) {
+    return function(promise) {
+        return promise.then(function(response) {
+            $('#loading').hide();
+            return response;
+        }, function(response) {
+            $('#loading').hide();
+            return $q.reject(response);
+        });
     };
 });

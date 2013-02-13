@@ -79,7 +79,7 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
     return user;
 });
 
-eventjugglerServices.service('Event', function($resource, User, $http, $routeParams) {
+eventjugglerServices.service('Event', function($resource, User, $http, $routeParams, $rootScope) {
     var eventsRes = $resource('/eventjuggler-rest/event/:eventId');
     var mineRes = $resource('/eventjuggler-rest/event/mine');
     var rsvpRes = $resource('/eventjuggler-rest/event/:eventId/rsvp');
@@ -88,6 +88,7 @@ eventjugglerServices.service('Event', function($resource, User, $http, $routePar
         var events = [];
 
         events.loading = false;
+        events.completed = false;
 
         events.parameters = {
             first : 0,
@@ -100,22 +101,23 @@ eventjugglerServices.service('Event', function($resource, User, $http, $routePar
         }
 
         events.loadNext = function(success) {
+            if (events.loading || events.completed)
+                return;
+
+            events.loading = true;
+
             eventsRes.query(events.parameters, function(data) {
-                if (events.loading)
-                    return;
+                if (data.length > 0) {
+                    var l = events.length;
+                    for ( var i = 0; i < data.length; i++) {
+                        events[i + l] = data[i];
+                    }
 
-                events.loading = true;
-
-                if (data.length == 0) {
-                    return;
+                    events.parameters.first += events.parameters.max;
+                } else {
+                    events.completed = true;
                 }
-
-                var l = events.length;
-                for ( var i = 0; i < data.length; i++) {
-                    events[i + l] = data[i];
-                }
-
-                events.parameters.first += events.parameters.max;
+                
                 events.loading = false;
 
                 if (success) {
