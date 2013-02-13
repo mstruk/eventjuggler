@@ -45,7 +45,7 @@
          <artifactId>eventjuggler-rest</artifactId>
          <type>war</type>
       </dependency>
-       <dependency>
+      <dependency>
          <groupId>org.eventjuggler</groupId>
          <artifactId>eventjuggler-scaffold</artifactId>
          <type>war</type>
@@ -54,7 +54,7 @@
          <groupId>org.eventjuggler</groupId>
          <artifactId>eventjuggler-services</artifactId>
          <type>ejb</type>
-      </dependency>  
+      </dependency>
       <dependency>
          <groupId>org.eventjuggler</groupId>
          <artifactId>eventjuggler-web-js</artifactId>
@@ -65,12 +65,35 @@
          <artifactId>eventjuggler-web-jsf</artifactId>
          <type>war</type>
       </dependency>
+      <dependency>
+         <groupId>org.picketlink.extensions</groupId>
+         <artifactId>picketlink-extensions-core</artifactId>
+      </dependency>
    </dependencies>
 
    <build>
       <finalName>${project.artifactId}</finalName>
-
       <plugins>
+         <plugin>
+            <artifactId>maven-ear-plugin</artifactId>
+            <configuration>
+               <!-- Include picketlink-extensions as an ejb for beans to work properly -->
+               <artifactTypeMappings>
+                  <artifactTypeMapping type="jar" mapping="ejb" />
+               </artifactTypeMappings>
+               <modules>
+                  <ejbModule>
+                     <groupId>org.picketlink.extensions</groupId>
+                     <artifactId>picketlink-extensions-core</artifactId>
+                  </ejbModule>
+                  <jarModule>
+                     <groupId>org.picketlink.extensions</groupId>
+                     <artifactId>picketlink-extensions-core</artifactId>
+                     <excluded>true</excluded>
+                  </jarModule>
+               </modules>
+            </configuration>
+         </plugin>
          <plugin>
             <groupId>org.jboss.as.plugins</groupId>
             <artifactId>jboss-as-maven-plugin</artifactId>
