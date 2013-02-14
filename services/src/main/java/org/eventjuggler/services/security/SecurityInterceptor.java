@@ -27,18 +27,14 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 
-import org.apache.http.HttpStatus;
 import org.jboss.resteasy.annotations.interception.ServerInterceptor;
 import org.jboss.resteasy.core.ResourceMethod;
 import org.jboss.resteasy.core.ServerResponse;
 import org.jboss.resteasy.spi.Failure;
 import org.jboss.resteasy.spi.HttpRequest;
 import org.jboss.resteasy.spi.interception.PreProcessInterceptor;
-import org.picketbox.jaxrs.model.AuthenticationResponse;
 import org.picketlink.authentication.AuthenticationException;
 import org.picketlink.extensions.core.pbox.PicketBoxIdentity;
-import org.picketlink.extensions.core.pbox.authorization.RolesAllowed;
-import org.picketlink.extensions.core.pbox.authorization.UserLoggedIn;
 
 /**
  * There's an implementation of this provided in picketlink-extensions (
@@ -61,26 +57,13 @@ public class SecurityInterceptor implements PreProcessInterceptor {
     public ServerResponse preProcess(HttpRequest request, ResourceMethod method) throws Failure, WebApplicationException {
         ServerResponse response = null;
 
-        if (requiresAuthentication(method) && !this.identity.isLoggedIn()) {
-            boolean isLoggedIn = false;
+        if (!this.identity.isLoggedIn()) {
             String token = getToken(request);
-
             if (token != null) {
                 try {
-                    isLoggedIn = identity.restoreSession(token);
+                    identity.restoreSession(token);
                 } catch (AuthenticationException e) {
-
                 }
-            }
-
-            if (!isLoggedIn) {
-                AuthenticationResponse authcResponse = new AuthenticationResponse();
-
-                authcResponse.setLoggedIn(false);
-
-                response = new ServerResponse();
-                response.setEntity(authcResponse);
-                response.setStatus(HttpStatus.SC_FORBIDDEN);
             }
         }
 
@@ -96,11 +79,6 @@ public class SecurityInterceptor implements PreProcessInterceptor {
         }
 
         return token;
-    }
-
-    private boolean requiresAuthentication(ResourceMethod method) {
-        return method.getMethod().getAnnotation(RolesAllowed.class) != null
-                || method.getMethod().getAnnotation(UserLoggedIn.class) != null;
     }
 
 }
