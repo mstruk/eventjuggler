@@ -69,17 +69,15 @@ function UserCtrl($scope, User) {
 }
 
 function RegisterCtrl($scope, User) {
-    $scope.user = {
-        userName : User.userName,
-        password : User.password
-    };
+    $scope.u = {};
 
     $scope.register = function() {
         $scope.registered = false;
         $scope.failed = false;
 
-        User.register($scope.user, function(response) {
+        User.register($scope.u, function(response) {
             $scope.registered = true;
+            $scope.u = {};
         }, function(status) {
             $scope.failed = true;
             $scope.failedMessage = status;
