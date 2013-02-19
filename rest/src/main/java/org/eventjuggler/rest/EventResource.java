@@ -24,6 +24,8 @@ package org.eventjuggler.rest;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -33,8 +35,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 
+import org.eventjuggler.analytics.Analytics;
+import org.eventjuggler.analytics.AnalyticsQuery;
 import org.eventjuggler.model.User;
 import org.eventjuggler.services.EventProperty;
 import org.eventjuggler.services.EventQuery;
@@ -46,8 +52,13 @@ import org.picketlink.extensions.core.pbox.authorization.UserLoggedIn;
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-@Path("/event")
+@Path("/")
 public class EventResource {
+
+    private Analytics analytics;
+
+    @Inject
+    private Instance<Analytics> analyticsInstance;
 
     @Inject
     private EventService eventService;
@@ -58,15 +69,18 @@ public class EventResource {
     @Inject
     private UserService userService;
 
+    @Context
+    private UriInfo uriInfo;
+
     @PUT
-    @Path("/")
+    @Path("/event")
     @Consumes(MediaType.APPLICATION_JSON)
     public void createEvent(Event event) {
         eventService.create(event.toInternal());
     }
 
     @GET
-    @Path("/{id}/rsvp")
+    @Path("/rsvp/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @UserLoggedIn
     public void createRSVP(@PathParam("id") long eventId) {
@@ -74,27 +88,79 @@ public class EventResource {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/event/{id}")
     public void deleteEvent(@PathParam("id") long eventId) {
         eventService.remove(eventService.getEvent(eventId));
     }
 
     @DELETE
-    @Path("/{id}/rsvp")
+    @Path("/rsvp/{id}")
     @UserLoggedIn
     public void deleteRSVP(@PathParam("id") long eventId) {
         eventService.resign(eventId, getUser());
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/event/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public EventDetails getEvent(@PathParam("id") long eventId) {
         return new EventDetails(eventService.getEvent(eventId));
     }
 
     @GET
-    @Path("/")
+    @Path("/events/popular")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Event> getPopular(@QueryParam("max") Integer maxResult) {
+        List<Event> events = new LinkedList<Event>();
+
+        if (analytics != null) {
+            AnalyticsQuery query = analytics.createQuery().page(uriInfo.getBaseUri().getPath() + "event/%");
+
+            if (maxResult == null) {
+                maxResult = 5;
+            }
+
+            List<String> popularPage = query.getPopularPages();
+            for (String p : popularPage) {
+                long eventId = Long.parseLong(p.substring(p.lastIndexOf('/') + 1));
+                org.eventjuggler.model.Event e = eventService.getEvent(eventId);
+                if (e != null) {
+                    events.add(new Event(e));
+                }
+            }
+        }
+
+        return events;
+    }
+
+    @GET
+    @Path("/events/related/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Event> getRelated(@PathParam("id") long eventId, @QueryParam("max") Integer maxResult) {
+        List<Event> events = new LinkedList<Event>();
+
+        if (analytics != null) {
+            AnalyticsQuery query = analytics.createQuery().page(uriInfo.getBaseUri().getPath() + "event/%");
+
+            if (maxResult == null) {
+                maxResult = 5;
+            }
+
+            List<String> popularPage = query.getRelatedPages(uriInfo.getBaseUri().getPath() + "event/" + eventId);
+            for (String p : popularPage) {
+                long relatedEventId = Long.parseLong(p.substring(p.lastIndexOf('/') + 1));
+                org.eventjuggler.model.Event e = eventService.getEvent(relatedEventId);
+                if (e != null) {
+                    events.add(new Event(e));
+                }
+            }
+        }
+
+        return events;
+    }
+
+    @GET
+    @Path("/events")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Event> getEvents(@QueryParam("first") Integer firstResult, @QueryParam("max") Integer maxResult,
             @QueryParam("query") String query, @QueryParam("tags") String tags, @QueryParam("sort") String sortBy,
@@ -129,7 +195,7 @@ public class EventResource {
     }
 
     @GET
-    @Path("/mine")
+    @Path("/events/mine")
     @Produces(MediaType.APPLICATION_JSON)
     @UserLoggedIn
     public List<Event> getMyEvents() {
@@ -142,6 +208,13 @@ public class EventResource {
 
     private User getUser() {
         return userService.getUser(identity.getUser().getLoginName());
+    }
+
+    @PostConstruct
+    public void init() {
+        if (!analyticsInstance.isUnsatisfied()) {
+            analytics = analyticsInstance.get();
+        }
     }
 
 }

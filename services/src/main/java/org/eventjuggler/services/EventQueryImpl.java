@@ -21,6 +21,7 @@
  */
 package org.eventjuggler.services;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -28,6 +29,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.eventjuggler.model.Event;
@@ -40,7 +42,7 @@ public class EventQueryImpl implements EventQuery {
 
     private boolean ascending;
 
-    private EntityManager em;
+    private final EntityManager em;
     private int firstResult = -1;
 
     private int maxResult = -1;
@@ -53,25 +55,33 @@ public class EventQueryImpl implements EventQuery {
         this.em = em;
     }
 
+    @Override
     public EventQueryImpl firstResult(int firstResult) {
         this.firstResult = firstResult;
         return this;
     }
 
+    @Override
     public List<Event> getEvents() {
         CriteriaBuilder b = em.getCriteriaBuilder();
         CriteriaQuery<Event> c = b.createQuery(Event.class);
         Root<Event> e = c.from(Event.class);
 
+        List<Predicate> predicates = new LinkedList<Predicate>();
+
         if (query != null) {
-            c.where(b.or(b.like(b.upper(e.get(Event_.title)), query), b.like(b.upper(e.get(Event_.description)), query)));
+            Predicate queryPredicate = b.or(b.like(b.upper(e.get(Event_.title)), query), b.like(b.upper(e.get(Event_.description)), query));
+            predicates.add(queryPredicate);
         }
 
         if (tags != null) {
             for (String t : tags) {
-                c.where(b.like(b.upper(e.get(Event_.tags)), "%" + t.toUpperCase() + "%"));
+                Predicate tagPredicate = b.like(b.upper(e.get(Event_.tags)), "%" + t.toUpperCase() + "%");
+                predicates.add(tagPredicate);
             }
         }
+
+        c.where(predicates.toArray(new Predicate[predicates.size()]));
 
         if (sort != null) {
             Path<?> p = null;
@@ -102,16 +112,19 @@ public class EventQueryImpl implements EventQuery {
         return q.getResultList();
     }
 
+    @Override
     public EventQueryImpl maxResult(int maxResult) {
         this.maxResult = maxResult;
         return this;
     }
 
+    @Override
     public EventQueryImpl query(String query) {
         this.query = "%" + query.toUpperCase() + "%";
         return this;
     }
 
+    @Override
     public EventQueryImpl sortBy(EventProperty sort, boolean ascending) {
         this.sort = sort;
         this.ascending = ascending;

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<jboss-deployment-structure>
+	<deployment>
+		<dependencies>
+			<module name="org.eventjuggler.analytics" optional="true" />
+		</dependencies>
+	</deployment>
+	<sub-deployment name="eventjuggler-rest.war">
+		<dependencies>
+			<module name="org.eventjuggler.analytics" optional="true" />
+		</dependencies>
+	</sub-deployment>
+</jboss-deployment-structure>

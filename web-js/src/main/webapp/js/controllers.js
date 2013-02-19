@@ -9,6 +9,8 @@ function EventListCtrl($scope, Event, $routeParams, $location) {
             }
         });
     });
+    
+    $scope.popular = Event.getEventsPopular();
 
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
@@ -40,7 +42,9 @@ function EventMineCtrl($scope, Event) {
 
 function EventDetailCtrl($scope, $routeParams, Event, User) {
     $scope.event = Event.getEvent($routeParams.eventId);
-
+    
+    $scope.related = Event.getEventsRelated($routeParams.eventId);
+    
     $scope.attend = function() {
         Event.attend($scope.event.id, function() {
             $scope.event = Event.getEvent($routeParams.eventId);

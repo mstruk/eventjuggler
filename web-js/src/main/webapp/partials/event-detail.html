@@ -1,26 +1,45 @@
-<h1>{{event.title}}</h1>
-<h2>{{event.time | date:'mediumDate'}}</h2>
-<h3>{{event.time | date:'shortTime'}}</h3>
+<div class="container">
+    <h1>{{event.title}}</h1>
+    <div class="span8">
+        <h2>{{event.time | date:'mediumDate'}}</h2>
+        <h3>{{event.time | date:'shortTime'}}</h3>
 
-<p>{{event.attendingCount}} attending</p>
+        <p>{{event.attendingCount}} attending</p>
+        <p ng-show="user.loggedIn && !event.attending">
+            <button class="btn" ng-click="attend()">Attend</button>
+        </p>
+        <p ng-show="user.loggedIn && event.attending">
+            <button class="btn" ng-click="resign()">Resign</button>
+        </p>
 
-<p ng-show="user.loggedIn && !event.attending"><button class="btn" ng-click="attend()">Attend</button></p>
-<p ng-show="user.loggedIn && event.attending"><button class="btn" ng-click="resign()">Resign</button></p>
+        <p>
+            <img ng-src="{{event.imageId}}"></img>
+        </p>
+        <div ng-bind-html-unsafe="event.description"></div>
 
-<p><img ng-src="{{event.imageId}}"></img></p>
-<div ng-bind-html-unsafe="event.description"></div>
+        <hr />
 
-<hr/>
+        <h2>{{event.location.name}}</h2>
+        <p>{{event.location.city}}, {{event.location.country}}</p>
 
-<h2>{{event.location.name}}</h2>
-<p>{{event.location.city}}, {{event.location.country}}</p>
+        <hr />
 
-<hr/>
+        <h2>{{event.organizerGroup.name}}</h2>
 
-<h2>{{event.organizerGroup.name}}</h2>
+        <div ng-bind-html-unsafe="event.organizerGroup.description"></div>
 
-<div ng-bind-html-unsafe="event.organizerGroup.description"></div>
+        <hr />
 
-<hr/>
-
-<p><a ng-repeat="tag in event.tags" class="btn" href="#/events?tags={{tag}}" >{{tag}}</a></p>
+        <p>
+            <a ng-repeat="tag in event.tags" class="btn" href="#/events?tags={{tag}}">{{tag}}</a>
+        </p>
+    </div>
+    <div class="span3">
+        <h2>Related events</h2>
+        <div class="span3">
+            <ul>
+                <li ng-repeat="event in related"><a href="#/events/{{event.id}}">{{event.title}}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
