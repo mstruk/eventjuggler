@@ -1,38 +1,55 @@
-<div class="hero-unit">
-    <h1>EventJuggler</h1>
-    <p>Welcome to EventJuggler</p>
-</div>
-
 <div class="container">
-    <div class="span8">
-        <div ng-repeat="event in events" class="span3 well">
-            <div class="span1">
-                <div ng-background-image="event.imageId" style="width: 200px; height: 150px;"></div>
+    <section>
+        <hgroup class="clearfix">
+            <h3>Upcoming events</h3>
+            <form id="events-filter">
+                <fieldset>
+                    <legend>Filter events</legend>
+                    <label for="distance">within</label>
+                    <div class="selectors">
+                        <a href="#" class="selected">any distance</a>
+                        <i class="icon-angle-down"></i>
+                    </div>
+                    <label for="city">of</label>
+                    <div class="selectors">
+                        <a href="#" class="selected">Florianopolis, Brazil</a>
+                        <i class="icon-angle-down"></i>
+                    </div>
+                </fieldset>
+            </form>
+        </hgroup>
+        
+        <article class="ng-scope event" ng-repeat="event in events">
+            <div class="left">
+                <span class="date">{{event.time | date}}</span>
+                <span class="dateShadow"></span>
+                <a href="#/events/{{event.id}}" class="mask clearfix">
+                    <img ng-background-image="event.imageId" alt="{{event.title}}">
+                </a>
+                <span class="locality"><a href="#">{{event.location.city}}</a>, <a href="#">{{event.location.country | uppercase}}</a></span>
             </div>
-            <div class="span3">
-                <p>
-                    <a href="#/events/{{event.id}}">{{event.title}}</a>
-                </p>
-                <p>{{event.time | date}}</p>
-
+            <div class="right">
+                <h4><a href="#/events/{{event.id}}">{{event.title}}</a></h4>
                 <p>{{event.description | substring}}</p>
-
-                <p>{{event.location.city}}</p>
-
-                <p>
-                    <a ng-repeat="tag in event.tags" class="btn" href="#/events?tags={{tag}}">{{tag}}</a>
-                </p>
-
+                <nav class="tags">
+                    <ul>
+                        <li ng-repeat="tag in event.tags"><a href="#">{{tag}}</a></li>
+                    </ul>
+                </nav>
                 <p ng-show="event.attendingCount > 0">{{event.attendingCount}} attending</p>
             </div>
-        </div>
-    </div>
-    <div class="span3">
-        <h2>Popular events</h2>
-        <div class="span3">
+        </article>
+    
+    </section>
+    
+    <section>
+        <hgroup class="clearfix">
+            <h3>Popular events</h3>
+        </hgroup>    
+        <nav class="tags">
             <ul>
                 <li ng-repeat="event in popular"><a href="#/events/{{event.id}}">{{event.title}}</a></li>
             </ul>
-        </div>
-    </div>
-</div>
+        </nav>
+    </section>    
+</div><!-- End .container -->

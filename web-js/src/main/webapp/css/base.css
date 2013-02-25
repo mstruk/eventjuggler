@@ -1,0 +1,331 @@
+/* General styles */
+
+body {
+    font-family: "Open Sans", Helvetica, sans-serif;
+    font-size: 62.5%;
+    color: #2d2d2d;
+}
+
+.hiddenElement {display: none;}
+
+li {list-style: none;}
+
+a:hover {text-decoration: none;}
+
+input[type="search"] {color: #2D2D2D;}
+input[type="search"]:-moz-placeholder {color: #aaa;}
+
+
+.left {float: left;}
+.right {float: right;}
+
+.container {width: 120em;}
+
+
+/* Top */
+
+#top {
+    background-color: #2393c8, transparent; /* Make it with CSS or replace by SVG */
+    background-image: linear-gradient(rgba(0,0,0,0) 91%, rgba(0,0,0,0.1) 100%), url(img/banner-bg.png) ;
+    background-image: -webkit-linear-gradient(rgba(0,0,0,0) 91%, rgba(0,0,0,0.1) 100%), url(img/banner-bg.png) ;
+    background-image: -moz-linear-gradient(rgba(0,0,0,0) 91%, rgba(0,0,0,0.2) 100%), url(img/banner-bg.png) ;
+    background-repeat: repeat;
+    background-position: left top;
+    border-top: 5px solid rgba(0,0,0,0.50);
+    padding-top: 1em;
+    padding-bottom: 6em;
+}
+
+header nav li {float: left;}
+
+header nav li+li {margin-left: 3em;}
+
+header nav a {
+    font-size: 1.8em;
+    color: #fff;
+    font-weight: 100;
+    margin-top: 0.35em;
+    display: block;
+}
+
+header nav a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+header form {position: relative;}
+
+header label {
+    position: absolute;
+    left: 0.6em;
+    top: 0.4em;
+}
+
+header #searchEvents {
+    border: none;
+    border-radius: 0.3125em;
+    font-size: 1.6em;
+    font-family: "Lucida Grande", Lucida, sans-serif;
+    margin-bottom: 2em;
+    padding-left: 2em;
+    height: 1.5em;
+    width: 11em;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+
+header #searchEvents:focus {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 255, 255, 0.75);
+    outline: 0 none;
+}
+
+header i.icon-search {
+    color: #b2afaf;
+    font-size: 1.6em;
+    line-height: 1.4em;
+}
+
+#banner h1 {
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+#banner h1 a {
+    width: 29.9em;
+    height: 5.8em;
+    display: inline-block;
+    text-indent: -99999em;
+    background: url(img/logo.png) no-repeat left top; /* Replace by SVG */
+}
+
+#banner h2 {
+    font-size: 3.8em;
+    font-weight: 100;
+    text-align: center;
+    color: #fff;
+}
+
+
+/* Content */
+
+section {
+    clear: both;
+    padding-top: 3.6em;
+}
+
+#content hgroup {
+    background: url(img/heading-bg.png) repeat-x left 0.3em; /* Test with Retina */
+    width: 100%;
+    margin-bottom: 3em;
+}
+
+#content hgroup h3 {
+    font-size: 2.6em;
+    text-transform: uppercase;
+    color: #868686;
+    margin-left: 0.76923076923077em;
+    padding-left: 0.38461538461538em;
+    padding-right: 0.38461538461538em;
+    background-color: #fff;
+    float: left;
+    padding-top: 0.2em;
+}
+
+#events-filter {
+    float: right;
+    margin-right: 2em;
+    padding-left: 1em;
+    background-color: #fff;
+}
+
+#events-filter legend {display: none;}
+
+#events-filter label {
+    font-size: 1.6em;
+    color: #868686;
+}
+
+#events-filter label,
+#events-filter .selectors {display: inline-block;}
+
+#events-filter .selectors {
+    margin-left: 1em;
+    margin-right: 1em;
+    position: relative;
+}
+
+#events-filter .selected {
+    font-size: 1.5em;
+    color: #2d2d2d;
+    background: linear-gradient(#fff, #ededed);
+    background: -moz-linear-gradient(#fff, #ededed);
+    background: -webkit-linear-gradient(#fff, #ededed);
+    border: 1px solid #d6d6d6;
+    border-radius: 0.33333333333333em;
+    padding-left: 0.8em;
+    padding-right: 2.93333333333333em;
+    line-height: 2.26666666666667em;
+    display: inline-block;
+    font-family: "Lucida Grande", Lucida, sans-serif;
+}
+
+#events-filter .selectors i {
+    position: absolute;
+    font-size: 1.6em;
+    right: 0.625em;
+    top: 10px;
+    color: #2d2d2d;
+}
+
+
+/* Events list */
+
+article.ng-scope {
+    float: left;
+    width: 48.333333333333%;
+    margin-bottom: 4em;
+}
+
+article.ng-scope:nth-child(even) {
+    clear: left;
+    margin-right: 3.333333333334%;
+}
+
+.ng-scope .left {
+    width: 37.241379310345%;
+    position: relative;
+}
+
+.ng-scope:nth-child(odd) .left {
+    margin-left: 1.724137931034%;
+}
+
+span.date {
+    font-weight: bold;
+    font-size: 1.8em;
+    color: #696969;
+    display: inline-block;
+    line-height: 1.83333333333333em;
+    text-shadow: 0px 1px 0px #fff;
+    background-color: rgba(227,226,223,0.95);
+    padding-left: 1.11111111111111em;
+    min-width: 6em;
+    position: absolute;
+    z-index: 10;    
+}
+
+span.dateShadow {
+    border-color: #b2b0ad transparent transparent transparent;
+    border-style: solid;
+    border-width: 3em;
+    position: absolute;
+    top: 3.3em;
+}
+
+.mask {
+    width: 20em;
+    height: 15em;
+    position: relative;
+    overflow: hidden;
+    top: 1.6em;
+    left: 1.6em;
+    border-left: 1px solid #fff;
+}
+
+span.locality {
+    background-color: rgba(0,0,0,0.7);
+    line-height: 1.66666666666667em;
+    font-size: 1.8em;
+    color: #fff;
+    padding-right: 0.55555555555556em;
+    padding-left: 1.11111111111111em;
+    display: block;
+    position: absolute;
+    top: 7.44444444444444em;
+    right: 0.11111111111111em;
+}
+
+span.locality a {color: #fff;}
+
+.event .right {width: 57.586206896552%;}
+
+.event h4 {
+    font-size: 3em;
+    margin-top: 0.4em;
+    margin-bottom: 0.66666666666667em;
+}
+
+.event h4 a {color: #2d2d2d;}
+
+.event p {
+    color: #a4a4a4;
+    font-family: "Lucida Grande", Lucida, sans-serif;
+    font-size: 1.6em;
+    line-height: 1.25em;
+    margin-bottom: 1.25em;
+}
+
+
+/* Tags */
+
+section+section {
+    padding-top: 1em;
+}
+
+nav.tags li {
+    float: left;
+    margin-right: 1em;
+    position: relative;
+    background: url(img/tag-neb.svg) no-repeat left top;
+}
+
+nav.tags a {
+    font-family: "Lucida Grande", Lucida, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #909090;
+    background-color: #f4f4f4;
+    border: 1px solid #d6d6d6;
+    border-left: none;
+    line-height: 1.83333333333333em;
+    display: inline-block;
+    padding-right: 0.66666666666667em;
+    padding-left: 0.5em;
+    margin-left: 1em;
+    border-radius: 0 0.16666666666667em 0.16666666666667em 0;
+}
+
+nav.tags a span {
+    font-weight: normal;
+    color: #acacac;
+    padding-left: 0.3em;
+}
+
+
+/* Footer */
+
+footer {
+    margin-top: 6em;
+    margin-bottom: 3em;
+}
+
+footer p {
+    text-align: center;
+    color: #c3c2c2;
+    font-size: 1.3em;
+}
+
+
+/* Clearfix */
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}

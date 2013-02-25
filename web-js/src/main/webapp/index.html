@@ -1,107 +1,109 @@
 <!doctype html>
 <html lang="en" ng-app="eventjuggler">
-<head>
-<meta charset="utf-8">
-<title>EventJuggler</title>
 
-<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <head>
+        <meta charset="utf-8">
+        <title>EventJuggler</title>
+        
+        <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="css/reset.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        
+        <script src="lib/angular/angular.js"></script>
+        <script src="lib/angular/angular-cookies.js"></script>
+        <script src="lib/angular/angular-resource.js"></script>
+        
+        <script src="lib/jquery/jquery-1.9.0.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.js"></script>
+        
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/services.js"></script>
+    </head>
 
-<script src="lib/angular/angular.js"></script>
-<script src="lib/angular/angular-cookies.js"></script>
-<script src="lib/angular/angular-resource.js"></script>
+    <body ng-controller="UserCtrl">
+        <div id="top">
+            <header class="container">
+                <nav>
+                    <ul class="left">
+                        <li>
+                            <a href="#/events">Explore events</a>
+                        </li>
+                        <li ng-show="user.loggedIn" class="hiddenElement">
+                            <a href="#/events/mine">Your events</a>
+                        </li>
+                    </ul>
+                    <ul class="right">
+                        <li>
+                            <form ng-controller="EventSearchCtrl" ng-submit="search()">
+                                <fieldset>
+                                    <label for="searchEvents"><i class="icon-search"><span class="hiddenElement">Search for:</span></i></label>
+                                    <input id="searchEvents" type="search" placeholder="Search events" ng-model="query"/>
+                                    <button class="btn hiddenElement" type="button">Search</button>
+                                </fieldset>    
+                            </form>
+                        </li>
 
-<script src="lib/jquery/jquery-1.9.0.js"></script>
-<script src="lib/bootstrap/js/bootstrap.js"></script>
-
-<script src="js/app.js"></script>
-<script src="js/controllers.js"></script>
-<script src="js/services.js"></script>
-
-<style type="text/css">
-body {
-	padding-top: 60px;
-	padding-bottom: 40px;
-}
-</style>
-</head>
-<body ng-controller="UserCtrl">
-
-   <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-         <div class="container">
-            <ul class="nav">
-               <li>
-                  <a href="#/events">Explore events</a>
-               </li>
-               <li ng-show="user.loggedIn">
-                  <a href="#/events/mine">Your events</a>
-               </li>
-               <li class="divider-vertical"></li>
-               <li>
-                  <form class="navbar-form" ng-controller="EventSearchCtrl" ng-submit="search()">
-                     <div class="input-append">
-                        <input class="span2" id="searchEvents" type="text" placeholder="Search events" ng-model="query"></input>
-                        <button class="btn" type="button">
-                           <i class="icon-search"></i>
-                        </button>
-                     </div>
-                  </form>
-               </li>
-               <li class="divider-vertical"></li>
-               <li ng-show="!user.loggedIn">
-                  <a href="#loginModal" data-toggle="modal">Login</a>
-               </li>
-               <li ng-show="!user.loggedIn">
-                  <a href="#/register">Register</a>
-               </li>
-               <li ng-show="user.loggedIn">
-                  <a>{{user.name}}</a>
-               </li>
-               <li ng-show="user.loggedIn">
-                  <a ng-click="user.logout()">Logout</a>
-               </li>
-            </ul>
-         </div>
-      </div>
-   </div>
-
-   <div class="container">
-      <div ng-view></div>
-   
-      <div class="span12" id="loading"><i class="icon-spinner icon-spin"></i> Loading events...</div>
-   </div>
-
-   <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-      <div class="modal-header">
-         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-         <h3 id="myModalLabel">Login</h3>
-      </div>
-      <div class="modal-body">
-         <div class="alert alert-block alert-error" ng-show="failed">Failed to login!</div>
-
-         <form class="form-horizontal" name="loginForm" ng-submit="login()">
-            <div class="control-group">
-               <label class="control-label" for="username">User Name</label>
-               <div class="controls">
-                  <input type="text" id="username" ng-model="user.username" placeholder="User Name">
-               </div>
+                        <li ng-show="!user.loggedIn">
+                            <a href="#loginModal" data-toggle="modal">Login</a>
+                        </li>
+                        <li ng-show="!user.loggedIn">
+                            <a href="#/register">Register</a>
+                        </li>
+                        <li ng-show="user.loggedIn" class="hiddenElement">
+                            <a>{{user.name}}</a>
+                        </li>
+                        <li ng-show="user.loggedIn" class="hiddenElement">
+                            <a ng-click="user.logout()">Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <div id="banner" class="container">
+                <h1><a href="#/events">EventJuggler</a></h1>
+                <h2>Find technical presentations in one place.</h2>
             </div>
+        </div><!-- End #top -->
 
-            <div class="control-group">
-               <label class="control-label" for="password">Password</label>
-               <div class="controls">
-                  <input type="password" id="password" ng-model="user.password" placeholder="Password">
-               </div>
-            </div>
-            
-            <div class="control-group">
-               <div class="controls">
-                  <button class="btn btn-primary">Login</button>
-               </div>
-            </div>
-         </form>
-      </div>
-   </div>
-</body>
+        <div ng-view id="content" class="container">
+            <div ng-view></div>
+        </div><!-- End #content -->
+        
+        <footer>
+            <p>Copyright © 2009-2012. All rights reserved.</p>
+        </footer>
+        
+
+        <div id="loading" class="hiddenElement">
+            <i class="icon-spinner icon-spin"></i> Loading events...
+        </div>
+        
+        <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Login</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-block alert-error" ng-show="failed">Failed to login!</div>
+            <form class="form-horizontal" name="loginForm" ng-submit="login()">
+                <div class="control-group">
+                    <label class="control-label" for="username">User Name</label>
+                    <div class="controls">
+                        <input type="text" id="username" ng-model="user.username" placeholder="User Name">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="password">Password</label>
+                    <div class="controls">
+                        <input type="password" id="password" ng-model="user.password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                    <button class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div><!-- End .modal-body -->
+    </body>
 </html>
