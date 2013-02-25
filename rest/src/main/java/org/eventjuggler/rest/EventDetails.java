@@ -34,31 +34,25 @@ import org.eventjuggler.model.RSVP;
 @XmlRootElement
 class EventDetails extends Event {
 
-    private Address location;
     private Group organizerGroup;
     private List<Attendance> attendance;
 
     public EventDetails() {
     }
 
-    public EventDetails(org.eventjuggler.model.Event event) {
-        super(event);
+    public EventDetails(org.eventjuggler.model.Event e) {
+        super(e);
 
-        location = new Address(event.getLocation());
-        organizerGroup = new Group(event.getOrganizerGroup());
+        organizerGroup = new Group(e.getOrganizerGroup());
 
         attendance = new LinkedList<Attendance>();
-        for (RSVP r : event.getAttendance()) {
+        for (RSVP r : e.getAttendance()) {
             attendance.add(new Attendance(r));
         }
     }
 
     public List<Attendance> getAttendance() {
         return attendance;
-    }
-
-    public Address getLocation() {
-        return location;
     }
 
     public Group getOrganizerGroup() {

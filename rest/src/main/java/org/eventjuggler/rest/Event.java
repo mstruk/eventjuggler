@@ -34,6 +34,7 @@ class Event {
     private String imageId;
     private Long organizerGroupId;
     private Long organizerId;
+    private Address location;
 
     private String[] tags;
 
@@ -55,6 +56,9 @@ class Event {
         this.time = e.getTime();
         this.title = e.getTitle();
         this.attendingCount = e.getAttendance().size();
+        if (e.getLocation() != null) {
+            this.location = new Address(e.getLocation());
+        }
     }
 
     public long getAttendingCount() {
@@ -91,6 +95,10 @@ class Event {
 
     public String getTitle() {
         return title;
+    }
+
+    public Address getLocation() {
+        return location;
     }
 
     public org.eventjuggler.model.Event toInternal() {
