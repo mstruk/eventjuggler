@@ -1,5 +1,5 @@
 <div class="container">
-    
+
     <section>
         <hgroup class="clearfix">
             <h3>Popular events</h3>
@@ -10,7 +10,7 @@
             </ul>
         </nav>
     </section>
-    
+
     <section>
         <hgroup class="clearfix">
             <h3>Upcoming events</h3>
@@ -19,30 +19,29 @@
                     <legend>Filter events</legend>
                     <label for="distance">within</label>
                     <div class="selectors">
-                        <a href="#" class="selected">any distance</a>
-                        <i class="icon-angle-down"></i>
+                        <a href="#" class="selected">any distance</a> <i class="icon-angle-down"></i>
                     </div>
                     <label for="city">of</label>
                     <div class="selectors">
-                        <a href="#" class="selected">Florianopolis, Brazil</a>
-                        <i class="icon-angle-down"></i>
+                        <a href="#" class="selected">Florianopolis, Brazil</a> <i class="icon-angle-down"></i>
                     </div>
                 </fieldset>
             </form>
         </hgroup>
-            
+
         <div ng-repeat="event in events">
             <article class="ng-scope event">
                 <div class="left">
-                    <span class="date">{{event.time | eventDate}}</span>
-                    <span class="dateShadow"></span>
-                    <a href="#/events/{{event.id}}" class="mask clearfix">
-                        <img ng-background-image="event.imageId" style="width: 200px; height: 150px;"></img>
-                    </a>
-                    <span class="locality"><a href="#/events/{{event.id}}">{{event.location.city}}</a>, <a href="#/events/{{event.id}}">{{event.location.country | uppercase}}</a></span>
+                    <span class="date">{{event.time | eventDate}}</span> <span class="dateShadow"></span> <a
+                        href="#/events/{{event.id}}" class="mask clearfix"> <img ng-background-image="event.imageId"
+                        style="width: 200px; height: 150px;"></img>
+                    </a> <span class="locality"><a href="#/events/{{event.id}}">{{event.location.city}}</a>, <a
+                        href="#/events/{{event.id}}">{{event.location.country | uppercase}}</a></span>
                 </div>
                 <div class="right">
-                    <h4><a href="#/events/{{event.id}}">{{event.title}}</a></h4>
+                    <h4>
+                        <a href="#/events/{{event.id}}">{{event.title}}</a>
+                    </h4>
                     <p>{{event.description | substring}}</p>
                     <nav class="tags">
                         <ul>
@@ -53,6 +52,7 @@
                 </div>
             </article>
         </div>
-    
+
     </section>
-</div><!-- End .container -->
+</div>
+<!-- End .container -->
