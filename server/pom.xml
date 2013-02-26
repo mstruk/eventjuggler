@@ -9,110 +9,111 @@
     License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
     OF ANY KIND, either express or implied. See the License for the specific 
     language governing permissions and limitations under the License. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-   <modelVersion>4.0.0</modelVersion>
-   <parent>
-      <groupId>org.eventjuggler</groupId>
-      <artifactId>eventjuggler-parent</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-   </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.eventjuggler</groupId>
+        <artifactId>eventjuggler-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
 
-   <artifactId>eventjuggler-server</artifactId>
-   <packaging>ear</packaging>
+    <artifactId>eventjuggler-server</artifactId>
+    <packaging>ear</packaging>
 
-   <name>EventJuggler Server</name>
-   <description>EventJuggler EAR</description>
+    <name>EventJuggler Server</name>
+    <description>EventJuggler EAR</description>
 
-   <properties>
-      <jboss.as.deploy.skip>false</jboss.as.deploy.skip>
-   </properties>
+    <properties>
+        <jboss.as.deploy.skip>false</jboss.as.deploy.skip>
+    </properties>
 
-   <licenses>
-      <license>
-         <name>Apache License, Version 2.0</name>
-         <distribution>repo</distribution>
-         <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-      </license>
-   </licenses>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <distribution>repo</distribution>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+        </license>
+    </licenses>
 
-   <dependencies>
-      <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-common</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-rest</artifactId>
-         <type>war</type>
-      </dependency>
-      <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-scaffold</artifactId>
-         <type>war</type>
-      </dependency>
-      <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-services</artifactId>
-         <type>ejb</type>
-      </dependency>
-      <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-web-js</artifactId>
-         <type>war</type>
-      </dependency>
-      <dependency>
-         <groupId>org.eventjuggler</groupId>
-         <artifactId>eventjuggler-web-jsf</artifactId>
-         <type>war</type>
-      </dependency>
-      <dependency>
-         <groupId>org.picketlink.extensions</groupId>
-         <artifactId>picketlink-extensions-core</artifactId>
-      </dependency>
-   </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-rest</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-scaffold</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-services</artifactId>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-web-js</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-web-jsf</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.picketlink.extensions</groupId>
+            <artifactId>picketlink-extensions-core</artifactId>
+        </dependency>
+    </dependencies>
 
-   <build>
-      <finalName>${project.artifactId}</finalName>
-      <plugins>
-         <plugin>
-            <artifactId>maven-ear-plugin</artifactId>
-            <configuration>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
                <!-- Include picketlink-extensions as an ejb for beans to work properly -->
-               <artifactTypeMappings>
-                  <artifactTypeMapping type="jar" mapping="ejb" />
-               </artifactTypeMappings>
-               <modules>
-                  <ejbModule>
-                     <groupId>org.picketlink.extensions</groupId>
-                     <artifactId>picketlink-extensions-core</artifactId>
-                  </ejbModule>
-                  <jarModule>
-                     <groupId>org.picketlink.extensions</groupId>
-                     <artifactId>picketlink-extensions-core</artifactId>
-                     <excluded>true</excluded>
-                  </jarModule>
-               </modules>
-            </configuration>
-         </plugin>
-         <plugin>
-            <groupId>org.jboss.as.plugins</groupId>
-            <artifactId>jboss-as-maven-plugin</artifactId>
-            <inherited>true</inherited>
-            <configuration>
-               <skip>${jboss.as.deploy.skip}</skip>
-            </configuration>
-         </plugin>
-      </plugins>
-   </build>
+                    <artifactTypeMappings>
+                        <artifactTypeMapping type="jar" mapping="ejb" />
+                    </artifactTypeMappings>
+                    <modules>
+                        <ejbModule>
+                            <groupId>org.picketlink.extensions</groupId>
+                            <artifactId>picketlink-extensions-core</artifactId>
+                        </ejbModule>
+                        <jarModule>
+                            <groupId>org.picketlink.extensions</groupId>
+                            <artifactId>picketlink-extensions-core</artifactId>
+                            <excluded>true</excluded>
+                        </jarModule>
+                    </modules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <skip>${jboss.as.deploy.skip}</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-   <profiles>
-      <profile>
-         <id>standalone</id>
-         <properties>
-            <jboss.as.deploy.skip>true</jboss.as.deploy.skip>
-         </properties>
-      </profile>
-   </profiles>
+    <profiles>
+        <profile>
+            <id>standalone</id>
+            <properties>
+                <jboss.as.deploy.skip>true</jboss.as.deploy.skip>
+            </properties>
+        </profile>
+    </profiles>
 </project>
 
 
