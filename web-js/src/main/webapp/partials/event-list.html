@@ -1,4 +1,16 @@
 <div class="container">
+    
+    <section>
+        <hgroup class="clearfix">
+            <h3>Popular events</h3>
+        </hgroup>
+        <nav class="tags">
+            <ul>
+                <li ng-repeat="event in popular"><a href="#/events/{{event.id}}">{{event.title}}</a></li>
+            </ul>
+        </nav>
+    </section>
+    
     <section>
         <hgroup class="clearfix">
             <h3>Upcoming events</h3>
@@ -18,38 +30,29 @@
                 </fieldset>
             </form>
         </hgroup>
-        
-        <article class="ng-scope event" ng-repeat="event in events">
-            <div class="left">
-                <span class="date">{{event.time | date}}</span>
-                <span class="dateShadow"></span>
-                <a href="#/events/{{event.id}}" class="mask clearfix">
-                    <img ng-background-image="event.imageId" alt="{{event.title}}">
-                </a>
-                <span class="locality"><a href="#">{{event.location.city}}</a>, <a href="#">{{event.location.country | uppercase}}</a></span>
-            </div>
-            <div class="right">
-                <h4><a href="#/events/{{event.id}}">{{event.title}}</a></h4>
-                <p>{{event.description | substring}}</p>
-                <nav class="tags">
-                    <ul>
-                        <li ng-repeat="tag in event.tags"><a href="#">{{tag}}</a></li>
-                    </ul>
-                </nav>
-                <p ng-show="event.attendingCount > 0">{{event.attendingCount}} attending</p>
-            </div>
-        </article>
+            
+        <div ng-repeat="event in events">
+            <article class="ng-scope event">
+                <div class="left">
+                    <span class="date">{{event.time | eventDate}}</span>
+                    <span class="dateShadow"></span>
+                    <a href="#/events/{{event.id}}" class="mask clearfix">
+                        <img ng-background-image="event.imageId" style="width: 200px; height: 150px;"></img>
+                    </a>
+                    <span class="locality"><a href="#/events/{{event.id}}">{{event.location.city}}</a>, <a href="#/events/{{event.id}}">{{event.location.country | uppercase}}</a></span>
+                </div>
+                <div class="right">
+                    <h4><a href="#/events/{{event.id}}">{{event.title}}</a></h4>
+                    <p>{{event.description | substring}}</p>
+                    <nav class="tags">
+                        <ul>
+                            <li ng-repeat="tag in (event.tags | limitTo:2)"><a href="#/events?tag={{tag}}">{{tag}}</a></li>
+                        </ul>
+                    </nav>
+                    <p ng-show="event.attendingCount > 0">{{event.attendingCount}} attending</p>
+                </div>
+            </article>
+        </div>
     
     </section>
-    
-    <section>
-        <hgroup class="clearfix">
-            <h3>Popular events</h3>
-        </hgroup>    
-        <nav class="tags">
-            <ul>
-                <li ng-repeat="event in popular"><a href="#/events/{{event.id}}">{{event.title}}</a></li>
-            </ul>
-        </nav>
-    </section>    
 </div><!-- End .container -->

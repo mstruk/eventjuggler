@@ -2,6 +2,7 @@
 
 var eventjugglerModule = angular.module('eventjuggler', [
 		'eventjugglerServices', 'ngCookies' ]);
+var loadCount = 0;
 
 eventjugglerModule.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/events', {
@@ -41,9 +42,43 @@ eventjugglerModule.filter('substring', function() {
 	};
 });
 
+eventjugglerModule.filter('eventDate', function($filter) {
+	return function(date) {
+		if (!date) {
+			return date;
+		}
+
+		var d = new Date(date);
+		d.setHours(0);
+		d.setMinutes(0);
+		d.setSeconds(0);
+		d.setMilliseconds(0);
+		
+		var today = new Date();
+		today.setHours(0);
+		today.setMinutes(0);
+		today.setSeconds(0);
+		today.setMilliseconds(0);
+		
+		if (d.getTime() == today.getTime()) {
+			return "Today";
+		}
+		else if (d.getTime() <= today.getTime() + 7 * 24 * 60 * 60 * 1000) { 
+			return $filter('date')(date, 'EEE');
+		}
+		else if (d.getFullYear() == today.getFullYear()) {
+			return $filter('date')(date, 'd MMM');
+		}
+		else {
+			return $filter('date')(date, 'd MMM, yyyy');
+		}
+	};
+});
+
 eventjugglerModule.config(function($httpProvider) {
 	$httpProvider.responseInterceptors.push('loadingInterceptor');
 	var spinnerFunction = function(data, headersGetter) {
+		loadCount++;
 		$('#loading').show();
 		return data;
 	};
@@ -53,10 +88,16 @@ eventjugglerModule.config(function($httpProvider) {
 eventjugglerModule.factory('loadingInterceptor', function($q, $window) {
 	return function(promise) {
 		return promise.then(function(response) {
-			$('#loading').hide();
+			loadCount--;
+			if (loadCount == 0) {
+				$('#loading').hide();
+			}
 			return response;
 		}, function(response) {
-			$('#loading').hide();
+			loadCount--;
+			if (loadCount == 0) {
+				$('#loading').hide();
+			}
 			return $q.reject(response);
 		});
 	};

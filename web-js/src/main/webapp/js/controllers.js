@@ -58,7 +58,7 @@ function EventDetailCtrl($scope, $routeParams, Event, User) {
     };
 }
 
-function UserCtrl($scope, User) {
+function UserCtrl($scope, User, $location) {
     $scope.user = User;
 
     $scope.login = function() {
@@ -66,6 +66,7 @@ function UserCtrl($scope, User) {
 
         User.login(function() {
             $('#loginModal').modal('hide');
+            $location.path('/events');
         }, function() {
             $scope.failed = true;
         });
