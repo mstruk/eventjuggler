@@ -290,9 +290,9 @@
         </repository>
 
         <repository>
-            <id>eventjuggler</id>
+            <id>eventjuggler-repository</id>
             <name>EventJuggler Repository</name>
-            <url>https://eventjuggler-stianst.rhcloud.com/repository/</url>
+            <url>https://raw.github.com/eventjuggler/repository/master/</url>
             <layout>default</layout>
         </repository>
     </repositories>
