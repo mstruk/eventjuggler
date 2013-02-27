@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container eventDetail">
     <h1>{{event.title}}</h1>
     <div class="span8">
         <h2>{{event.time | date:'mediumDate'}}</h2>
@@ -37,7 +37,7 @@
     <div class="span3">
         <h2>Related events</h2>
         <div class="span3">
-            <ul>
+            <ul class="relatedEvents">
                 <li ng-repeat="event in related"><a href="#/events/{{event.id}}">{{event.title}}</a></li>
             </ul>
         </div>

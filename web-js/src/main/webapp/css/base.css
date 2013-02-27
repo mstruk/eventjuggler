@@ -10,8 +10,6 @@ body {
 
 li {list-style: none;}
 
-a:hover {text-decoration: none;}
-
 input[type="search"] {color: #2D2D2D;}
 input[type="search"]:-moz-placeholder {color: #aaa;}
 
@@ -50,7 +48,6 @@ header nav a {
 
 header nav a:hover {
     color: #fff;
-    text-decoration: underline;
 }
 
 header form {position: relative;}
@@ -128,6 +125,7 @@ section {
     background-color: #fff;
     float: left;
     padding-top: 0.2em;
+    margin-top: -7px; /* Remove after removing general styles */
 }
 
 #events-filter {
@@ -168,6 +166,10 @@ section {
     font-family: "Lucida Grande", Lucida, sans-serif;
 }
 
+#events-filter .selected:hover {
+    text-decoration: none;
+}
+
 #events-filter .selectors i {
     position: absolute;
     font-size: 1.6em;
@@ -179,24 +181,29 @@ section {
 
 /* Events list */
 
-article.ng-scope {
-    float: left;
-    width: 48.333333333333%;
-    margin-bottom: 4em;
-}
-
-article.ng-scope:nth-child(even) {
+div.event:nth-child(even) {
     clear: left;
     margin-right: 3.333333333334%;
 }
 
-.ng-scope .left {
+div.event {
+    float: left;
+    width: 48.333333333333%;
+    margin-bottom: 3.5em;
+}
+
+.event .left {
     width: 37.241379310345%;
     position: relative;
 }
 
-.ng-scope:nth-child(odd) .left {
+.event:nth-child(odd) .left {
     margin-left: 1.724137931034%;
+}
+
+.event img {
+    width: 20em;
+    height: 15em;
 }
 
 span.date {
@@ -241,39 +248,44 @@ span.locality {
     display: block;
     position: absolute;
     top: 7.44444444444444em;
-    right: 0.11111111111111em;
+    right: 0.05555555555556em;
 }
 
 span.locality a {color: #fff;}
 
 .event .right {width: 57.586206896552%;}
 
-.event h4 {
-    font-size: 3em;
+.event h4 a {
     margin-top: 0.4em;
-    margin-bottom: 0.66666666666667em;
+    margin-bottom: 0.53333333333333em;
+    color: #2d2d2d;
+    display: inline-block;
+    font-size: 3em;
 }
 
-.event h4 a {color: #2d2d2d;}
+.event h4 a.smaller {
+    font-size: 2.5em;
+}
 
-.event p {
+#content .event p {
     color: #a4a4a4;
     font-family: "Lucida Grande", Lucida, sans-serif;
     font-size: 1.6em;
     line-height: 1.25em;
-    margin-bottom: 1.25em;
+    margin-bottom: 1em;
 }
 
 
 /* Tags */
 
 section+section {
-    padding-top: 1em;
+    padding-top: 2.6em;
 }
 
 nav.tags li {
     float: left;
-    margin-right: 1em;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
     position: relative;
     background: url(img/tag-neb.svg) no-repeat left top;
 }
@@ -301,11 +313,25 @@ nav.tags a span {
 }
 
 
+/* Popular events */
+
+.popularEvents li {
+    margin-right: 2em;
+    margin-bottom: 1em;
+}
+
+.popularEvents a {
+    font-size: 2em;
+    color: #2D2D2D;
+}
+
+
+
 /* Footer */
 
 footer {
-    margin-top: 6em;
-    margin-bottom: 3em;
+    margin-top: 2em;
+    margin-bottom: 4em;
 }
 
 footer p {
@@ -328,4 +354,57 @@ footer p {
  
 .clearfix {
 	display: inline-block;
+}
+
+
+/* General styles [PROVISIONAL] */
+
+.eventDetail h1,
+.eventDetail h2,
+.eventDetail h3 {
+    line-height: 40px;
+}
+
+.eventDetail h1 {
+    font-size: 38.5px;
+    margin-top: 30px;
+}
+
+.eventDetail h2 {
+    font-size: 31.5px;
+    margin-top: 20px;
+}
+
+.eventDetail h3 {
+    font-size: 25px;
+    margin-top: 20px;
+}
+
+.eventDetail p {
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.eventDetail p strong {
+    font-weight: bold;
+}
+
+.eventDetail img {
+    margin: 10px 10px 10px 0;
+}
+
+.eventDetail ul li {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 18px;
+    display: inline-block;
+}
+
+.register {
+    margin-top: 30px;
+}
+
+.register label {
+    font-size: 16px;
 }
