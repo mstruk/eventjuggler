@@ -34,7 +34,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.eventjuggler</groupId>
+            <groupId>org.eventjuggler.services</groupId>
             <artifactId>analytics-api</artifactId>
         </dependency>
       

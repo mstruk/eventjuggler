@@ -39,13 +39,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import org.eventjuggler.analytics.Analytics;
-import org.eventjuggler.analytics.AnalyticsQuery;
 import org.eventjuggler.model.User;
 import org.eventjuggler.services.EventProperty;
 import org.eventjuggler.services.EventQuery;
 import org.eventjuggler.services.EventService;
 import org.eventjuggler.services.UserService;
+import org.eventjuggler.services.analytics.Analytics;
+import org.eventjuggler.services.analytics.AnalyticsQuery;
 import org.picketlink.extensions.core.pbox.PicketBoxIdentity;
 import org.picketlink.extensions.core.pbox.authorization.UserLoggedIn;
 
