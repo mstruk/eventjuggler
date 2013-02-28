@@ -22,22 +22,30 @@ eventjugglerModule.config([ '$routeProvider', function($routeProvider) {
 } ]);
 
 eventjugglerModule.filter('substring', function() {
-    return function(text, length) {
+    return function(text, length, end) {
         if (!text) {
             return text;
         }
 
-        if (!length) {
-            length = 100;
+        if (isNaN(length)) {
+            length = 10;
         }
 
-        text = text.replace(/<(?:.|\n)*?>/gm, '');
+        if (end === undefined) {
+            end = "";
+        }
 
-        if (text.length < 100) {
+        if (text.length <= length || text.length - end.length <= length) {
             return text;
         } else {
-            return text.substring(0, length) + "...";
+            return String(text).substring(0, length - end.length) + end;
         }
+    };
+});
+
+eventjugglerModule.filter('removehtml', function () {
+    return function(text) {
+        return text.replace(/<(?:.|\n)*?>/gm, '');
     };
 });
 

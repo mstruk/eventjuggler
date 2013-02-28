@@ -6,7 +6,7 @@
         </hgroup>
         <nav class="popularEvents">
             <ul>
-                <li ng-repeat="event in popular"><a href="#/events/{{event.id}}">{{event.title}}</a></li>
+                <li ng-repeat="event in (popular | limitTo:5)"><a href="#/events/{{event.id}}">{{event.title}}</a></li>
             </ul>
         </nav>
     </section>
@@ -29,28 +29,30 @@
             </form>
         </hgroup>
 
-        <div ng-repeat="event in events" class="event">
-            <article class="ng-scope">
-                <div class="left">
-                    <span class="date">{{event.time | eventDate}}</span> <span class="dateShadow"></span> 
-                    <a href="#/events/{{event.id}}" class="mask clearfix"> 
-                        <img ng-src="{{event.imageId}}"></img>
-                    </a> 
-                    <span class="locality"><a href="#/events/{{event.id}}">{{event.location.city}}</a>, <a href="#/events/{{event.id}}">{{event.location.country | uppercase}}</a></span>
-                </div>
-                <div class="right">
-                    <h4>
-                        <a href="#/events/{{event.id}}">{{event.title}}</a>
-                    </h4>
-                    <p>{{event.description | substring}}</p>
-                    <nav class="tags">
-                        <ul>
-                            <li ng-repeat="tag in (event.tags | limitTo:2)"><a href="#/events?tag={{tag}}">{{tag}}</a></li>
-                        </ul>
-                    </nav>
-                    <p ng-show="event.attendingCount > 0">{{event.attendingCount}} attending</p>
-                </div>
-            </article>
+        <div ng-repeat="event in events" class="event-wrapper">
+            <div class="event">
+                <article class="ng-scope">
+                    <div class="left">
+                        <span class="date">{{event.time | eventDate}}</span> <span class="dateShadow"></span> 
+                        <a href="#/events/{{event.id}}" class="mask clearfix">
+                            <img ng-src="{{event.imageId}}"></img>
+                        </a>
+                        <span class="locality" ng-show="event.location.city && event.location.country"><a href="#/events/{{event.id}}">{{event.location.city}}</a>, <a href="#/events/{{event.id}}">{{event.location.country | uppercase}}</a></span>
+                    </div>
+                    <div class="right">
+                        <h4>
+                            <a href="#/events/{{event.id}}" ng-class="event.title.length > 40 && 'smaller'">{{event.title | substring:75}}</a>
+                        </h4>
+                        <p ng-show="event.description && (event.description | removehtml).length > 1">{{event.description | removehtml | substring:100}}</p>
+                        <nav class="tags">
+                            <ul>
+                                <li ng-repeat="tag in (event.tags | limitTo:2)"><a href="#/events?tag={{tag}}">{{tag}}</a></li>
+                            </ul>
+                        </nav>
+                        <p ng-show="event.attendingCount > 0">{{event.attendingCount}} attending</p>
+                    </div>
+                </article>
+            </div>
         </div>
 
     </section>

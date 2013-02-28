@@ -181,7 +181,7 @@ section {
 
 /* Events list */
 
-div.event:nth-child(even) {
+div.event-wrapper:nth-child(even) {
     clear: left;
     margin-right: 3.333333333334%;
 }

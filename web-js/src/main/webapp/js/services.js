@@ -106,7 +106,7 @@ eventjugglerServices.service('Event', function($resource, User, $http, $routePar
         events.loadNext = function(success) {
             if (events.loading || events.completed)
                 return;
-
+            
             events.loading = true;
 
             eventsRes.query(events.parameters, function(data) {
@@ -122,7 +122,7 @@ eventjugglerServices.service('Event', function($resource, User, $http, $routePar
                 }
 
                 events.loading = false;
-
+                
                 if (success) {
                     success(events);
                 }
