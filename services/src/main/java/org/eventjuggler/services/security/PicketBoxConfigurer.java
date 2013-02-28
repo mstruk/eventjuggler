@@ -24,6 +24,7 @@ package org.eventjuggler.services.security;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
+import org.eventjuggler.services.security.authc.social.fb.FacebookAuthenticationMechanism;
 import org.picketbox.core.config.ConfigurationBuilder;
 import org.picketbox.core.identity.jpa.EntityManagerLookupStrategy;
 
@@ -35,13 +36,25 @@ public class PicketBoxConfigurer {
     @Inject
     private EntityManagerLookupStrategy entityManagerLookupStrategy;
 
+    @Inject
+    private FacebookAuthenticationMechanism fbAuthenticationMechanism;
+
     @Produces
     public ConfigurationBuilder produceConfiguration() {
         ConfigurationBuilder builder = new ConfigurationBuilder();
 
-        builder.identityManager().jpaStore().entityManagerLookupStrategy(this.entityManagerLookupStrategy);
+        // configure the social authentication mechanisms
+        builder
+            .authentication()
+                .mechanism(this.fbAuthenticationMechanism);
 
-        builder.sessionManager().inMemorySessionStore();
+        builder
+            .identityManager()
+                .jpaStore().entityManagerLookupStrategy(this.entityManagerLookupStrategy);
+
+        builder
+            .sessionManager()
+                .inMemorySessionStore();
 
         return builder;
     }

@@ -57,6 +57,7 @@
         <version.checkstyle.plugin>2.9.1</version.checkstyle.plugin>
         <version.org.picketbox>5.0.0-2013Feb01</version.org.picketbox>
         <version.org.picketlink>3.0.0-2013Feb01</version.org.picketlink>
+        <version.org.picketlink.social>2.0.0.2012sep25</version.org.picketlink.social>
         <version.org.jboss.resteasy>2.3.3.Final</version.org.jboss.resteasy>
 
         <jboss.as.deploy.skip>true</jboss.as.deploy.skip>
@@ -156,6 +157,11 @@
                 <groupId>org.picketlink.extensions</groupId>
                 <artifactId>picketlink-extensions-core</artifactId>
                 <version>${version.org.picketlink}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.picketlink</groupId>
+                <artifactId>picketlink-social-standalone</artifactId>
+                <version>${version.org.picketlink.social}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>

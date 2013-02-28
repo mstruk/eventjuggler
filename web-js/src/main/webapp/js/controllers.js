@@ -58,6 +58,15 @@ function EventDetailCtrl($scope, $routeParams, Event, User) {
     };
 }
 
+
+var oauthPopup;
+var loginSuccess;
+
+function sendMainPage() {
+    oauthPopup.close();
+    loginSuccess();
+}
+
 function UserCtrl($scope, User, $location) {
     $scope.user = User;
 
@@ -70,6 +79,22 @@ function UserCtrl($scope, User, $location) {
         }, function() {
             $scope.failed = true;
         });
+    };
+
+    $scope.loginFacebook = function () {
+        $scope.failed = false;
+
+        loginSuccess = function() {
+            User.loginFacebook(function() {
+                $('#loginModal').modal('hide');
+                $location.path('/events');
+            }, function() {
+                $scope.failed = true;
+            });
+        }
+
+        oauthPopup = window.open("/eventjuggler-rest/facebook", "name", "height=768, width=1024");
+        oauthPopup.focus();
     };
 }
 

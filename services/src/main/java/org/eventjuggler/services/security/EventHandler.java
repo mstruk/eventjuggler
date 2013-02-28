@@ -27,11 +27,17 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.eventjuggler.services.UserService;
+import org.picketbox.core.UserContext;
+import org.picketbox.core.authentication.AuthenticationResult;
+import org.picketbox.core.authentication.AuthenticationStatus;
 import org.picketbox.core.authentication.event.UserAuthenticatedEvent;
 import org.picketlink.idm.model.User;
 
+import java.security.Principal;
+
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
+ * @author <a href="mailto:marko.strukelj@gmail.com">Marko Strukelj</a>
  */
 @ApplicationScoped
 public class EventHandler {
@@ -42,18 +48,26 @@ public class EventHandler {
     private UserService userService;
 
     public void onUserAuthenticatedEvent(@Observes UserAuthenticatedEvent event) {
-        User user = event.getUserContext().getUser();
 
-        if (userService.getUser(user.getLoginName()) == null) {
-            org.eventjuggler.model.User u = new org.eventjuggler.model.User();
+        UserContext subject = event.getUserContext();
+        AuthenticationResult authenticationResult = subject.getAuthenticationResult();
+        AuthenticationStatus status = authenticationResult.getStatus();
 
-            u.setLogin(user.getLoginName());
-            u.setName(user.getFirstName());
-            u.setLastName(user.getLastName());
+        if (status.equals(AuthenticationStatus.SUCCESS)) {
+            Principal principal = authenticationResult.getPrincipal();
+            User user = subject.getUser();
 
-            userService.create(u);
+            if (userService.getUser(user.getLoginName()) == null) {
+                org.eventjuggler.model.User u = new org.eventjuggler.model.User();
 
-            log.info("Created user '" + u.getLogin() + "'");
+                u.setLogin(user.getLoginName());
+                u.setName(user.getFirstName());
+                u.setLastName(user.getLastName());
+
+                userService.create(u);
+
+                log.info("Created user '" + u.getLogin() + "'");
+            }
         }
     }
 

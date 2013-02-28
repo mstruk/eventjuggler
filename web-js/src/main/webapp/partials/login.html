@@ -5,6 +5,13 @@
     </div>
     <div class="modal-body">
         <div class="alert alert-block alert-error" ng-show="failed">Failed to login!</div>
+
+        <div id="facebook-login-box" ng-click="loginFacebook()">
+            <img id="facebook-sign" src="images/Facebook.png" border="0" />
+        </div>
+
+        <hr/>
+
         <form class="form-horizontal" name="loginForm" ng-submit="login()">
             <div class="control-group">
                 <label class="control-label" for="username">User Name</label>

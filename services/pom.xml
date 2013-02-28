@@ -47,6 +47,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jboss.spec.javax.servlet</groupId>
+            <artifactId>jboss-servlet-api_3.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.eventjuggler</groupId>
             <artifactId>eventjuggler-common</artifactId>
         </dependency>
@@ -54,6 +60,11 @@
         <dependency>
             <groupId>org.picketlink.extensions</groupId>
             <artifactId>picketlink-extensions-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.picketlink</groupId>
+            <artifactId>picketlink-social-standalone</artifactId>
         </dependency>
 
         <dependency>
