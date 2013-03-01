@@ -186,7 +186,7 @@ div.event-wrapper:nth-child(even) {
     margin-right: 3.333333333334%;
 }
 
-div.event {
+article.event {
     float: left;
     width: 48.333333333333%;
     margin-bottom: 3.5em;
