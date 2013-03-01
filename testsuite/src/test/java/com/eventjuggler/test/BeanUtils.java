@@ -20,8 +20,6 @@ public class BeanUtils {
         String lookup = "java:global/" + appName + "/eventjuggler-services/" + clazz.getSimpleName() + "Bean!"
                 + clazz.getName();
 
-        System.out.println("Looking up " + lookup);
-
         return clazz.cast(new InitialContext().lookup(lookup));
     }
 

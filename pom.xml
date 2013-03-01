@@ -36,13 +36,17 @@
         <module>web-js</module>
         <module>web-jsf</module>
         <module>scaffold</module>
+        <module>testsuite</module>
     </modules>
 
     <properties>
       <!-- Define the version of the JBoss BOMs we want to import. The JBoss BOMs specify tested stacks. -->
         <version.org.jboss.bom>1.0.0.Final</version.org.jboss.bom>
+        <version.shrinkwrap.resolver>2.0.0-beta-2</version.shrinkwrap.resolver>
 
         <version.org.eventjuggler.services>0.1.0.20130301</version.org.eventjuggler.services>
+
+        <version.org.jboss.as>7.1.3.Final</version.org.jboss.as>
 
         <version.org.jboss.as.plugins.maven.plugin>7.3.Final</version.org.jboss.as.plugins.maven.plugin>
         <version.surefire.plugin>2.10</version.surefire.plugin>
@@ -66,6 +70,14 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.resolver</groupId>
+                <artifactId>shrinkwrap-resolver-bom</artifactId>
+                <version>${version.shrinkwrap.resolver}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        
          <!-- JBoss distributes a complete set of Java EE 6 APIs including
    a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
    a collection) of artifacts. We use this here so that we always get the correct
@@ -130,6 +142,12 @@
                 <type>war</type>
             </dependency>
             <dependency>
+                <groupId>org.eventjuggler</groupId>
+                <artifactId>eventjuggler-server</artifactId>
+                <version>${project.version}</version>
+                <type>ear</type>
+            </dependency>
+            <dependency>
                 <groupId>org.dbunit</groupId>
                 <artifactId>dbunit</artifactId>
                 <version>2.4.9</version>
@@ -143,6 +161,26 @@
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-jaxrs</artifactId>
                 <version>${version.org.jboss.resteasy}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>1.9.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-arquillian-container-remote</artifactId>
+                <version>${version.org.jboss.as}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                <version>${version.org.jboss.as}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -8,7 +8,7 @@ Prerequisites
 - Java Development Kit 1.6
 - Recent Git client
 - Recent Maven 3
-- JBoss AS 7.1.1.Final
+- JBoss AS 7.1.3.Final
 
 
 Deploying to JBoss AS
@@ -76,14 +76,14 @@ curl http://localhost:8080/eventjuggler-rest/data/clear
 Functional Tests
 ================
 
-There are some functional tests that runs Arquillian. These tests require JBoss AS to run and are not 
-executed by default.
+The testsuite contains a set of integration tests. The tests can be execute in either managed or remote mode.
 
-To run the tests with a managed JBoss AS, use the following command:
+To run the testsuite in managed mode, run:
 
-export JBOSS_HOME=<JBOSS HOME>
-mvn -Parq-jbossas-managed test
+    mvn -Pit-managed -Djboss.home=<PATH TO JBOSS AS> clean install
 
-To run with a remote JBoss AS, start JBoss AS before running the tests, and use this command: 
+In managed mode you have to provide "-Djboss.zip" as it requires a full package (see the installation section).
 
-mvn -Parq-jbossas-remote test
+To run the testsuite in remote mode, first start a JBoss AS with the EventJuggler Services sub-systems enabled, and run:
+
+    mvn -Pit-remote clean install
