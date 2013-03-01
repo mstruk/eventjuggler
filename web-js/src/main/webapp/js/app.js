@@ -69,8 +69,8 @@ eventjugglerModule.filter('eventDate', function($filter) {
 
         if (d.getTime() == today.getTime()) {
             return "Today";
-        } else if (d.getTime() <= today.getTime() + 7 * 24 * 60 * 60 * 1000) {
-            return $filter('date')(date, 'EEE');
+        } else if (d.getTime() > today.getTime() && d.getTime() <= today.getTime() + 7 * 24 * 60 * 60 * 1000) {
+            return $filter('date')(date, 'EEEE');
         } else if (d.getFullYear() == today.getFullYear()) {
             return $filter('date')(date, 'd MMM');
         } else {
