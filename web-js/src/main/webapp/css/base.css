@@ -104,6 +104,16 @@ header i.icon-search {
 
 /* Content */
 
+div#loading {
+    background-color: rgba(255,255,255,0.5);
+    color: #868686;
+    font-size: 2em;
+    padding: 10px;
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+} 
+
 section {
     clear: both;
     padding-top: 3.6em;
