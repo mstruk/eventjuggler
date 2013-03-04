@@ -390,7 +390,7 @@ footer p {
     margin-top: 20px;
 }
 
-.eventDetail p {
+.eventDetail p, .register p {
     margin: 10px 0;
     font-size: 14px;
     line-height: 18px;

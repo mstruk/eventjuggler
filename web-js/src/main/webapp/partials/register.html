@@ -1,66 +1,68 @@
-<div class="alert alert-block alert-success" ng-show="!user.loggedIn && registered">
-    <p>User registered!</p>
-    <p>
-        <a href="#loginModal" data-toggle="modal" class="btn">Login</a>
-    </p>
+<div class="container register">
+    <div class="alert alert-block alert-success" ng-show="!user.loggedIn && registered">
+        <p>User registered!</p>
+        <p>
+            <a href="#loginModal" data-toggle="modal" class="btn">Login</a>
+        </p>
+    </div>
+
+    <p class="alert alert-block alert-error" ng-show="!user.loggedIn && failed">{{failedMessage}}</p>
+
+    <form class="form-horizontal" ng-submit="register()" name="registerForm" ng-show="!registered && !user.loggedIn">
+
+        <div class="control-group">
+            <label class="control-label" for="userName">User Name</label>
+            <div class="controls">
+                <input type="text" id="userName" ng-model="u.userName" placeholder="User Name" required>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" id="password" ng-model="u.password" placeholder="Password" required>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="control-group">
+            <label class="control-label" for="firstName">First name</label>
+            <div class="controls">
+                <input type="text" id="firstName" ng-model="u.firstName" placeholder="First name">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="lastName">Last name</label>
+            <div class="controls">
+                <input type="text" id="lastName" ng-model="u.lastName" placeholder="Last name">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="email">E-mail</label>
+            <div class="controls">
+                <input type="text" id="email" ng-model="u.email" placeholder="E-mail">
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="control-group">
+            <label class="control-label" for="description">Description</label>
+            <div class="controls">
+                <textarea id="description" ng-model="u.description" placeholder="Description" disabled="true"></textarea>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary" id="registerButton">Register</button>
+            </div>
+        </div>
+
+    </form>
 </div>
-
-<div class="alert alert-block alert-error" ng-show="!user.loggedIn && failed">{{failedMessage}}</div>
-
-<form class="form-horizontal register" ng-submit="register()" name="registerForm" ng-show="!registered && !user.loggedIn">
-
-    <div class="control-group">
-        <label class="control-label" for="userName">User Name</label>
-        <div class="controls">
-            <input type="text" id="email" ng-model="u.userName" placeholder="User Name" required>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label" for="password">Password</label>
-        <div class="controls">
-            <input type="password" id="password" ng-model="u.password" placeholder="Password" required>
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="control-group">
-        <label class="control-label" for="firstName">First name</label>
-        <div class="controls">
-            <input type="text" id="firstName" ng-model="u.firstName" placeholder="First name">
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label" for="lastName">Last name</label>
-        <div class="controls">
-            <input type="text" id="lastName" ng-model="u.lastName" placeholder="Last name">
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label" for="email">E-mail</label>
-        <div class="controls">
-            <input type="text" id="email" ng-model="u.email" placeholder="E-mail">
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="control-group">
-        <label class="control-label" for="description">Description</label>
-        <div class="controls">
-            <textarea id="description" ng-model="u.description" placeholder="Description" disabled="true"></textarea>
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="control-group">
-        <div class="controls">
-            <button type="submit" class="btn btn-primary">Register</button>
-        </div>
-    </div>
-
-</form>
