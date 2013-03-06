@@ -15,7 +15,7 @@ import com.eventjuggler.test.HttpUtils;
 @RunWith(Arquillian.class)
 public class SimpleJsIT {
 
-    @Deployment(name = "eventjuggler-server", order = 1)
+    @Deployment(name = "eventjuggler-server", testable = false)
     public static EnterpriseArchive getEventJugglerServer() throws Exception {
         return Deployments.getEventJugglerServer();
     }
