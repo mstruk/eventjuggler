@@ -24,7 +24,10 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
                 user.name = userInfo.userId;
 
                 if (userInfo.fullName && userInfo.fullName != "null null") {
-                    user.name = userInfo.fullName;
+                    // Remove nulls that are a result of picketlink-extensions-core UserInfoEndpoint class
+                    // where userInfo.setFullName = user.getFirstName() + " " + user.getLastName()
+                    // without checking for null
+                    user.name = userInfo.fullName.replace(/\ null$/g, '').replace(/^null\ /g, '');
                 }
 
                 user.roles = userInfo.roles;
