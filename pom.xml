@@ -60,6 +60,9 @@
         <version.org.picketlink.social>2.0.0.2012sep25</version.org.picketlink.social>
         <version.org.jboss.resteasy>2.3.3.Final</version.org.jboss.resteasy>
         <version.org.twitter4j>2.2.6</version.org.twitter4j>
+        <version.org.jboss.arquillian>1.0.3.Final</version.org.jboss.arquillian>
+        <version.org.jboss.arquillian.drone>1.2.0.Alpha1</version.org.jboss.arquillian.drone>
+        <version.org.jboss.arquillian.graphene2>2.0.0.Alpha3</version.org.jboss.arquillian.graphene2>
 
         <jboss.as.deploy.skip>true</jboss.as.deploy.skip>
     </properties>
@@ -78,6 +81,20 @@
                 <version>${version.shrinkwrap.resolver}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${version.org.jboss.arquillian}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-bom</artifactId>
+                <version>${version.org.jboss.arquillian.drone}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         
          <!-- JBoss distributes a complete set of Java EE 6 APIs including
@@ -193,6 +210,13 @@
                 <groupId>org.twitter4j</groupId>
                 <artifactId>twitter4j-core</artifactId>
                 <version>${version.org.twitter4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-webdriver-depchain</artifactId>
+                <version>${version.org.jboss.arquillian.drone}</version>
+                <type>pom</type>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
