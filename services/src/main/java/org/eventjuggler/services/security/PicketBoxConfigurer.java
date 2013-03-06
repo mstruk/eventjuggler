@@ -25,6 +25,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 import org.eventjuggler.services.security.authc.social.fb.FacebookAuthenticationMechanism;
+import org.eventjuggler.services.security.authc.social.twitter.TwitterAuthenticationMechanism;
 import org.picketbox.core.config.ConfigurationBuilder;
 import org.picketbox.core.identity.jpa.EntityManagerLookupStrategy;
 
@@ -39,6 +40,9 @@ public class PicketBoxConfigurer {
     @Inject
     private FacebookAuthenticationMechanism fbAuthenticationMechanism;
 
+    @Inject
+    private TwitterAuthenticationMechanism twAuthenticationMechanism;
+
     @Produces
     public ConfigurationBuilder produceConfiguration() {
         ConfigurationBuilder builder = new ConfigurationBuilder();
@@ -46,7 +50,8 @@ public class PicketBoxConfigurer {
         // configure the social authentication mechanisms
         builder
             .authentication()
-                .mechanism(this.fbAuthenticationMechanism);
+                .mechanism(this.fbAuthenticationMechanism)
+                .mechanism(this.twAuthenticationMechanism);
 
         builder
             .identityManager()

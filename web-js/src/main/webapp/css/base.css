@@ -418,3 +418,16 @@ footer p {
 .register label {
     font-size: 16px;
 }
+
+#facebook-login-box {
+   display: inline-block;
+   width: 120px;
+   height: 120px;
+}
+
+#twitter-login-box {
+   display: inline-block;
+   width: 120px;
+   heigth: 120px;
+   padding-left: 0.5em;
+}

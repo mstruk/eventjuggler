@@ -22,12 +22,13 @@
 
 package org.eventjuggler.services.security.authc.social.fb;
 
+import org.eventjuggler.services.security.authc.social.BaseAuthenticationMechanism;
 import org.picketbox.core.UserCredential;
 import org.picketbox.core.authentication.AuthenticationInfo;
 import org.picketbox.core.authentication.AuthenticationResult;
-import org.picketbox.core.authentication.impl.AbstractAuthenticationMechanism;
 import org.picketbox.core.exceptions.AuthenticationException;
 import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.credential.Credentials;
 import org.picketlink.idm.model.Group;
 import org.picketlink.idm.model.Role;
 import org.picketlink.idm.model.SimpleGroup;
@@ -53,7 +54,7 @@ import java.util.List;
  * @author Pedro Silva
  * @author <a href="mailto:marko.strukelj@gmail.com">Marko Strukelj</a>
  */
-public class FacebookAuthenticationMechanism extends AbstractAuthenticationMechanism {
+public class FacebookAuthenticationMechanism extends BaseAuthenticationMechanism {
 
     private static final String FB_AUTH_STATE_SESSION_ATTRIBUTE = "FB_AUTH_STATE_SESSION_ATTRIBUTE";
 
@@ -80,9 +81,9 @@ public class FacebookAuthenticationMechanism extends AbstractAuthenticationMecha
         HttpServletResponse response = oAuthCredential.getResponse();
         HttpSession session = request.getSession();
 
+        Principal principal = null;
         FacebookProcessor fb = getFacebookProcessor(oAuthCredential);
-        Principal principal = fb.getPrincipal(request, response);
-        if (principal == null || isFirstInteraction(session)) {
+        if (isFirstInteraction(session)) {
             try {
                 fb.initialInteraction(request, response);
             } catch (IOException e) {
@@ -94,7 +95,10 @@ public class FacebookAuthenticationMechanism extends AbstractAuthenticationMecha
             }
         } else if (isAuthorizationInteraction(session)) {
             session.removeAttribute(FB_AUTH_STATE_SESSION_ATTRIBUTE);
-            provisionNewUser((FacebookPrincipal) principal);
+            principal = fb.getPrincipal(request, response);
+            if (principal != null) {
+                provisionNewUser((FacebookPrincipal) principal);
+            }
         }
 
         return principal;
@@ -129,24 +133,6 @@ public class FacebookAuthenticationMechanism extends AbstractAuthenticationMecha
         return this.processor;
     }
 
-    private static String getRequiredProperty(String suffix, String key) {
-        String longKey = trimSlashes(suffix) + "." + key;
-        String val = System.getProperty(longKey);
-        if (val == null)
-            val = System.getProperty(key);
-        if (val == null)
-            throw new IllegalStateException("A required system property is not defined: [" + longKey + ", " + key + "]");
-        return val;
-    }
-
-    private static String trimSlashes(String val) {
-        if (val.startsWith("/"))
-            val = val.substring(1);
-        if (val.endsWith("/"))
-            val = val.substring(0, val.length()-1);
-        return val;
-    }
-
     /**
      * <p>
      * Provision the authenticated user if he is not stored yes.
@@ -170,13 +156,17 @@ public class FacebookAuthenticationMechanism extends AbstractAuthenticationMecha
 
             // necessary because we need to show the user info at the main page. Otherwise the informations will be show only
             // after the second login.
-            Role guest = new SimpleRole("guest");
+            Role guest = identityManager.getRole("guest");
+            if (guest == null) {
+                guest = new SimpleRole("guest");
+                identityManager.add(guest);
+            }
 
-            identityManager.add(guest);
-
-            Group guests = new SimpleGroup("Guests");
-
-            identityManager.add(guests);
+            Group guests = identityManager.getGroup("Guests");
+            if (guests == null) {
+                guests = new SimpleGroup("Guests");
+                identityManager.add(guests);
+            }
 
             identityManager.grantRole(storedUser, guest);
             identityManager.addToGroup(storedUser, guests);

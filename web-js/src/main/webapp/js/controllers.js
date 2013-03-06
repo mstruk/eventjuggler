@@ -61,10 +61,16 @@ function EventDetailCtrl($scope, $routeParams, Event, User) {
 
 var oauthPopup;
 var loginSuccess;
+var loginFailed;
 
 function sendMainPage() {
     oauthPopup.close();
     loginSuccess();
+}
+
+function sendMainPageError() {
+    oauthPopup.close();
+    loginFailed();
 }
 
 function UserCtrl($scope, User, $location) {
@@ -93,7 +99,27 @@ function UserCtrl($scope, User, $location) {
             });
         }
 
+        loginFailed = function() {
+            $scope.failed = true;
+        }
+
         oauthPopup = window.open("/eventjuggler-rest/facebook", "name", "height=768, width=1024");
+        oauthPopup.focus();
+    };
+
+    $scope.loginTwitter = function () {
+        $scope.failed = false;
+
+        loginSuccess = function() {
+            User.loginTwitter(function() {
+                $('#loginModal').modal('hide');
+                $location.path('/events');
+            }, function() {
+                $scope.failed = true;
+            });
+        }
+
+        oauthPopup = window.open("/eventjuggler-rest/twitter", "name", "height=768, width=1024");
         oauthPopup.focus();
     };
 }

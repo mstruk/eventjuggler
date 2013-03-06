@@ -8,6 +8,7 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
     var userInfoRes = $resource('/eventjuggler-rest/userinfo');
     var logoutRes = $resource('/eventjuggler-rest/logout');
     var facebookRes = $resource('/eventjuggler-rest/facebook');
+    var twitterRes = $resource('/eventjuggler-rest/twitter');
 
     var user = {
         username : null,
@@ -73,6 +74,16 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
 
     user.loginFacebook = function(success, error) {
         facebookRes.save({}, function(response) {
+            if (response.loggedIn) {
+                loadUserInfo(success);
+            } else if (error) {
+                error();
+            }
+        }, error);
+    };
+
+    user.loginTwitter = function(success, error) {
+        twitterRes.save({}, function(response) {
             if (response.loggedIn) {
                 loadUserInfo(success);
             } else if (error) {

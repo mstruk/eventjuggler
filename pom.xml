@@ -59,6 +59,7 @@
         <version.org.picketlink>3.0.0-2013Feb01</version.org.picketlink>
         <version.org.picketlink.social>2.0.0.2012sep25</version.org.picketlink.social>
         <version.org.jboss.resteasy>2.3.3.Final</version.org.jboss.resteasy>
+        <version.org.twitter4j>2.2.6</version.org.twitter4j>
 
         <jboss.as.deploy.skip>true</jboss.as.deploy.skip>
     </properties>
@@ -187,6 +188,11 @@
                 <groupId>org.jboss.as</groupId>
                 <artifactId>jboss-as-arquillian-container-managed</artifactId>
                 <version>${version.org.jboss.as}</version>
+            </dependency>
+           <dependency>
+                <groupId>org.twitter4j</groupId>
+                <artifactId>twitter4j-core</artifactId>
+                <version>${version.org.twitter4j}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
