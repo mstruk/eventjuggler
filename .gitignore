@@ -16,3 +16,7 @@ target/
 
 # OS-X meta files
 .DS_Store
+
+# Test
+chromedriver.log
+
