@@ -38,6 +38,6 @@ public interface AddressService {
 
     void remove(Address address);
 
-    void update(Address address);
+    Address update(Address address);
 
 }

@@ -108,6 +108,9 @@ class Event {
         e.setTags(ObjectFactory.createTags(tags));
         e.setTime(time);
         e.setTitle(title);
+        if (location != null) {
+            e.setLocation(location.toInternal());
+        }
         return e;
     }
 

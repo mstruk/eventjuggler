@@ -43,11 +43,17 @@ class EventDetails extends Event {
     public EventDetails(org.eventjuggler.model.Event e) {
         super(e);
 
-        organizerGroup = new Group(e.getOrganizerGroup());
+        final org.eventjuggler.model.Group group = e.getOrganizerGroup();
+        if (group != null) {
+            organizerGroup = new Group(group);
+        }
 
         attendance = new LinkedList<Attendance>();
-        for (RSVP r : e.getAttendance()) {
-            attendance.add(new Attendance(r));
+        final List<RSVP> rsvpList = e.getAttendance();
+        if (rsvpList != null) {
+            for (RSVP r : rsvpList) {
+                attendance.add(new Attendance(r));
+            }
         }
     }
 

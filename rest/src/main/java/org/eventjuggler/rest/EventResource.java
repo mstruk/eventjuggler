@@ -21,12 +21,14 @@
  */
 package org.eventjuggler.rest;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -37,9 +39,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.eventjuggler.model.User;
+import org.eventjuggler.services.AddressService;
 import org.eventjuggler.services.EventProperty;
 import org.eventjuggler.services.EventQuery;
 import org.eventjuggler.services.EventService;
@@ -72,11 +76,88 @@ public class EventResource {
     @Context
     private UriInfo uriInfo;
 
+    @Inject
+    AddressService addressService;
+
+    @PUT
+    @Path("/location")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void createLocation(Address address) {
+        createOrUpdate(address);
+    }
+
+    private org.eventjuggler.model.Address createOrUpdate(Address address) {
+        if (address != null) {
+            final org.eventjuggler.model.Address existing = addressService.getAddress(address.getId());
+            final org.eventjuggler.model.Address result = address.toInternal();
+            if (existing != null) {
+                return addressService.update(result);
+            } else {
+                addressService.create(result);
+                return result;
+            }
+        }
+
+        return null;
+    }
+
+    @DELETE
+    @Path("/location/{id}")
+    public void deleteLocation(@PathParam("id") long locationId) {
+        addressService.remove(addressService.getAddress(locationId));
+    }
+
+    @GET
+    @Path("/location/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Address getLocation(@PathParam("id") long locationId, @Context HttpServletResponse response) {
+        final org.eventjuggler.model.Address address = addressService.getAddress(locationId);
+        if (address == null) {
+            response.setStatus(Response.Status.NOT_FOUND.getStatusCode());
+            return null;
+        } else {
+            return new Address(address);
+        }
+    }
+
+    @GET
+    @Path("/locations")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Address> getLocations(@Context HttpServletResponse response) {
+        final List<org.eventjuggler.model.Address> addresses = addressService.getAddresses();
+        if (addresses == null || addresses.isEmpty()) {
+            response.setStatus(Response.Status.NOT_FOUND.getStatusCode());
+            return null;
+        } else {
+            List<Address> result = new ArrayList<Address>(addresses.size());
+            for (org.eventjuggler.model.Address address : addresses) {
+                result.add(new Address(address));
+            }
+            return result;
+        }
+    }
+
     @PUT
     @Path("/event")
     @Consumes(MediaType.APPLICATION_JSON)
     public void createEvent(Event event) {
-        eventService.create(event.toInternal());
+        if (event != null) {
+            final org.eventjuggler.model.Event existing = eventService.getEvent(event.getId());
+
+            // check that location exists and create it if needed
+            final Address location = event.getLocation();
+            final org.eventjuggler.model.Address address = createOrUpdate(location);
+
+            // update the event with the persisted location
+            final org.eventjuggler.model.Event modelEvent = event.toInternal();
+            modelEvent.setLocation(address);
+
+            if (existing != null) {
+                eventService.update(modelEvent);
+            } else {
+                eventService.create(modelEvent);
+            }
+        }
     }
 
     @GET
@@ -103,8 +184,14 @@ public class EventResource {
     @GET
     @Path("/event/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public EventDetails getEvent(@PathParam("id") long eventId) {
-        return new EventDetails(eventService.getEvent(eventId));
+    public EventDetails getEvent(@PathParam("id") long eventId, @Context HttpServletResponse response) {
+        final org.eventjuggler.model.Event event = eventService.getEvent(eventId);
+        if (event == null) {
+            response.setStatus(Response.Status.NOT_FOUND.getStatusCode());
+            return null;
+        } else {
+            return new EventDetails(event);
+        }
     }
 
     @GET
@@ -163,8 +250,8 @@ public class EventResource {
     @Path("/events")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Event> getEvents(@QueryParam("first") Integer firstResult, @QueryParam("max") Integer maxResult,
-            @QueryParam("query") String query, @QueryParam("tags") String tags, @QueryParam("sort") String sortBy,
-            @QueryParam("order") String order) {
+                                 @QueryParam("query") String query, @QueryParam("tags") String tags, @QueryParam("sort") String sortBy,
+                                 @QueryParam("order") String order) {
         EventQuery q = eventService.query();
 
         if (firstResult != null) {

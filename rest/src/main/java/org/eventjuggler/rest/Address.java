@@ -72,4 +72,17 @@ public class Address {
         return longitude;
     }
 
+   public org.eventjuggler.model.Address toInternal() {
+      final org.eventjuggler.model.Address address = new org.eventjuggler.model.Address();
+      address.setCity(getCity());
+      address.setCountry(getCountry());
+      address.setImageId(getImageId());
+      address.setLatitude(getLatitude());
+      address.setLongitude(getLongitude());
+      address.setName(getName());
+      address.setStreet(getStreet());
+      address.setStreetNum(getStreetNum());
+      address.setZip(getZip());
+      return address;
+   }
 }

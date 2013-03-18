@@ -59,8 +59,8 @@ public class AddressServiceBean implements AddressService {
     }
 
     @Override
-    public void update(Address event) {
-        em.merge(event);
+    public Address update(Address event) {
+        return em.merge(event);
     }
 
 }
