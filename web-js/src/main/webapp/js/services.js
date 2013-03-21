@@ -34,7 +34,11 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
                 user.loggedIn = true;
 
                 if (success) {
+                    localStorage.setItem("logged-in", "true");
+                    
                     success();
+                } else {
+                    localStorage.removeItem("logged-in");
                 }
             }
         });
@@ -46,9 +50,6 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
             password : user.password
         }, function(response) {
             if (response.loggedIn) {
-                $http.defaults.headers.common['Auth-Token'] = response.token;
-                sessionStorage.setItem("auth-token", response.token);
-
                 loadUserInfo(success);
             } else if (error) {
                 error();
@@ -62,7 +63,7 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
         user.loggedIn = false;
 
         logoutRes.get();
-        sessionStorage.removeItem("auth-token");
+        localStorage.removeItem("logged-in");
     };
 
     user.register = function(user, success, error) {
@@ -95,9 +96,7 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
         }, error);
     };
 
-    if (!user.loggedIn && sessionStorage.getItem("auth-token")) {
-        $http.defaults.headers.common['Auth-Token'] = sessionStorage.getItem("auth-token");
-
+    if (!user.loggedIn && localStorage.getItem("logged-in")) {
         loadUserInfo();
     }
 
