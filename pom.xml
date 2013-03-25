@@ -44,7 +44,7 @@
         <version.org.jboss.bom>1.0.4.CR7</version.org.jboss.bom>
         <version.shrinkwrap.resolver>2.0.0-beta-2</version.shrinkwrap.resolver>
 
-        <version.org.eventjuggler.services>0.1.0.20130301</version.org.eventjuggler.services>
+        <version.org.eventjuggler.services>0.1.0.20130325</version.org.eventjuggler.services>
 
         <version.org.jboss.as>7.2.0.Final</version.org.jboss.as>
         <version.org.jboss.as.plugins.maven.plugin>7.3.Final</version.org.jboss.as.plugins.maven.plugin>
