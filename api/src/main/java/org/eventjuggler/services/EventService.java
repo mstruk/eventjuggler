@@ -35,8 +35,6 @@ public interface EventService {
 
     Event getEvent(long id);
 
-    List<Event> getEvents();
-
     List<Event> getEvents(String user);
 
     EventQuery query();

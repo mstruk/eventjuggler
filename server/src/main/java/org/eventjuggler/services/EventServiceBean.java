@@ -63,11 +63,6 @@ public class EventServiceBean implements EventService {
     }
 
     @Override
-    public List<Event> getEvents() {
-        return em.createQuery("from Event", Event.class).getResultList();
-    }
-
-    @Override
     public List<Event> getEvents(String user) {
         return em.createQuery("select e from Event e join e.attendance a where a.user = :user", Event.class)
                 .setParameter("user", user).getResultList();
