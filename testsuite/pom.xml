@@ -43,7 +43,7 @@
         </dependency>
         <dependency>
             <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-common</artifactId>
+            <artifactId>eventjuggler-api</artifactId>
             <type>jar</type>
         </dependency>
         <dependency>

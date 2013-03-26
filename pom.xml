@@ -29,13 +29,11 @@
     </licenses>
 
     <modules>
-        <module>common</module>
+        <module>api</module>
         <module>rest</module>
         <module>server</module>
         <module>services</module>
         <module>web-js</module>
-        <module>web-jsf</module>
-        <module>scaffold</module>
         <module>testsuite</module>
     </modules>
 
@@ -127,7 +125,7 @@
             </dependency>
             <dependency>
                 <groupId>org.eventjuggler</groupId>
-                <artifactId>eventjuggler-common</artifactId>
+                <artifactId>eventjuggler-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

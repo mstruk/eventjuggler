@@ -54,7 +54,7 @@
 
         <dependency>
             <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-common</artifactId>
+            <artifactId>eventjuggler-api</artifactId>
         </dependency>
 
         <dependency>
