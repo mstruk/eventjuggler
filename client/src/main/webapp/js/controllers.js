@@ -33,7 +33,12 @@ function EventCreateCtrl($scope, Event, $location) {
     $scope.e = {};
 
     $scope.create = function() {
-        $scope.e.time = new Date($scope.e.year, $scope.e.month - 1, $scope.e.day).getTime();
+        $scope.e.time = new Date($scope.year, $scope.month - 1, $scope.day).getTime();
+        
+        if ($scope.e.tags) {
+            $scope.e.tags = $scope.tags.split(",");
+            $scope.e.tags.forEach(function(v, i, a) { a[i] = v.trim(); });
+        }
         
         delete $scope.e.year;
         delete $scope.e.month;
@@ -42,10 +47,10 @@ function EventCreateCtrl($scope, Event, $location) {
         $scope.created = false;
         $scope.failed = false;
 
-        Event.createEvent($scope.e, function(response) {
-            alert("created");
+        Event.createEvent($scope.e, function(result) {
+            $location.url("/events");
         }, function(status) {
-            alert("failed");
+            $scope.status = "failed";
         });
     };
 }

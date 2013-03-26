@@ -186,7 +186,7 @@ eventjugglerServices.service('Event', function($resource, User, $http, $routePar
     
 
     this.createEvent = function(event, success, error) {
-        eventRes.save(event, success, error);
+        var result = eventRes.save(event, success, error);
     };
 
     this.getEventsUser = function() {

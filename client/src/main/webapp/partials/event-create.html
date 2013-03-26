@@ -1,5 +1,5 @@
 <div class="container register">
-    <p class="alert alert-block alert-error" ng-show="!user.loggedIn && failed">{{failedMessage}}</p>
+    <p class="alert alert-block alert-error" ng-show="status == 'failed'">Failed to create event</p>
 
     <form class="form-horizontal" ng-submit="create()" name="eventCreateForm">
         <div class="control-group">
@@ -12,30 +12,30 @@
         <div class="control-group">
             <label class="control-label" for="description">Description</label>
             <div class="controls">
-                <textarea id="description" ng-model="e.description" placeholder="Description"></textarea>
+                <textarea id="description" ng-model="e.description" placeholder="Description" required ></textarea>
             </div>
         </div>
 
         <div class="control-group">
             <label class="control-label" for="time">Date</label>
             <div class="controls">
-                <input type="text" id="time" ng-model="e.day" placeholder="Day" class="input-small" />
-                <input type="text" id="time" ng-model="e.month" placeholder="Month" class="input-small" />
-                <input type="text" id="time" ng-model="e.year" placeholder="Year" class="input-small" />
+                <input type="text" id="time" ng-model="day" placeholder="Day" class="input-small" required />
+                <input type="text" id="time" ng-model="month" placeholder="Month" class="input-small" required />
+                <input type="text" id="time" ng-model="year" placeholder="Year" class="input-small" required />
             </div>
         </div>
 
         <div class="control-group">
             <label class="control-label" for="image">Image</label>
             <div class="controls">
-                 <input type="text" id="imageId" ng-model="e.imageId" placeholder="Image" />
+                 <input type="text" id="imageId" ng-model="e.imageId" placeholder="Image" required />
             </div>
         </div>
 
         <div class="control-group">
             <label class="control-label" for="tags">Tags</label>
             <div class="controls">
-                 <input type="text" id="tags" ng-model="e.tags" placeholder="Tags" />
+                 <input type="text" id="tags" ng-model="tags" placeholder="Tags" required />
             </div>
         </div>
 
@@ -44,14 +44,14 @@
         <div class="control-group">
             <label class="control-label" for="city">City</label>
             <div class="controls">
-                 <input type="text" id="city" ng-model="e.location.city" placeholder="City" />
+                 <input type="text" id="city" ng-model="e.location.city" placeholder="City" required />
             </div>
         </div>
 
         <div class="control-group">
             <label class="control-label" for="country">Country Code</label>
             <div class="controls">
-                 <input type="text" id="country" ng-model="e.location.country" placeholder="Country Code" />
+                 <input type="text" id="country" ng-model="e.location.country" placeholder="Country Code" required />
             </div>
         </div>
 
