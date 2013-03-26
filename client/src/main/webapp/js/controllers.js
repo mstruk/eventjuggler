@@ -29,6 +29,21 @@ function EventListCtrl($scope, Event, $routeParams, $location) {
     });
 }
 
+function EventCreateCtrl($scope, Event, $location) {
+    $scope.e = {};
+
+    $scope.create = function() {
+        $scope.created = false;
+        $scope.failed = false;
+
+        Event.createEvent($scope.e, function(response) {
+            alert("created");
+        }, function(status) {
+            alert("failed");
+        });
+    };
+}
+
 function EventSearchCtrl($scope, Event, $location) {
     $scope.search = function() {
         $location.url("/events?query=" + $scope.query);

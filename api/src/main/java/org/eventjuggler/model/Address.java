@@ -3,11 +3,13 @@ package org.eventjuggler.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author <a href="mailto:marko.strukelj@gmail.com">Marko Strukelj</a>
  */
 @Entity
+@XmlRootElement
 public class Address {
 
     @Id @GeneratedValue

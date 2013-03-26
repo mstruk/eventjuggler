@@ -171,7 +171,7 @@ eventjugglerServices.service('Event', function($resource, User, $http, $routePar
 
             if (User.loggedIn && event.attendance) {
                 for ( var i = 0; i < event.attendance.length; i++) {
-                    if (event.attendance[i].login == User.username) {
+                    if (event.attendance[i].user == User.username) {
                         event.attending = true;
                     }
                 }
@@ -182,6 +182,11 @@ eventjugglerServices.service('Event', function($resource, User, $http, $routePar
             }
         });
         return event;
+    };
+    
+
+    this.createEvent = function(event, success, error) {
+        eventRes.save(event, success, error);
     };
 
     this.getEventsUser = function() {

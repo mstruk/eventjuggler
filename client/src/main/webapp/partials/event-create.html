@@ -1,0 +1,63 @@
+<div class="container register">
+    <p class="alert alert-block alert-error" ng-show="!user.loggedIn && failed">{{failedMessage}}</p>
+
+    <form class="form-horizontal" ng-submit="create()" name="eventCreateForm">
+        <div class="control-group">
+            <label class="control-label" for="title">Title</label>
+            <div class="controls">
+                <input type="text" id="title" ng-model="e.title" placeholder="Title" required />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="description">Description</label>
+            <div class="controls">
+                <textarea id="description" ng-model="e.description" placeholder="Description"></textarea>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="time">Time</label>
+            <div class="controls">
+                <input type="text" id="time" ng-model="e.time" placeholder="Time" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="image">Image</label>
+            <div class="controls">
+                 <input type="text" id="imageId" ng-model="e.imageId" placeholder="Image" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="tags">Tags</label>
+            <div class="controls">
+                 <input type="text" id="tags" ng-model="e.tags" placeholder="Tags" />
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="control-group">
+            <label class="control-label" for="city">City</label>
+            <div class="controls">
+                 <input type="text" id="city" ng-model="e.location.city" placeholder="City" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="countr">Country</label>
+            <div class="controls">
+                 <input type="text" id="country" ng-model="e.location.country" placeholder="Country" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary" id="createButton">Create</button>
+            </div>
+        </div>
+
+    </form>
+</div>

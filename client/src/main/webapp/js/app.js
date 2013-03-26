@@ -10,6 +10,9 @@ eventjugglerModule.config([ '$routeProvider', function($routeProvider) {
     }).when('/events/mine', {
         templateUrl : 'partials/event-mine.html',
         controller : EventMineCtrl
+    }).when('/events/create', {
+        templateUrl : 'partials/event-create.html',
+        controller : EventCreateCtrl
     }).when('/events/:eventId', {
         templateUrl : 'partials/event-detail.html',
         controller : EventDetailCtrl
