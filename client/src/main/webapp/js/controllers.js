@@ -33,6 +33,12 @@ function EventCreateCtrl($scope, Event, $location) {
     $scope.e = {};
 
     $scope.create = function() {
+        $scope.e.time = new Date($scope.e.year, $scope.e.month - 1, $scope.e.day).getTime();
+        
+        delete $scope.e.year;
+        delete $scope.e.month;
+        delete $scope.e.day;
+        
         $scope.created = false;
         $scope.failed = false;
 

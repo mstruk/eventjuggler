@@ -17,9 +17,11 @@
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="time">Time</label>
+            <label class="control-label" for="time">Date</label>
             <div class="controls">
-                <input type="text" id="time" ng-model="e.time" placeholder="Time" />
+                <input type="text" id="time" ng-model="e.day" placeholder="Day" class="input-small" />
+                <input type="text" id="time" ng-model="e.month" placeholder="Month" class="input-small" />
+                <input type="text" id="time" ng-model="e.year" placeholder="Year" class="input-small" />
             </div>
         </div>
 
@@ -47,9 +49,9 @@
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="countr">Country</label>
+            <label class="control-label" for="country">Country Code</label>
             <div class="controls">
-                 <input type="text" id="country" ng-model="e.location.country" placeholder="Country" />
+                 <input type="text" id="country" ng-model="e.location.country" placeholder="Country Code" />
             </div>
         </div>
 
