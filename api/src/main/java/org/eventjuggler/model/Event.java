@@ -20,9 +20,6 @@ public class Event {
     private Long id;
 
     @ManyToOne(fetch=FetchType.EAGER)
-    private Group organizerGroup;
-
-    @ManyToOne(fetch=FetchType.EAGER)
     private User organizer;
 
     @ManyToOne(fetch=FetchType.EAGER)
@@ -49,14 +46,6 @@ public class Event {
 
     protected void setId(Long id) {
         this.id = id;
-    }
-
-    public Group getOrganizerGroup() {
-        return organizerGroup;
-    }
-
-    public void setOrganizerGroup(Group organizerGroup) {
-        this.organizerGroup = organizerGroup;
     }
 
     public User getOrganizer() {

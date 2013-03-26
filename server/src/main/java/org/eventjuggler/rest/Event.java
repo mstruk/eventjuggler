@@ -51,7 +51,6 @@ class Event {
         this.id = e.getId();
         this.imageId = e.getImageId();
         this.organizerId = e.getOrganizer() != null ? e.getOrganizer().getId() : null;
-        this.organizerGroupId = e.getOrganizerGroup() != null ? e.getOrganizerGroup().getId() : null;
         this.tags = ObjectFactory.createTags(e.getTags());
         this.time = e.getTime();
         this.title = e.getTitle();

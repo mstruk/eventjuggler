@@ -21,43 +21,19 @@
  */
 package org.eventjuggler.services;
 
-import java.util.List;
-
-import org.eventjuggler.model.Group;
 import org.eventjuggler.model.User;
-import org.eventjuggler.model.UserRole;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
 public interface UserService {
 
-    void create(Group group);
-
     void create(User user);
-
-    void create(UserRole userRole);
-
-    Group getGroup(Long id);
-
-    List<Group> getGroups();
-
-    List<Group> getGroups(User user);
 
     User getUser(String login);
 
-    UserRole getUserRole(Long id);
-
-    void remove(Group group);
-
     void remove(User user);
 
-    void remove(UserRole userRole);
-
-    void update(Group group);
-
     void update(User user);
-
-    void update(UserRole userRole);
 
 }

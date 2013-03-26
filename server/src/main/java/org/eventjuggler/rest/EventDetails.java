@@ -34,7 +34,6 @@ import org.eventjuggler.model.RSVP;
 @XmlRootElement
 class EventDetails extends Event {
 
-    private Group organizerGroup;
     private List<Attendance> attendance;
 
     public EventDetails() {
@@ -42,11 +41,6 @@ class EventDetails extends Event {
 
     public EventDetails(org.eventjuggler.model.Event e) {
         super(e);
-
-        final org.eventjuggler.model.Group group = e.getOrganizerGroup();
-        if (group != null) {
-            organizerGroup = new Group(group);
-        }
 
         attendance = new LinkedList<Attendance>();
         final List<RSVP> rsvpList = e.getAttendance();
@@ -59,10 +53,6 @@ class EventDetails extends Event {
 
     public List<Attendance> getAttendance() {
         return attendance;
-    }
-
-    public Group getOrganizerGroup() {
-        return organizerGroup;
     }
 
 }

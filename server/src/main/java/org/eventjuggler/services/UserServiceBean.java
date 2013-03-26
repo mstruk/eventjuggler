@@ -27,9 +27,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.eventjuggler.model.Group;
 import org.eventjuggler.model.User;
-import org.eventjuggler.model.UserRole;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
@@ -41,35 +39,8 @@ public class UserServiceBean implements UserService {
     private EntityManager em;
 
     @Override
-    public void create(Group group) {
-        em.persist(group);
-    }
-
-    @Override
     public void create(User user) {
         em.persist(user);
-    }
-
-    @Override
-    public void create(UserRole userRole) {
-        em.persist(userRole);
-    }
-
-    @Override
-    public Group getGroup(Long id) {
-        return em.find(Group.class, id);
-    }
-
-    @Override
-    public List<Group> getGroups() {
-        return em.createQuery("from Group g", Group.class).getResultList();
-    }
-
-    @Override
-    public List<Group> getGroups(User user) {
-        return em.createQuery("select g from Group g join g.members m where m.user = :user", Group.class)
-                .setParameter("user", user)
-                .getResultList();
     }
 
     @Override
@@ -85,28 +56,8 @@ public class UserServiceBean implements UserService {
     }
 
     @Override
-    public UserRole getUserRole(Long id) {
-        return em.find(UserRole.class, id);
-    }
-
-    @Override
-    public void remove(Group group) {
-        em.remove(group);
-    }
-
-    @Override
     public void remove(User user) {
         em.remove(user);
-    }
-
-    @Override
-    public void remove(UserRole userRole) {
-        em.remove(userRole);
-    }
-
-    @Override
-    public void update(Group group) {
-        em.merge(group);
     }
 
     @Override
@@ -114,8 +65,4 @@ public class UserServiceBean implements UserService {
         em.merge(user);
     }
 
-    @Override
-    public void update(UserRole userRole) {
-        em.merge(userRole);
-    }
 }
