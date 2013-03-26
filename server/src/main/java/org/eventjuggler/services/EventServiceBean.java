@@ -28,6 +28,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.eventjuggler.model.Address;
 import org.eventjuggler.model.Event;
 import org.eventjuggler.model.RSVP;
 import org.eventjuggler.model.RSVP.Response;
@@ -42,8 +43,18 @@ public class EventServiceBean implements EventService {
     private EntityManager em;
 
     @Override
-    public void create(Event event) {
-        em.persist(event);
+    public RSVP attend(long eventId, String user) {
+        Event event = getEvent(eventId);
+
+        RSVP rsvp = new RSVP();
+        rsvp.setResponse(Response.WILL_ATTEND);
+        rsvp.setUser(user);
+        em.persist(rsvp);
+
+        event.getAttendance().add(rsvp);
+        em.merge(event);
+
+        return rsvp;
     }
 
     @Override
@@ -59,18 +70,7 @@ public class EventServiceBean implements EventService {
     @Override
     public List<Event> getEvents(String user) {
         return em.createQuery("select e from Event e join e.attendance a where a.user = :user", Event.class)
-                .setParameter("user", user)
-                .getResultList();
-    }
-
-    @Override
-    public void remove(Event event) {
-        em.remove(em.merge(event));
-    }
-
-    @Override
-    public void update(Event event) {
-        em.merge(event);
+                .setParameter("user", user).getResultList();
     }
 
     @Override
@@ -79,18 +79,8 @@ public class EventServiceBean implements EventService {
     }
 
     @Override
-    public RSVP attend(long eventId, String user) {
-        Event event = getEvent(eventId);
-
-        RSVP rsvp = new RSVP();
-        rsvp.setResponse(Response.WILL_ATTEND);
-        rsvp.setUser(user);
-        em.persist(rsvp);
-
-        event.getAttendance().add(rsvp);
-        update(event);
-
-        return rsvp;
+    public void remove(Event event) {
+        em.remove(em.merge(event));
     }
 
     @Override
@@ -106,7 +96,38 @@ public class EventServiceBean implements EventService {
             }
         }
 
-        update(event);
+        em.merge(event);
+    }
+
+    private Address save(Address address) {
+        return save(address, address.getId());
+    }
+
+    @Override
+    public Event save(Event event) {
+        if (event.getLocation() != null) {
+            event.setLocation(save(event.getLocation()));
+        }
+
+        if (event.getAttendance() != null) {
+            ListIterator<RSVP> itr = event.getAttendance().listIterator();
+            while (itr.hasNext()) {
+                RSVP r = itr.next();
+                itr.set(save(r, r.getId()));
+            }
+        }
+
+        save(event, event.getId());
+        return event;
+    }
+
+    private <T> T save(T entity, Long id) {
+        if (id == null) {
+            em.persist(entity);
+        } else {
+            entity = em.merge(entity);
+        }
+        return entity;
     }
 
 }

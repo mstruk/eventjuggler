@@ -41,9 +41,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.eventjuggler.model.Address;
 import org.eventjuggler.model.Event;
-import org.eventjuggler.services.AddressService;
 import org.eventjuggler.services.EventProperty;
 import org.eventjuggler.services.EventQuery;
 import org.eventjuggler.services.EventService;
@@ -72,92 +70,6 @@ public class EventResource {
     @Context
     private UriInfo uriInfo;
 
-    @Inject
-    AddressService addressService;
-
-    @POST
-    @Path("/location")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void createLocation(Address address) {
-        save(address);
-    }
-
-    private Address save(Address address) {
-        if (address != null) {
-            if (address.getId() != null) {
-                return addressService.update(address);
-            } else {
-                addressService.create(address);
-                return address;
-            }
-        } else {
-            return null;
-        }
-    }
-
-    private void save(Event event) {
-        if (event != null) {
-            if (event.getId() != null) {
-                eventService.update(event);
-            } else {
-                eventService.create(event);
-            }
-        }
-    }
-
-    @DELETE
-    @Path("/location/{id}")
-    public void deleteLocation(@PathParam("id") long locationId) {
-        addressService.remove(addressService.getAddress(locationId));
-    }
-
-    @GET
-    @Path("/location/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Address getLocation(@PathParam("id") long locationId, @Context HttpServletResponse response) {
-        Address address = addressService.getAddress(locationId);
-        if (address == null) {
-            response.setStatus(Response.Status.NOT_FOUND.getStatusCode());
-            return null;
-        } else {
-            return address;
-        }
-    }
-
-    @GET
-    @Path("/locations")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Address> getLocations(@Context HttpServletResponse response) {
-        final List<org.eventjuggler.model.Address> addresses = addressService.getAddresses();
-        if (addresses == null || addresses.isEmpty()) {
-            response.setStatus(Response.Status.NOT_FOUND.getStatusCode());
-            return null;
-        } else {
-            return addresses;
-        }
-    }
-
-    @POST
-    @Path("/event")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @UserLoggedIn
-    public void createEvent(Event event) {
-        if (event != null) {
-            event.setOrganizer(identity.getUser().getLoginName());
-            Address address = save(event.getLocation());
-            event.setLocation(address);
-            save(event);
-        }
-    }
-
-    @GET
-    @Path("/rsvp/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @UserLoggedIn
-    public void createRSVP(@PathParam("id") long eventId) {
-        eventService.attend(eventId, identity.getUser().getLoginName());
-    }
-
     @DELETE
     @Path("/event/{id}")
     public void deleteEvent(@PathParam("id") long eventId) {
@@ -182,58 +94,6 @@ public class EventResource {
         } else {
             return event;
         }
-    }
-
-    @GET
-    @Path("/events/popular")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Event> getPopular(@QueryParam("max") Integer maxResult) {
-        List<Event> events = new LinkedList<Event>();
-
-        if (analytics != null) {
-            AnalyticsQuery query = analytics.createQuery().page(uriInfo.getBaseUri().getPath() + "event/%");
-
-            if (maxResult == null) {
-                maxResult = 5;
-            }
-
-            List<String> popularPage = query.getPopularPages();
-            for (String p : popularPage) {
-                long eventId = Long.parseLong(p.substring(p.lastIndexOf('/') + 1));
-                Event e = eventService.getEvent(eventId);
-                if (e != null) {
-                    events.add(e);
-                }
-            }
-        }
-
-        return events;
-    }
-
-    @GET
-    @Path("/events/related/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Event> getRelated(@PathParam("id") long eventId, @QueryParam("max") Integer maxResult) {
-        List<Event> events = new LinkedList<Event>();
-
-        if (analytics != null) {
-            AnalyticsQuery query = analytics.createQuery().page(uriInfo.getBaseUri().getPath() + "event/%");
-
-            if (maxResult == null) {
-                maxResult = 5;
-            }
-
-            List<String> popularPage = query.getRelatedPages(uriInfo.getBaseUri().getPath() + "event/" + eventId);
-            for (String p : popularPage) {
-                long relatedEventId = Long.parseLong(p.substring(p.lastIndexOf('/') + 1));
-                Event e = eventService.getEvent(relatedEventId);
-                if (e != null) {
-                    events.add(e);
-                }
-            }
-        }
-
-        return events;
     }
 
     @GET
@@ -271,8 +131,69 @@ public class EventResource {
     @Path("/events/mine")
     @Produces(MediaType.APPLICATION_JSON)
     @UserLoggedIn
-    public List<Event> getMyEvents() {
+    public List<Event> getEventsMine() {
         return eventService.getEvents(identity.getUser().getLoginName());
+    }
+
+    @GET
+    @Path("/events/popular")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Event> getEventsPopular(@QueryParam("max") Integer maxResult) {
+        List<Event> events = new LinkedList<Event>();
+
+        if (analytics != null) {
+            AnalyticsQuery query = analytics.createQuery().page(uriInfo.getBaseUri().getPath() + "event/%");
+
+            if (maxResult == null) {
+                maxResult = 5;
+            }
+
+            List<String> popularPage = query.getPopularPages();
+            for (String p : popularPage) {
+                long eventId = Long.parseLong(p.substring(p.lastIndexOf('/') + 1));
+                Event e = eventService.getEvent(eventId);
+                if (e != null) {
+                    events.add(e);
+                }
+            }
+        }
+
+        return events;
+    }
+
+    @GET
+    @Path("/events/related/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Event> getEventsRelated(@PathParam("id") long eventId, @QueryParam("max") Integer maxResult) {
+        List<Event> events = new LinkedList<Event>();
+
+        if (analytics != null) {
+            AnalyticsQuery query = analytics.createQuery().page(uriInfo.getBaseUri().getPath() + "event/%");
+
+            if (maxResult == null) {
+                maxResult = 5;
+            }
+
+            List<String> popularPage = query.getRelatedPages(uriInfo.getBaseUri().getPath() + "event/" + eventId);
+            for (String p : popularPage) {
+                long relatedEventId = Long.parseLong(p.substring(p.lastIndexOf('/') + 1));
+                Event e = eventService.getEvent(relatedEventId);
+                if (e != null) {
+                    events.add(e);
+                }
+            }
+        }
+
+        return events;
+    }
+
+    @POST
+    @Path("/import")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void importEvents(List<Event> events) {
+        for (Event e : events) {
+            eventService.save(e);
+        }
     }
 
     @PostConstruct
@@ -280,6 +201,23 @@ public class EventResource {
         if (!analyticsInstance.isUnsatisfied()) {
             analytics = analyticsInstance.get();
         }
+    }
+
+    @POST
+    @Path("/event")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UserLoggedIn
+    public void saveEvent(Event event) {
+        event.setOrganizer(identity.getUser().getLoginName());
+        eventService.save(event);
+    }
+
+    @GET
+    @Path("/rsvp/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @UserLoggedIn
+    public void saveRSVP(@PathParam("id") long eventId) {
+        eventService.attend(eventId, identity.getUser().getLoginName());
     }
 
 }

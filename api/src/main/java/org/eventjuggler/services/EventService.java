@@ -31,7 +31,7 @@ import org.eventjuggler.model.RSVP;
  */
 public interface EventService {
 
-    void create(Event event);
+    Event save(Event event);
 
     Event getEvent(long id);
 
@@ -42,8 +42,6 @@ public interface EventService {
     EventQuery query();
 
     void remove(Event event);
-
-    void update(Event event);
 
     RSVP attend(long eventId, String user);
 
