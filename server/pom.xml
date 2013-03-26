@@ -100,34 +100,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.hamcrest</groupId>
-                    <artifactId>hamcrest-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
-                <dependency>
-                    <groupId>org.eventjuggler</groupId>
-                    <artifactId>eventjuggler-api</artifactId>
-                </dependency>
+        <dependency>
+            <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-api</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
