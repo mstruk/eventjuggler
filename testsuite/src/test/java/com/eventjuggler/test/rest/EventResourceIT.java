@@ -26,7 +26,7 @@ public class EventResourceIT {
     @Test
     @RunAsClient
     public void events() throws Exception {
-        List<Event> list = HttpUtils.get("/eventjuggler-rest/events", new TypeReference<List<Event>>() {
+        List<Event> list = HttpUtils.get("/eventjuggler-server/events", new TypeReference<List<Event>>() {
         });
 
         Assert.assertEquals(0, list.size());

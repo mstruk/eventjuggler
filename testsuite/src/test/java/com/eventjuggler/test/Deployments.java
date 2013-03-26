@@ -3,11 +3,7 @@ package com.eventjuggler.test;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependency;
 import org.jboss.shrinkwrap.resolver.impl.maven.MavenResolverSystemBaseImpl;
@@ -45,12 +41,4 @@ public class Deployments {
         return archive;
     }
 
-    public static WebArchive getTestArchive(Class<?> test) throws IllegalArgumentException, Exception {
-        return ShrinkWrap
-                .create(WebArchive.class, "test.war")
-                .addClasses(test, BeanUtils.class)
-                .addAsManifestResource(
-                        new StringAsset("Dependencies: deployment." + Deployments.getEventJugglerServer().getName() + " \n"),
-                        "MANIFEST.MF").addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-    }
 }

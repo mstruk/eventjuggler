@@ -3,12 +3,12 @@
 var eventjugglerServices = angular.module('eventjugglerServices', [ 'ngResource' ]);
 
 eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
-    var accregisterRes = $resource('/eventjuggler-rest/accregister');
-    var signinRes = $resource('/eventjuggler-rest/signin');
-    var userInfoRes = $resource('/eventjuggler-rest/userinfo');
-    var logoutRes = $resource('/eventjuggler-rest/logout');
-    var facebookRes = $resource('/eventjuggler-rest/facebook');
-    var twitterRes = $resource('/eventjuggler-rest/twitter');
+    var accregisterRes = $resource('/eventjuggler-server/accregister');
+    var signinRes = $resource('/eventjuggler-server/signin');
+    var userInfoRes = $resource('/eventjuggler-server/userinfo');
+    var logoutRes = $resource('/eventjuggler-server/logout');
+    var facebookRes = $resource('/eventjuggler-server/facebook');
+    var twitterRes = $resource('/eventjuggler-server/twitter');
 
     var user = {
         username : null,
@@ -104,12 +104,12 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
 });
 
 eventjugglerServices.service('Event', function($resource, User, $http, $routeParams, $rootScope) {
-    var eventsRes = $resource('/eventjuggler-rest/events');
-    var eventRes = $resource('/eventjuggler-rest/event/:eventId');
-    var mineRes = $resource('/eventjuggler-rest/events/mine');
-    var rsvpRes = $resource('/eventjuggler-rest/rsvp/:eventId');
-    var popularRes = $resource('/eventjuggler-rest/events/popular');
-    var relatedRes = $resource('/eventjuggler-rest/events/related/:eventId');
+    var eventsRes = $resource('/eventjuggler-server/events');
+    var eventRes = $resource('/eventjuggler-server/event/:eventId');
+    var mineRes = $resource('/eventjuggler-server/events/mine');
+    var rsvpRes = $resource('/eventjuggler-server/rsvp/:eventId');
+    var popularRes = $resource('/eventjuggler-server/events/popular');
+    var relatedRes = $resource('/eventjuggler-server/events/related/:eventId');
 
     this.getEvents = function(success) {
         var events = [];

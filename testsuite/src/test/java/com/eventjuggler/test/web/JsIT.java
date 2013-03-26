@@ -34,10 +34,10 @@ public class JsIT {
     public void registerAndLogin() throws Exception {
         System.out.println(IOUtils.toString(getClass().getResourceAsStream("/arquillian.xml")));
 
-        driver.get("http://localhost:8080/eventjuggler-web-js/#/events");
+        driver.get("http://localhost:8080/eventjuggler-client/#/events");
         driver.findElement(By.linkText("Register")).click();
 
-        waitForCurrentUrl("http://localhost:8080/eventjuggler-web-js/#/register");
+        waitForCurrentUrl("http://localhost:8080/eventjuggler-client/#/register");
 
         String userName = "user-" + System.currentTimeMillis();
 
@@ -60,7 +60,7 @@ public class JsIT {
         driver.findElement(
                 By.cssSelector("form[name=\"loginForm\"] > div.control-group > div.controls > button.btn.btn-primary")).click();
 
-        waitForCurrentUrl("http://localhost:8080/eventjuggler-web-js/#/events");
+        waitForCurrentUrl("http://localhost:8080/eventjuggler-client/#/events");
 
         Assert.assertTrue(driver.findElement(By.cssSelector("BODY")).getText().contains("Foo Bar"));
     }
