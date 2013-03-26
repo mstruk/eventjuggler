@@ -5,7 +5,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  * @author <a href="mailto:marko.strukelj@gmail.com">Marko Strukelj</a>
@@ -13,11 +12,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class RSVP {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    private User user;
+    private String user;
 
     @Enumerated(EnumType.STRING)
     private Response response;
@@ -38,17 +37,15 @@ public class RSVP {
         this.response = response;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
     public static enum Response {
-        WILL_ATTEND,
-        MAYBE,
-        WONT_ATTEND
+        WILL_ATTEND, MAYBE, WONT_ATTEND
     }
 }

@@ -31,7 +31,6 @@ import javax.persistence.PersistenceContext;
 import org.eventjuggler.model.Event;
 import org.eventjuggler.model.RSVP;
 import org.eventjuggler.model.RSVP.Response;
-import org.eventjuggler.model.User;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
@@ -58,7 +57,7 @@ public class EventServiceBean implements EventService {
     }
 
     @Override
-    public List<Event> getEvents(User user) {
+    public List<Event> getEvents(String user) {
         return em.createQuery("select e from Event e join e.attendance a where a.user = :user", Event.class)
                 .setParameter("user", user)
                 .getResultList();
@@ -80,7 +79,7 @@ public class EventServiceBean implements EventService {
     }
 
     @Override
-    public RSVP attend(long eventId, User user) {
+    public RSVP attend(long eventId, String user) {
         Event event = getEvent(eventId);
 
         RSVP rsvp = new RSVP();
@@ -95,13 +94,13 @@ public class EventServiceBean implements EventService {
     }
 
     @Override
-    public void resign(long eventId, User user) {
+    public void resign(long eventId, String user) {
         Event event = getEvent(eventId);
 
         ListIterator<RSVP> itr = event.getAttendance().listIterator();
         while (itr.hasNext()) {
             RSVP r = itr.next();
-            if (r.getUser().getId().equals(user.getId())) {
+            if (r.getUser().equals(user)) {
                 itr.remove();
                 em.remove(r);
             }

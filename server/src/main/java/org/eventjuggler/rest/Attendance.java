@@ -29,68 +29,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 class Attendance {
 
-    private String description;
-    private String imageId;
-    private String lastName;
-    private String login;
-    private String name;
+    private String user;
     private String response;
 
     public Attendance() {
     }
 
     public Attendance(org.eventjuggler.model.RSVP rsvp) {
-        description = rsvp.getUser().getDescription();
-        imageId = rsvp.getUser().getImageId();
-
+        user = rsvp.getUser();
         response = ObjectFactory.createString(rsvp.getResponse());
-        lastName = rsvp.getUser().getLastName();
-        login = rsvp.getUser().getLogin();
-        name = rsvp.getUser().getName();
     }
 
     public String getDescription() {
-        return description;
+        return user;
     }
 
-    public String getImageId() {
-        return imageId;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getName() {
-        return name;
+    public String getUser() {
+        return user;
     }
 
     public String getResponse() {
         return response;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setResponse(String response) {
-        this.response = response;
+    public void setUser(String user) {
+        this.user = user;
     }
 
 }

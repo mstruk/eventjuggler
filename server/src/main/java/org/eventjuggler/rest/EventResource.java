@@ -42,12 +42,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.eventjuggler.model.User;
 import org.eventjuggler.services.AddressService;
 import org.eventjuggler.services.EventProperty;
 import org.eventjuggler.services.EventQuery;
 import org.eventjuggler.services.EventService;
-import org.eventjuggler.services.UserService;
 import org.eventjuggler.services.analytics.Analytics;
 import org.eventjuggler.services.analytics.AnalyticsQuery;
 import org.picketlink.extensions.core.pbox.PicketBoxIdentity;
@@ -69,9 +67,6 @@ public class EventResource {
 
     @Inject
     private PicketBoxIdentity identity;
-
-    @Inject
-    private UserService userService;
 
     @Context
     private UriInfo uriInfo;
@@ -165,7 +160,7 @@ public class EventResource {
     @Produces(MediaType.APPLICATION_JSON)
     @UserLoggedIn
     public void createRSVP(@PathParam("id") long eventId) {
-        eventService.attend(eventId, getUser());
+        eventService.attend(eventId, identity.getUser().getLoginName());
     }
 
     @DELETE
@@ -178,7 +173,7 @@ public class EventResource {
     @Path("/rsvp/{id}")
     @UserLoggedIn
     public void deleteRSVP(@PathParam("id") long eventId) {
-        eventService.resign(eventId, getUser());
+        eventService.resign(eventId, identity.getUser().getLoginName());
     }
 
     @GET
@@ -287,14 +282,10 @@ public class EventResource {
     @UserLoggedIn
     public List<Event> getMyEvents() {
         List<Event> events = new LinkedList<Event>();
-        for (org.eventjuggler.model.Event e : eventService.getEvents(getUser())) {
+        for (org.eventjuggler.model.Event e : eventService.getEvents(identity.getUser().getLoginName())) {
             events.add(new Event(e));
         }
         return events;
-    }
-
-    private User getUser() {
-        return userService.getUser(identity.getUser().getLoginName());
     }
 
     @PostConstruct

@@ -32,8 +32,7 @@ class Event {
     private String description;
     private Long id;
     private String imageId;
-    private Long organizerGroupId;
-    private Long organizerId;
+    private String organizer;
     private Address location;
 
     private String[] tags;
@@ -50,7 +49,7 @@ class Event {
         this.description = e.getDescription();
         this.id = e.getId();
         this.imageId = e.getImageId();
-        this.organizerId = e.getOrganizer() != null ? e.getOrganizer().getId() : null;
+        this.organizer = e.getOrganizer();
         this.tags = ObjectFactory.createTags(e.getTags());
         this.time = e.getTime();
         this.title = e.getTitle();
@@ -76,12 +75,8 @@ class Event {
         return imageId;
     }
 
-    public Long getOrganizerGroupId() {
-        return organizerGroupId;
-    }
-
-    public Long getOrganizerId() {
-        return organizerId;
+    public String getOrganizer() {
+        return organizer;
     }
 
     public String[] getTags() {

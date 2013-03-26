@@ -19,8 +19,7 @@ public class Event {
     @Id @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    private User organizer;
+    private String organizer;
 
     @ManyToOne(fetch=FetchType.EAGER)
     private Address location;
@@ -48,11 +47,11 @@ public class Event {
         this.id = id;
     }
 
-    public User getOrganizer() {
+    public String getOrganizer() {
         return organizer;
     }
 
-    public void setOrganizer(User organizer) {
+    public void setOrganizer(String organizer) {
         this.organizer = organizer;
     }
 

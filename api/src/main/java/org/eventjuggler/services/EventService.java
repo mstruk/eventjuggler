@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.eventjuggler.model.Event;
 import org.eventjuggler.model.RSVP;
-import org.eventjuggler.model.User;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
@@ -38,7 +37,7 @@ public interface EventService {
 
     List<Event> getEvents();
 
-    List<Event> getEvents(User user);
+    List<Event> getEvents(String user);
 
     EventQuery query();
 
@@ -46,8 +45,8 @@ public interface EventService {
 
     void update(Event event);
 
-    RSVP attend(long eventId, User user);
+    RSVP attend(long eventId, String user);
 
-    void resign(long eventId, User user);
+    void resign(long eventId, String user);
 
 }
