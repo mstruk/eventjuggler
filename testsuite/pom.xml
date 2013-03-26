@@ -48,7 +48,7 @@
         </dependency>
         <dependency>
             <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-server</artifactId>
+            <artifactId>eventjuggler-ear</artifactId>
             <type>ear</type>
         </dependency>
         <dependency>

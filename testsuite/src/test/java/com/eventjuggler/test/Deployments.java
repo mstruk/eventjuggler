@@ -40,7 +40,7 @@ public class Deployments {
 
     public static EnterpriseArchive getEventJugglerServer() throws Exception {
         EnterpriseArchive archive = Maven.resolver().offline().loadPomFromFile("../pom.xml")
-                .resolve(expandCanonical("org.eventjuggler:eventjuggler-server:ear")).withoutTransitivity()
+                .resolve(expandCanonical("org.eventjuggler:eventjuggler-ear:ear")).withoutTransitivity()
                 .as(EnterpriseArchive.class)[0];
         return archive;
     }

@@ -30,8 +30,8 @@
 
     <modules>
         <module>api</module>
+        <module>ear</module>
         <module>rest</module>
-        <module>server</module>
         <module>services</module>
         <module>web-js</module>
         <module>testsuite</module>
@@ -136,12 +136,6 @@
             </dependency>
             <dependency>
                 <groupId>org.eventjuggler</groupId>
-                <artifactId>eventjuggler-scaffold</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>org.eventjuggler</groupId>
                 <artifactId>eventjuggler-services</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
@@ -154,13 +148,7 @@
             </dependency>
             <dependency>
                 <groupId>org.eventjuggler</groupId>
-                <artifactId>eventjuggler-web-jsf</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>org.eventjuggler</groupId>
-                <artifactId>eventjuggler-server</artifactId>
+                <artifactId>eventjuggler-ear</artifactId>
                 <version>${project.version}</version>
                 <type>ear</type>
             </dependency>

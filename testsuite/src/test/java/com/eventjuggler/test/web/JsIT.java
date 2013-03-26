@@ -22,7 +22,7 @@ import com.google.common.base.Predicate;
 @RunWith(Arquillian.class)
 public class JsIT {
 
-    @Deployment(name = "eventjuggler-server", testable = false)
+    @Deployment(name = "eventjuggler-ear", testable = false)
     public static EnterpriseArchive getEventJugglerServer() throws Exception {
         return Deployments.getEventJugglerServer();
     }

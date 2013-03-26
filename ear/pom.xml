@@ -18,10 +18,10 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>eventjuggler-server</artifactId>
+    <artifactId>eventjuggler-ear</artifactId>
     <packaging>ear</packaging>
 
-    <name>EventJuggler Server</name>
+    <name>EventJuggler EAR</name>
     <description>EventJuggler EAR</description>
 
     <properties>
@@ -48,22 +48,12 @@
         </dependency>
         <dependency>
             <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-scaffold</artifactId>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>org.eventjuggler</groupId>
             <artifactId>eventjuggler-services</artifactId>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>org.eventjuggler</groupId>
             <artifactId>eventjuggler-web-js</artifactId>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>org.eventjuggler</groupId>
-            <artifactId>eventjuggler-web-jsf</artifactId>
             <type>war</type>
         </dependency>
         <dependency>

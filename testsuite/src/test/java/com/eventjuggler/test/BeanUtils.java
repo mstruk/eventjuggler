@@ -7,7 +7,7 @@ import javax.naming.NamingEnumeration;
 public class BeanUtils {
 
     public static <T> T lookupBean(Class<T> clazz) throws Exception {
-        String appName = "eventjuggler-server";
+        String appName = "eventjuggler-ear";
 
         NamingEnumeration<NameClassPair> list = new InitialContext().list("java:global");
         while (list.hasMore()) {

@@ -26,7 +26,7 @@ import com.eventjuggler.test.Deployments;
 @RunWith(Arquillian.class)
 public class EventServiceIT {
 
-    @Deployment(name = "eventjuggler-server", order = 1, testable = false)
+    @Deployment(name = "eventjuggler-ear", order = 1, testable = false)
     public static EnterpriseArchive getEventJugglerServer() throws Exception {
         return Deployments.getEventJugglerServer();
     }
