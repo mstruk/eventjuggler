@@ -57,10 +57,10 @@ Sample data
 
 There's some sample data available in sample-data. This contains the events data in json format and associated images. 
 
-To use the sample data start the JBoss EAP with '-Dej.image.dir=<LOCATION OF SAMPLE DATA>/images'. For example if you have
-cloned eventjuggler to '~/dev/eventjuggler' start JBoss EAP with:
+To use the sample data start the JBoss EAP with '-Dej.image.dir=<LOCATION OF SAMPLE DATA IMAGES>'. For example if you have
+cloned eventjuggler to '/home/user/dev/eventjuggler' start JBoss EAP with:
 
-    bin/standalone.sh -Dej.image.dir=~/dev/eventjuggler/sample-data/images
+    bin/standalone.sh -Dej.image.dir=$(echo ~/dev/eventjuggler/sample-data/images)
 
 Then import the events data with:
 
