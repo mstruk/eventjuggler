@@ -81,11 +81,14 @@ eventjugglerModule.filter('eventDate', function($filter) {
 
 eventjugglerModule.config(function($httpProvider) {
     $httpProvider.responseInterceptors.push('loadingInterceptor');
+    $httpProvider.responseInterceptors.push('errorInterceptor');
+
     var spinnerFunction = function(data, headersGetter) {
         loadCount++;
         $('#loading').show();
         return data;
     };
+
     $httpProvider.defaults.transformRequest.push(spinnerFunction);
 });
 
@@ -102,6 +105,21 @@ eventjugglerModule.factory('loadingInterceptor', function($q, $window) {
             if (loadCount == 0) {
                 $('#loading').hide();
             }
+            return $q.reject(response);
+        });
+    };
+});
+
+eventjugglerModule.factory('errorInterceptor', function($q, $window) {
+    $('#error').hide();
+    return function(promise) {
+        return promise.then(function(response) {
+            $('#errorStats').text();
+            $('#error').hide();
+            return response;
+        }, function(response) {
+            $('#errorStats').text(response.status);
+            $('#error').show();
             return $q.reject(response);
         });
     };
