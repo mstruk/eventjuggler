@@ -132,12 +132,13 @@ eventjugglerModule.directive('ngBackgroundImage', function($timeout, dateFilter)
         function updateTime() {
             element.css({
                 'background-image' : 'url(' + backgroundImage + ')',
-                'background-size' : 'cover'
+                'background-size' : 'cover',
+                'background-position': 'center' 
             });
         }
 
-        scope.$watch(attrs.ngBackgroundImage, function(value) {
-            backgroundImage = value;
+        scope.$watch(attrs.ngBackgroundImage, function() {
+            backgroundImage = attrs.ngBackgroundImage;
             updateTime();
         });
     };
