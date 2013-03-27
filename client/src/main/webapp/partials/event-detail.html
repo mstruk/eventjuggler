@@ -7,16 +7,18 @@
         <p>
             <button ng-show="user.loggedIn && !event.attending" class="btn" ng-click="attend()">Attend</button>
             <button ng-show="user.loggedIn && event.attending" class="btn" ng-click="resign()">Resign</button>
+            <button ng-show="user.loggedIn" class="btn" ng-click="edit()">Edit</button>
+            <button ng-show="user.loggedIn" class="btn" ng-click="delete()">Delete</button>
         </p>
     </div>
     <div style="float: left; width: 50%; margin-left: 5%; margin-right: 5%;">
         <h2>{{event.title}}</h2>
 
-        <p ng-bind-html-unsafe="event.description"></p>
+        <p ng-bind="event.description"></p>
 
         <h3>{{event.organizerGroup.name}}</h3>
 
-        <div ng-bind-html-unsafe="event.organizerGroup.description"></div>
+        <div ng-bind="event.organizerGroup.description"></div>
 
         <p style="margin-top: 2em;">
             <a ng-repeat="tag in event.tags" class="btn" href="#/events?tags={{tag}}">{{tag}}</a>

@@ -29,20 +29,37 @@ function EventListCtrl($scope, Event, $routeParams, $location) {
     });
 }
 
-function EventCreateCtrl($scope, Event, $location) {
+function EventCreateCtrl($scope, Event, $routeParams, $location) {
     $scope.e = {};
+    
+    if ($routeParams.eventId) {
+        $scope.e = Event.getEvent($routeParams.eventId, function(event) {
+            delete $scope.e.attending;
+            
+            if ($scope.e.tags) {
+                $scope.tags = $scope.e.tags.join();
+            }
+            
+            if ($scope.e.time) {
+                var date = new Date($scope.e.time);
+                $scope.year = date.getFullYear();
+                $scope.month = date.getMonth() + 1;
+                $scope.date = date.getDate();
+            }
+        });
+    }
 
     $scope.create = function() {
-        $scope.e.time = new Date($scope.year, $scope.month - 1, $scope.day).getTime();
+        $scope.e.time = new Date($scope.year, $scope.month - 1, $scope.date).getTime();
         
-        if ($scope.e.tags) {
+        if ($scope.tags) {
             $scope.e.tags = $scope.tags.split(",");
             $scope.e.tags.forEach(function(v, i, a) { a[i] = v.trim(); });
         }
         
         delete $scope.e.year;
         delete $scope.e.month;
-        delete $scope.e.day;
+        delete $scope.e.date;
         
         $scope.created = false;
         $scope.failed = false;
@@ -66,7 +83,7 @@ function EventMineCtrl($scope, Event) {
     $scope.events = Event.getEventsUser();
 }
 
-function EventDetailCtrl($scope, $routeParams, Event, User) {
+function EventDetailCtrl($scope, $routeParams, $location, Event, User) {
     $scope.event = Event.getEvent($routeParams.eventId);
 
     $scope.related = Event.getEventsRelated($routeParams.eventId);
@@ -80,6 +97,16 @@ function EventDetailCtrl($scope, $routeParams, Event, User) {
     $scope.resign = function() {
         Event.resign($scope.event.id, function() {
             $scope.event = Event.getEvent($routeParams.eventId);
+        });
+    };
+
+    $scope.edit = function() {
+        $location.url("/events/" + $scope.event.id + "/edit");
+    };
+    
+    $scope.delete = function() {
+        Event.deleteEvent($scope.event, function() {
+            $location.url("/events");
         });
     };
 }

@@ -24,8 +24,10 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
                 user.name = userInfo.userId;
 
                 if (userInfo.fullName && userInfo.fullName != "null null") {
-                    // Remove nulls that are a result of picketlink-extensions-core UserInfoEndpoint class
-                    // where userInfo.setFullName = user.getFirstName() + " " + user.getLastName()
+                    // Remove nulls that are a result of
+                    // picketlink-extensions-core UserInfoEndpoint class
+                    // where userInfo.setFullName = user.getFirstName() + " " +
+                    // user.getLastName()
                     // without checking for null
                     user.name = userInfo.fullName.replace(/\ null$/g, '').replace(/^null\ /g, '');
                 }
@@ -183,12 +185,17 @@ eventjugglerServices.service('Event', function($resource, User, $http, $routePar
         });
         return event;
     };
-    
 
     this.createEvent = function(event, success, error) {
         var result = eventRes.save(event, success, error);
     };
 
+    this.deleteEvent = function(event, success, error) {
+        var result = eventRes.delete({
+            "eventId" : event.id
+        }, success, error);
+    };
+    
     this.getEventsUser = function() {
         var events = [];
 

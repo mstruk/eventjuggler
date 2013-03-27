@@ -13,6 +13,9 @@ eventjugglerModule.config([ '$routeProvider', function($routeProvider) {
     }).when('/events/create', {
         templateUrl : 'partials/event-create.html',
         controller : EventCreateCtrl
+    }).when('/events/:eventId/edit', {
+        templateUrl : 'partials/event-create.html',
+        controller : EventCreateCtrl
     }).when('/events/:eventId', {
         templateUrl : 'partials/event-detail.html',
         controller : EventDetailCtrl
@@ -43,12 +46,6 @@ eventjugglerModule.filter('substring', function() {
         } else {
             return String(text).substring(0, length - end.length) + end;
         }
-    };
-});
-
-eventjugglerModule.filter('removehtml', function () {
-    return function(text) {
-        return text.replace(/<(?:.|\n)*?>/gm, '');
     };
 });
 
