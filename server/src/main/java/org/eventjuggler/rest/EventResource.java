@@ -188,9 +188,9 @@ public class EventResource {
     }
 
     @POST
-    @Path("/import")
+    @Path("/events")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void importEvents(List<Event> events) {
+    public void saveEvents(List<Event> events) {
         for (Event e : events) {
             eventService.save(e);
         }
