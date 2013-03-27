@@ -63,12 +63,39 @@ function EventCreateCtrl($scope, Event, $routeParams, $location) {
         
         $scope.created = false;
         $scope.failed = false;
-
-        Event.createEvent($scope.e, function(result) {
+        
+        var createEvent = function() { Event.createEvent($scope.e, function(result) {
             $location.url("/events");
         }, function(status) {
             $scope.status = "failed";
         });
+        }
+        
+        var image = document.getElementById("imageFile").files;
+        if (image.length > 0) {
+            $scope.e.imageId = image[0].name;
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/eventjuggler-server/image/" + image[0].name, true);
+            xhr.setRequestHeader("Content-type", "application/octet-stream");
+            xhr.send(image[0]);
+            
+            xhr.onreadystatechange = function(){ 
+                if ( xhr.readyState == 4 ) { 
+                    if ( xhr.status == 200 ) {
+                        $scope.$apply(function() {
+                                createEvent();
+                        });
+                    } else {
+                        $scope.$apply(function() {
+                            $scope.status = "failed";
+                        });
+                    }
+                }
+            }
+        } else {
+            createEvent();
+        }
     };
 }
 

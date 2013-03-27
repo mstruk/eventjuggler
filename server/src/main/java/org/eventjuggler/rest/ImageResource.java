@@ -55,11 +55,12 @@ public class ImageResource {
     @POST
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-    public void saveImage(@PathParam("id") String id, byte[] image) throws IOException {
+    public Response saveImage(@PathParam("id") String id, byte[] image) throws IOException {
         File f = getImageFile(id);
         FileOutputStream os = new FileOutputStream(f);
         os.write(image);
         os.close();
+        return Response.ok().build();
     }
 
 }
