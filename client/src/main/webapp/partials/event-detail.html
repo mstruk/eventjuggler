@@ -1,6 +1,6 @@
 <div class="container eventDetail">
     <div style="float: left; width: 20%; margin-top: 2em;">
-        <img ng-src="/eventjuggler-server/image/{{event.imageId}}"></img>
+        <img ng-src="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}"></img>
         <p>{{event.location.city}}, {{event.location.country | uppercase}}</p>
         <p>{{event.time | date:'mediumDate'}} - {{event.time | date:'shortTime'}}</p>
         <p>{{event.attendance.length}} attending</p>

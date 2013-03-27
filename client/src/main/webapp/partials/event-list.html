@@ -33,7 +33,7 @@
             <article class="ng-scope event">
                 <div class="left">
                     <span class="date">{{event.time | eventDate}}</span> <span class="dateShadow"></span> <a
-                        href="#/events/{{event.id}}" class="mask clearfix"> <img ng-src="/eventjuggler-server/image/{{event.imageId}}"></img>
+                        href="#/events/{{event.id}}" class="mask clearfix"> <img ng-src="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}"></img>
                     </a> <span class="locality" ng-show="event.location.city && event.location.country"><a
                         href="#/events/{{event.id}}">{{event.location.city}}</a>, <a href="#/events/{{event.id}}">{{event.location.country
                             | uppercase}}</a></span>
