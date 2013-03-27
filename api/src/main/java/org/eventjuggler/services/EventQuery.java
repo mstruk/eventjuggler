@@ -42,4 +42,6 @@ public interface EventQuery {
 
     EventQuery tags(String... tags);
 
+    EventQuery user(String user);
+
 }

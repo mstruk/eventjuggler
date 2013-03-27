@@ -28,12 +28,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ListJoin;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.eventjuggler.model.Event;
 import org.eventjuggler.model.Event_;
+import org.eventjuggler.model.RSVP;
+import org.eventjuggler.model.RSVP_;
 
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
@@ -50,6 +53,8 @@ public class EventQueryImpl implements EventQuery {
     private EventProperty sort;
 
     private String[] tags;
+
+    private String user;
 
     public EventQueryImpl(EntityManager em) {
         this.em = em;
@@ -68,6 +73,12 @@ public class EventQueryImpl implements EventQuery {
         Root<Event> e = c.from(Event.class);
 
         List<Predicate> predicates = new LinkedList<Predicate>();
+
+        if (user != null) {
+            ListJoin<Event, RSVP> a = e.join(Event_.attendance);
+            Predicate userPredicate = b.equal(a.get(RSVP_.user), user);
+            predicates.add(userPredicate);
+        }
 
         if (query != null) {
             Predicate queryPredicate = b.or(b.like(b.upper(e.get(Event_.title)), query), b.like(b.upper(e.get(Event_.description)), query));
@@ -137,4 +148,9 @@ public class EventQueryImpl implements EventQuery {
         return this;
     }
 
+    @Override
+    public EventQuery user(String user) {
+        this.user = user;
+        return this;
+    }
 }

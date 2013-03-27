@@ -21,8 +21,6 @@
  */
 package org.eventjuggler.services;
 
-import java.util.List;
-
 import org.eventjuggler.model.Event;
 import org.eventjuggler.model.RSVP;
 
@@ -34,8 +32,6 @@ public interface EventService {
     Event save(Event event);
 
     Event getEvent(long id);
-
-    List<Event> getEvents(String user);
 
     EventQuery query();
 

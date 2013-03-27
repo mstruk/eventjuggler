@@ -229,6 +229,7 @@
                     <configuration>
                         <defaultLibBundleDir>lib</defaultLibBundleDir>
                         <fileNameMapping>no-version</fileNameMapping>
+                        <skinnyWars>true</skinnyWars>
                     </configuration>
                 </plugin>
 

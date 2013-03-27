@@ -21,14 +21,12 @@
  */
 package org.eventjuggler.services;
 
-import java.util.List;
 import java.util.ListIterator;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.eventjuggler.model.Address;
 import org.eventjuggler.model.Event;
 import org.eventjuggler.model.RSVP;
 import org.eventjuggler.model.RSVP.Response;
@@ -49,10 +47,9 @@ public class EventServiceBean implements EventService {
         RSVP rsvp = new RSVP();
         rsvp.setResponse(Response.WILL_ATTEND);
         rsvp.setUser(user);
-        em.persist(rsvp);
 
         event.getAttendance().add(rsvp);
-        em.merge(event);
+        save(event);
 
         return rsvp;
     }
@@ -60,12 +57,6 @@ public class EventServiceBean implements EventService {
     @Override
     public Event getEvent(long id) {
         return em.find(Event.class, id);
-    }
-
-    @Override
-    public List<Event> getEvents(String user) {
-        return em.createQuery("select e from Event e join e.attendance a where a.user = :user", Event.class)
-                .setParameter("user", user).getResultList();
     }
 
     @Override
@@ -91,38 +82,17 @@ public class EventServiceBean implements EventService {
             }
         }
 
-        em.merge(event);
-    }
-
-    private Address save(Address address) {
-        return save(address, address.getId());
+        save(event);
     }
 
     @Override
     public Event save(Event event) {
-        if (event.getLocation() != null) {
-            event.setLocation(save(event.getLocation()));
-        }
-
-        if (event.getAttendance() != null) {
-            ListIterator<RSVP> itr = event.getAttendance().listIterator();
-            while (itr.hasNext()) {
-                RSVP r = itr.next();
-                itr.set(save(r, r.getId()));
-            }
-        }
-
-        save(event, event.getId());
-        return event;
-    }
-
-    private <T> T save(T entity, Long id) {
-        if (id == null) {
-            em.persist(entity);
+        if (event.getId() == null) {
+            em.persist(event);
         } else {
-            entity = em.merge(entity);
+            event = em.merge(event);
         }
-        return entity;
+        return event;
     }
 
 }

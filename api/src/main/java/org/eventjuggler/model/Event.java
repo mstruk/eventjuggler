@@ -2,13 +2,14 @@ package org.eventjuggler.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -23,12 +24,12 @@ public class Event {
 
     private String organizer;
 
-    @ManyToOne(fetch=FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address location;
 
     private long time;
 
-    @ManyToMany(fetch=FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<RSVP> attendance;
 
     private String title;
@@ -109,7 +110,7 @@ public class Event {
         return convertTags(tags);
     }
 
-    public void setTags(String[] tags) {
+    public void setTags(String... tags) {
         this.tags = convertTags(tags);
     }
 

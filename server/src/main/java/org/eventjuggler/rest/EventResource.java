@@ -132,7 +132,7 @@ public class EventResource {
     @Produces(MediaType.APPLICATION_JSON)
     @UserLoggedIn
     public List<Event> getEventsMine() {
-        return eventService.getEvents(identity.getUser().getLoginName());
+        return eventService.query().user(identity.getUser().getLoginName()).getEvents();
     }
 
     @GET

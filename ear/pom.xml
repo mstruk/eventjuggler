@@ -34,6 +34,10 @@
     <dependencies>
         <dependency>
             <groupId>org.eventjuggler</groupId>
+            <artifactId>eventjuggler-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eventjuggler</groupId>
             <artifactId>eventjuggler-client</artifactId>
             <type>war</type>
         </dependency>
