@@ -16,7 +16,7 @@ Prerequisites
 Building
 ========
 
-mvn clean install
+    mvn clean install
 
 
 
@@ -26,13 +26,20 @@ Deploying to JBoss AS
 Deploy ear (includes client and server)
 ---------------------------------------
 
-mvn -pl ear jboss-as:deploy
+    mvn -pl ear jboss-as:deploy
 
 
 Deploy client and server
 ------------------------
 
-mvn -pl client,server jboss-as:deploy
+    mvn -pl client,server jboss-as:deploy
+
+
+
+Access web application
+======================
+
+Open http://localhost:8080/eventjuggler-client
 
 
 
@@ -42,13 +49,13 @@ Import and export data
 Export events
 -------------
 
-curl http://localhost:8080/eventjuggler-server/events > events.json
+    curl http://localhost:8080/eventjuggler-server/events > events.json
 
 
 Import events
 -------------
 
-curl -H "Content-Type: application/json" -X POST -d @events.json http://localhost:8080/eventjuggler-server/events
+    curl -H "Content-Type: application/json" -X POST -d @events.json http://localhost:8080/eventjuggler-server/events
 
 
 
@@ -74,6 +81,12 @@ Functional Tests
 
 The testsuite contains a set of integration tests. The tests can be execute with JBoss EAP in either managed or remote mode.
 
+Before running tests make sure that any manually installed deployables are unistalled from JBoss EAP:
+
+    mvn -pl ear jboss-as:undeploy
+    mvn -pl client,server jboss-as:undeploy
+
+
 To run the testsuite in managed mode, run:
 
     mvn -Pit-managed -Djboss.home=<PATH TO JBOSS EAP> clean install
@@ -81,6 +94,8 @@ To run the testsuite in managed mode, run:
 To run the testsuite in remote mode, first start JBoss EAP with the EventJuggler Services sub-systems enabled, and run:
 
     mvn -Pit-remote clean install
+
+For some tests to pass you need to have [chromedriver](https://code.google.com/p/chromedriver/downloads/list) executable on your path.
 
 
 
@@ -96,9 +111,9 @@ Facebook login requires three properties to be configured in your AS7 standalone
         </extensions>
 
         <system-properties>
-            <property name="eventjuggler-rest.FB_CLIENT_ID" value="VALUE_OF_YOUR_FACEBOOK_APP_ID"/>
-            <property name="eventjuggler-rest.FB_CLIENT_SECRET" value="VALUE_OF_YOUR_FACEBOOK_APP_SECRET"/>
-            <property name="eventjuggler-rest.FB_RETURN_URL" value="http://localhost:8080/eventjuggler-rest/facebook"/>
+            <property name="eventjuggler-server.FB_CLIENT_ID" value="VALUE_OF_YOUR_FACEBOOK_APP_ID"/>
+            <property name="eventjuggler-server.FB_CLIENT_SECRET" value="VALUE_OF_YOUR_FACEBOOK_APP_SECRET"/>
+            <property name="eventjuggler-server.FB_RETURN_URL" value="http://localhost:8080/eventjuggler-server/facebook"/>
             ...
         </system-properties>
         ...
@@ -113,7 +128,7 @@ Complete the wizard.
 After your application is created select how your app integrates with Facebook in the bottom of the screen.
 Choose the first option - Website with Facebook Login.
 
-Type in the Site URL: http://localhost:8080/eventjuggler-rest/facebook
+Type in the Site URL: http://localhost:8080/eventjuggler-server/facebook
 
 That's it.
 
@@ -134,9 +149,9 @@ Twitter login requires three properties to be configured in your AS7 standalone.
         </extensions>
 
         <system-properties>
-            <property name="eventjuggler-rest.TWIT_CLIENT_ID" value="VALUE_OF_YOUR_TWITTER_CONSUMER_KEY"/>
-            <property name="eventjuggler-rest.TWIT_CLIENT_SECRET" value="VALUE_OF_YOUR_TWITTER_CONSUMER_SECRET"/>
-            <property name="eventjuggler-rest.TWIT_RETURN_URL" value="http://localhost:8080/eventjuggler-rest/twitter"/>
+            <property name="eventjuggler-server.TWIT_CLIENT_ID" value="VALUE_OF_YOUR_TWITTER_CONSUMER_KEY"/>
+            <property name="eventjuggler-server.TWIT_CLIENT_SECRET" value="VALUE_OF_YOUR_TWITTER_CONSUMER_SECRET"/>
+            <property name="eventjuggler-server.TWIT_RETURN_URL" value="http://localhost:8080/eventjuggler-server/twitter"/>
             ...
         </system-properties>
         ...

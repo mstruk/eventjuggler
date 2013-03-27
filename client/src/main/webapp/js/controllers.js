@@ -183,7 +183,7 @@ function UserCtrl($scope, User, $location) {
             $scope.failed = true;
         }
 
-        oauthPopup = window.open("/eventjuggler-rest/facebook", "name", "height=768, width=1024");
+        oauthPopup = window.open("/eventjuggler-server/facebook", "name", "height=768, width=1024");
         oauthPopup.focus();
     };
 
@@ -199,7 +199,7 @@ function UserCtrl($scope, User, $location) {
             });
         }
 
-        oauthPopup = window.open("/eventjuggler-rest/twitter", "name", "height=768, width=1024");
+        oauthPopup = window.open("/eventjuggler-server/twitter", "name", "height=768, width=1024");
         oauthPopup.focus();
     };
 }
