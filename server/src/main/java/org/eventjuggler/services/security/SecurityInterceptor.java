@@ -55,8 +55,6 @@ public class SecurityInterceptor implements PreProcessInterceptor {
 
     @Override
     public ServerResponse preProcess(HttpRequest request, ResourceMethod method) throws Failure, WebApplicationException {
-        ServerResponse response = null;
-
         if (!this.identity.isLoggedIn()) {
             String token = getToken(request);
             if (token != null) {
@@ -67,7 +65,7 @@ public class SecurityInterceptor implements PreProcessInterceptor {
             }
         }
 
-        return response;
+        return null;
     }
 
     private String getToken(HttpRequest request) {
