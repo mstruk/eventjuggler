@@ -14,11 +14,7 @@
     <div style="float: left; width: 50%; margin-left: 5%; margin-right: 5%;">
         <h2>{{event.title}}</h2>
 
-        <p ng-bind="event.description"></p>
-
-        <h3>{{event.organizerGroup.name}}</h3>
-
-        <div ng-bind="event.organizerGroup.description"></div>
+        <p ng-bind-html="event.description"></p>
 
         <p style="margin-top: 2em;">
             <a ng-repeat="tag in event.tags" class="btn" href="#/events?tags={{tag}}">{{tag}}</a>
