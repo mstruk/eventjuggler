@@ -29,7 +29,7 @@ function EventListCtrl($scope, Event, $routeParams, $location) {
     });
 }
 
-function EventCreateCtrl($scope, Event, $routeParams, $location) {
+function EventCreateCtrl($scope, Event, Utils, $routeParams, $location) {
     $scope.e = {};
     
     if ($routeParams.eventId) {
@@ -73,10 +73,13 @@ function EventCreateCtrl($scope, Event, $routeParams, $location) {
         
         var image = document.getElementById("imageFile").files;
         if (image.length > 0) {
-            $scope.e.imageId = image[0].name;
+            if (!$scope.e.imageId) {
+                var ext = image[0].name.substring(image[0].name.lastIndexOf("."));
+                $scope.e.imageId = Utils.uuid() + ext;
+            }
             
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/eventjuggler-server/image/" + image[0].name, true);
+            xhr.open("POST", "/eventjuggler-server/image/" + $scope.e.imageId, true);
             xhr.setRequestHeader("Content-type", "application/octet-stream");
             xhr.send(image[0]);
             

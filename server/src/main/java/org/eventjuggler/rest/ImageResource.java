@@ -13,6 +13,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.picketlink.extensions.core.pbox.authorization.UserLoggedIn;
+
 @Path("/image")
 public class ImageResource {
 
@@ -23,6 +25,10 @@ public class ImageResource {
             imageDir = new File(System.getProperty("ej.image.dir"));
         } else if (System.getProperties().containsKey("jboss.server.data.dir")) {
             imageDir = new File(System.getProperty("jboss.server.data.dir"), "ej-images");
+        }
+
+        if (!imageDir.isDirectory()) {
+            imageDir.mkdirs();
         }
     }
 
@@ -55,6 +61,7 @@ public class ImageResource {
     @POST
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    @UserLoggedIn
     public Response saveImage(@PathParam("id") String id, byte[] image) throws IOException {
         File f = getImageFile(id);
         FileOutputStream os = new FileOutputStream(f);
