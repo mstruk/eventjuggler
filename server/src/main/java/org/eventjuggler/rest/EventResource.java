@@ -100,8 +100,8 @@ public class EventResource {
     @Path("/events")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Event> getEvents(@QueryParam("first") Integer firstResult, @QueryParam("max") Integer maxResult,
-            @QueryParam("query") String query, @QueryParam("tags") String tags, @QueryParam("sort") String sortBy,
-            @QueryParam("order") String order) {
+            @QueryParam("query") String query, @QueryParam("tag") String tag, @QueryParam("sort") String sortBy,
+            @QueryParam("order") String order, @QueryParam("user") String user) {
         EventQuery q = eventService.query();
 
         if (firstResult != null) {
@@ -116,8 +116,12 @@ public class EventResource {
             q.query(query);
         }
 
-        if (tags != null) {
-            q.tags(Event.convertTags(tags));
+        if (tag != null) {
+            q.tag(tag);
+        }
+
+        if (user != null) {
+            q.user(user);
         }
 
         if (sortBy != null) {
@@ -125,14 +129,6 @@ public class EventResource {
         }
 
         return q.getEvents();
-    }
-
-    @GET
-    @Path("/events/mine")
-    @Produces(MediaType.APPLICATION_JSON)
-    @UserLoggedIn
-    public List<Event> getEventsMine() {
-        return eventService.query().user(identity.getUser().getLoginName()).getEvents();
     }
 
     @GET

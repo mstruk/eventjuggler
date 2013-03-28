@@ -128,14 +128,6 @@ public class Event {
     }
 
     public String[] getTags() {
-        return convertTags(tags);
-    }
-
-    public void setTags(String... tags) {
-        this.tags = convertTags(tags);
-    }
-
-    public static String[] convertTags(String tags) {
         if (tags == null) {
             return null;
         }
@@ -147,9 +139,9 @@ public class Event {
         return t;
     }
 
-    public static String convertTags(String[] tags) {
+    public void setTags(String... tags) {
         if (tags == null) {
-            return null;
+            this.tags = null;
         }
 
         StringBuilder sb = new StringBuilder();
@@ -159,6 +151,6 @@ public class Event {
             }
             sb.append(tags[i]);
         }
-        return sb.toString();
+        this.tags = sb.toString();
     }
 }

@@ -40,7 +40,7 @@ public interface EventQuery {
 
     EventQuery sortBy(EventProperty property, boolean ascending);
 
-    EventQuery tags(String... tags);
+    EventQuery tag(String tag);
 
     EventQuery user(String user);
 

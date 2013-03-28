@@ -32,7 +32,7 @@
                             <a href="#/events">Explore events</a>
                         </li>
                         <li ng-show="user.loggedIn">
-                            <a href="#/events/mine">Your events</a>
+                            <a href="#/events?user={{user.username}}">Your events</a>
                         </li>
                         <li ng-show="user.loggedIn">
                             <a href="#/events/create">Create event</a>

@@ -52,7 +52,7 @@ public class EventQueryImpl implements EventQuery {
     private String query;
     private EventProperty sort;
 
-    private String[] tags;
+    private String tag;
 
     private String user;
 
@@ -81,15 +81,14 @@ public class EventQueryImpl implements EventQuery {
         }
 
         if (query != null) {
-            Predicate queryPredicate = b.or(b.like(b.upper(e.get(Event_.title)), query), b.like(b.upper(e.get(Event_.description)), query));
+            Predicate queryPredicate = b.or(b.like(b.upper(e.get(Event_.title)), query),
+                    b.like(b.upper(e.get(Event_.description)), query));
             predicates.add(queryPredicate);
         }
 
-        if (tags != null) {
-            for (String t : tags) {
-                Predicate tagPredicate = b.like(b.upper(e.get(Event_.tags)), "%" + t.toUpperCase() + "%");
-                predicates.add(tagPredicate);
-            }
+        if (tag != null) {
+            Predicate tagPredicate = b.like(b.upper(e.get(Event_.tags)), "%" + tag.toUpperCase() + "%");
+            predicates.add(tagPredicate);
         }
 
         c.where(predicates.toArray(new Predicate[predicates.size()]));
@@ -143,8 +142,8 @@ public class EventQueryImpl implements EventQuery {
     }
 
     @Override
-    public EventQuery tags(String... tags) {
-        this.tags = tags;
+    public EventQuery tag(String tag) {
+        this.tag = tag;
         return this;
     }
 

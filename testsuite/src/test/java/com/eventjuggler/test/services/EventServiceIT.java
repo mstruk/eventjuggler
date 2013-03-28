@@ -94,7 +94,7 @@ public class EventServiceIT {
         assertEquals(1, eventService.query().query("title2").getEvents().size());
         assertEquals(1, eventService.query().query("TiTlE2").getEvents().size());
         assertEquals(1, eventService.query().query("description2").getEvents().size());
-        assertEquals(1, eventService.query().tags("tag2").getEvents().size());
+        assertEquals(1, eventService.query().tag("tag2").getEvents().size());
 
         List<Event> events = eventService.query().sortBy(EventProperty.TIME, false).firstResult(2).maxResult(2).getEvents();
         assertEquals(2, events.size());

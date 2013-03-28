@@ -124,6 +124,14 @@ eventjugglerServices.service('Event', function($resource, User, $http, $routePar
             max : 10,
             sort : "time"
         };
+        
+        if ($routeParams.tag) {
+            events.parameters.tag = $routeParams.tag;
+        }
+        
+        if ($routeParams.user) {
+            events.parameters.user = $routeParams.user;
+        }
 
         if ($routeParams.query) {
             events.parameters.query = $routeParams.query;

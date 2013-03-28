@@ -109,10 +109,6 @@ function EventSearchCtrl($scope, Event, $location) {
     };
 }
 
-function EventMineCtrl($scope, Event) {
-    $scope.events = Event.getEventsUser();
-}
-
 function EventDetailCtrl($scope, $routeParams, $location, Event, User) {
     $scope.event = Event.getEvent($routeParams.eventId);
 
