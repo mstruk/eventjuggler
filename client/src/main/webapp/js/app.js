@@ -48,7 +48,7 @@ eventjugglerModule.filter('substring', function() {
 
 eventjugglerModule.filter('removehtml', function () {
     return function(text) {
-        return text.replace(/<(?:.|\n)*?>/gm, '');
+        return text && text.replace(/<(?:.|\n)*?>/gm, '');
     };
 });
 
