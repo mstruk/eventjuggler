@@ -10,28 +10,26 @@ body {
 
 li {list-style: none;}
 
-input[type="search"] {color: #2D2D2D;}
-input[type="search"]:-moz-placeholder {color: #aaa;}
-
-
 .left {float: left;}
 .right {float: right;}
-
-.container {width: 120em;}
 
 
 /* Top */
 
 #top {
-    background-color: #2393c8, transparent; /* Make it with CSS or replace by SVG */
-    background-image: linear-gradient(rgba(0,0,0,0) 91%, rgba(0,0,0,0.1) 100%), url(img/banner-bg.png) ;
-    background-image: -webkit-linear-gradient(rgba(0,0,0,0) 91%, rgba(0,0,0,0.1) 100%), url(img/banner-bg.png) ;
-    background-image: -moz-linear-gradient(rgba(0,0,0,0) 91%, rgba(0,0,0,0.2) 100%), url(img/banner-bg.png) ;
-    background-repeat: repeat;
-    background-position: left top;
-    border-top: 5px solid rgba(0,0,0,0.50);
+    background-color: #2393c8, transparent; /* SVG */
+    background-image: linear-gradient(rgba(0,0,0,0) 91%, rgba(0,0,0,0.1) 100%), url(img/banner-bg-lines.png), url(img/banner-bg-gradient.png), url(img/banner-bg.png) ;
+    background-image: -webkit-linear-gradient(rgba(0,0,0,0) 91%, rgba(0,0,0,0.1) 100%), url(img/banner-bg-lines.png), url(img/banner-bg-gradient.png), url(img/banner-bg.png) ;
+    background-image: -moz-linear-gradient(rgba(0,0,0,0) 91%, rgba(0,0,0,0.2) 100%), url(img/banner-bg-lines.png), url(img/banner-bg-gradient.png), url(img/banner-bg.png) ;
+    background-repeat: no-repeat, repeat-x, no-repeat, repeat;
+    background-position: left top, center center, center 16px, left top;
+    border-top: 5px solid rgba(0,0,0,0.4);
     padding-top: 1em;
-    padding-bottom: 6em;
+    padding-bottom: 1.7em;
+}
+
+header nav .left {
+    margin-left: 47em;
 }
 
 header nav li {float: left;}
@@ -39,16 +37,18 @@ header nav li {float: left;}
 header nav li+li {margin-left: 3em;}
 
 header nav a {
-    font-size: 1.8em;
+    font-size: 1.6em;
     color: #fff;
     font-weight: 100;
-    margin-top: 0.35em;
+    margin-top: 0.6em;
     display: block;
+    cursor: pointer;
 }
 
-header nav a:hover {
-    color: #fff;
-}
+header nav a:hover,
+header nav a:focus {color: #fff;}
+
+header li.active a {color: #f9eed0;}
 
 header form {position: relative;}
 
@@ -64,10 +64,11 @@ header #searchEvents {
     font-size: 1.6em;
     font-family: "Lucida Grande", Lucida, sans-serif;
     margin-bottom: 2em;
-    padding-left: 2em;
+    padding: 0.4375em 0.4375em 0.4375em 2em;
     height: 1.5em;
     width: 11em;
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+    width: 14.4375em;
 }
 
 header #searchEvents:focus {
@@ -75,34 +76,83 @@ header #searchEvents:focus {
     outline: 0 none;
 }
 
+input[type="search"] {color: #2D2D2D;}
+
 header i.icon-search {
     color: #b2afaf;
     font-size: 1.6em;
-    line-height: 1.4em;
+    line-height: 1.75em;
 }
 
 #banner h1 {
-    text-align: center;
-    margin-bottom: 3em;
+    margin-top: 0.7em;
+    float: left;
+}
+
+h1 a {
+    display: inline-block;
+    text-indent: -99999em;
+    background: url(img/logo.png) no-repeat left top; /* SVG */
+    opacity: 0.95;
 }
 
 #banner h1 a {
-    width: 29.9em;
-    height: 5.8em;
-    display: inline-block;
-    text-indent: -99999em;
-    background: url(img/logo.png) no-repeat left top; /* Replace by SVG */
+    width: 35.3em;
+    height: 14.3em;
 }
 
 #banner h2 {
-    font-size: 3.8em;
-    font-weight: 100;
-    text-align: center;
     color: #fff;
+    display: inline-block;
+    font-size: 3.2em;
+    font-weight: 100;
+    margin-left: 3.625em;
+    margin-top: 1.25em;
+    opacity: 0.5;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+#top.loggedIn {padding-bottom: 1.3em;}
+
+.loggedIn nav .left {margin-left: 0;}
+
+.loggedIn #searchEvents {
+    margin-bottom: 0;
+}
+
+.loggedIn h1 {
+    position: absolute;
+    top: 0.8em;
+    left: 50%;
+    margin-left: -9.65em;
+}
+
+.loggedIn h1 a {
+    width: 12.0625em;
+    height: 4.875em;
+    background-size: contain;
+    margin-top: 0;
+}
+
+.userName {
+    cursor: pointer;
+}
+
+.userName a img {
+    vertical-align: middle;
+    margin-right: 0.5em;
+    width: 1.25em;
 }
 
 
-/* Content */
+/* Content - general */
+
+.container {width: 120em;}
+
+input[type="file"] {
+    height: 1.92857142857143em;
+    line-height: 1.92857142857143em;
+}
 
 div#loading {
     background-color: rgba(255,255,255,0.5);
@@ -123,6 +173,23 @@ div#error {
     left: 10px;
     bottom: 10px;
 } 
+
+/*
+.btn-primary {
+    background-image: linear-gradient(#64b1e2 0%, #19719a 100%);
+    border-color: #1c6f99;
+    background-color: #499bca;
+}
+
+.btn-primary:hover {
+    border-color: #136289;
+    background-color: #3180ac;
+    background-image: linear-gradient(#1e8dc3 0%, #19719a 100%);
+}
+*/
+
+
+/* Home - page */
 
 section {
     clear: both;
@@ -145,7 +212,6 @@ section {
     background-color: #fff;
     float: left;
     padding-top: 0.2em;
-    margin-top: -7px; /* Remove after removing general styles */
 }
 
 #events-filter {
@@ -199,7 +265,9 @@ section {
 }
 
 
-/* Events list */
+/* List of events */
+
+div.event-wrapper {width: 1200px;}
 
 div.event-wrapper:nth-child(even) {
     clear: left;
@@ -231,10 +299,11 @@ span.date {
     font-size: 1.8em;
     color: #696969;
     display: inline-block;
-    line-height: 1.83333333333333em;
+    line-height: 1.66666666666667em;
     text-shadow: 0px 1px 0px #fff;
     background-color: rgba(227,226,223,0.95);
     padding-left: 1.11111111111111em;
+    padding-bottom: 0.16666666666667em;
     min-width: 6em;
     position: absolute;
     z-index: 10;    
@@ -254,7 +323,7 @@ span.dateShadow {
     position: relative;
     overflow: hidden;
     top: 1.6em;
-    left: 1.6em;
+    left: 1.5em;
     border-left: 1px solid #fff;
 }
 
@@ -295,6 +364,14 @@ span.locality a {color: #fff;}
     margin-bottom: 1em;
 }
 
+.attending {
+    font-size: 1.4em;
+    color: #2D2D2D;
+    line-height: 1.71428571428571em;
+    display: inline-block;
+    margin-left: 0.8em;
+}
+
 
 /* Tags */
 
@@ -318,9 +395,10 @@ nav.tags a {
     background-color: #f4f4f4;
     border: 1px solid #d6d6d6;
     border-left: none;
-    line-height: 1.83333333333333em;
+    line-height: 1.66666666666667em;
     display: inline-block;
     padding-right: 0.66666666666667em;
+    padding-bottom: 0.16666666666667em;
     padding-left: 0.5em;
     margin-left: 1em;
     border-radius: 0 0.16666666666667em 0.16666666666667em 0;
@@ -335,15 +413,72 @@ nav.tags a span {
 
 /* Popular events */
 
-.popularEvents li {
-    margin-right: 2em;
-    margin-bottom: 1em;
+.popularEvents {
+    position: relative;
+    width: 120em;
 }
 
-.popularEvents a {
-    font-size: 2em;
-    color: #2D2D2D;
+.popularEvents div {
+    width: 103em;
+    margin-left: 8.5em;
 }
+
+.popularEvents article {
+    position: relative;
+    margin-right: 5.5em;
+    width: 21.6em;
+}
+
+.popularEvents h4 {
+    margin-top: 1.5em;
+    margin-left: 1.6em;
+}
+
+.popularEvents nav a {
+    width: 3.8em;
+    height: 4.6em;
+    background: url(img/carousel-nav.png); /* SVG */
+    background-repeat: no-repeat;
+    text-indent: -99999em;
+    position: absolute;
+    top: 8.2em;
+}
+
+.popularEvents a.prev {
+    background-position: left top;
+    left: 0;
+}
+
+.popularEvents a.next {
+    background-position: right top;
+    right: 0;
+}
+
+a.prev:hover {background-position: left -4.6em;}
+a.next:hover {background-position: right -4.6em;}
+
+a.prev.disabled {background-position: left bottom;}
+a.next.disabled {background-position: right bottom;}
+
+a.prev.disabled,
+a.next.disabled {cursor: default;}
+
+
+/* Create event - Page */
+
+h2 {
+    font-size: 3em;
+    margin-bottom: 1.5em;
+}
+
+.container.register {
+    margin-left: 30em;
+    width: 60em;
+    margin-top: 4em;
+}
+
+
+
 
 
 

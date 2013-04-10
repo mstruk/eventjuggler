@@ -1,4 +1,7 @@
 <div class="container register">
+    
+    <h2>Join EventJuggler.</h2>
+    
     <p class="alert alert-block alert-error" ng-show="status == 'failed'">Failed to create event</p>
 
     <form class="form-horizontal" ng-submit="create()" name="eventCreateForm">
@@ -19,9 +22,9 @@
         <div class="control-group">
             <label class="control-label" for="time">Date</label>
             <div class="controls">
-                <input type="text" id="time" ng-model="date" placeholder="Date" class="input-small"/>
-                <input type="text" id="time" ng-model="month" placeholder="Month" class="input-small"/>
-                <input type="text" id="time" ng-model="year" placeholder="Year" class="input-small"/>
+                <input type="text" id="time" ng-model="date" placeholder="Date" class="input-mini"/>
+                <input type="text" id="time" ng-model="month" placeholder="Month" class="input-mini"/>
+                <input type="text" id="time" ng-model="year" placeholder="Year" class="input-mini"/>
             </div>
         </div>
 
@@ -54,6 +57,8 @@
                  <input type="text" id="country" ng-model="e.location.country" placeholder="Country"  />
             </div>
         </div>
+
+        <hr />
 
         <div class="control-group">
             <div class="controls">

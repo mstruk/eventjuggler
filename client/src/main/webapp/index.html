@@ -5,6 +5,8 @@
         <meta charset="utf-8">
         <title>EventJuggler</title>
         
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+                
         <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet">
         <link href="css/reset.css" rel="stylesheet">
@@ -24,21 +26,11 @@
     </head>
 
     <body ng-controller="UserCtrl">
-        <div id="top">
+    
+        <div id="top" ng-show="!user.loggedIn">
             <header class="container">
                 <nav>
                     <ul class="left">
-                        <li>
-                            <a href="#/events">Explore events</a>
-                        </li>
-                        <li ng-show="user.loggedIn">
-                            <a href="#/events?user={{user.username}}">Your events</a>
-                        </li>
-                        <li ng-show="user.loggedIn">
-                            <a href="#/events/create">Create event</a>
-                        </li>
-                    </ul>
-                    <ul class="right">
                         <li>
                             <form ng-controller="EventSearchCtrl" ng-submit="search()">
                                 <fieldset>
@@ -47,26 +39,61 @@
                                 </fieldset>    
                             </form>
                         </li>
-
-                        <li ng-show="!user.loggedIn">
+                        <li class="active"><!-- Add a class active dinamically --> 
+                            <a href="#/events">Explore events</a>
+                        </li>
+                    </ul>
+                    <ul class="right">
+                        <li>
                             <a href="#loginModal" data-toggle="modal">Login</a>
                         </li>
-                        <li ng-show="!user.loggedIn">
+                        <li>
                             <a href="#/register">Register</a>
-                        </li>
-                        <li ng-show="user.loggedIn">
-                            <a>{{user.name}}</a>
-                        </li>
-                        <li ng-show="user.loggedIn">
-                            <a ng-click="user.logout()">Logout</a>
                         </li>
                     </ul>
                 </nav>
             </header>
             <div id="banner" class="container">
                 <h1><a href="#/events">EventJuggler</a></h1>
-                <h2>Find technical presentations in one place.</h2>
+                <h2>Find tech presentations and connect ideas.</h2>
             </div>
+        </div><!-- End #top -->
+        
+        <div id="top" ng-show="user.loggedIn" class="loggedIn">
+            <header class="container">
+                <nav>
+                    <ul class="left">
+                        <li>
+                            <form ng-controller="EventSearchCtrl" ng-submit="search()">
+                                <fieldset>
+                                    <label for="searchEvents"><i class="icon-search"><span class="hiddenElement">Search for:</span></i></label>
+                                    <input id="searchEvents" type="search" placeholder="Search events" ng-model="query"/>
+                                </fieldset>    
+                            </form>
+                        </li>
+                        <li class="active"><!-- Add a class active dinamically --> 
+                            <a href="#/events">Explore events</a>
+                        </li>
+                    </ul>
+                    
+                    <h1><a href="#/events">EventJuggler</a></h1>
+                    
+                    <ul class="right">
+                        <li>
+                            <a href="#/events?user={{user.username}}">My events</a>
+                        </li>
+                        <li>
+                            <a href="#/events/create">Create event</a>
+                        </li>
+                        <li class="userName">
+                            <a><img src="https://dl.dropbox.com/u/2730435/avatar.jpg" alt="profile picture">{{user.name}}</a>
+                        </li>
+                        <li>
+                            <a ng-click="user.logout()">Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
         </div><!-- End #top -->
 
         <div id="loading">
@@ -82,7 +109,7 @@
         </div><!-- End #content -->
         
         <footer>
-            <p>Copyright © 2009-2012. All rights reserved.</p>
+            <p>Copyright © 2009-2013. All rights reserved.</p>
         </footer>
         
         <div ng-include src="'partials/login.html'"></div>
