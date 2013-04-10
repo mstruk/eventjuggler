@@ -160,7 +160,9 @@ Twitter login requires three properties to be configured in your AS7 standalone.
 In order to get Twitter Consumer Key, and Consumer Secret, go to https://dev.twitter.com/apps, and use Create New Application button.
 
 For Name type some globally unique name i.e. EventJuglerDemo-007. Then type a short Description.
-For Website enter something that looks like a top level domain - i.e. http://www.eventjuggler.org leave the rest empty.
+For Website enter something that looks like a top level domain - i.e. http://www.eventjuggler.org.
+For Callback URL enter some fake URL i.e. http://www.eventjuggler.org/twitter.
+Leave the rest empty.
 
 Submit the form. That's it.
 
