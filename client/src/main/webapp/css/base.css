@@ -267,17 +267,15 @@ section {
 
 /* List of events */
 
-div.event-wrapper {width: 1200px;}
-
-div.event-wrapper:nth-child(even) {
-    clear: left;
-    margin-right: 3.333333333334%;
-}
-
-article.event {
+div.event-wrapper {
     float: left;
     width: 48.333333333333%;
     margin-bottom: 3.5em;
+}
+
+div.event-wrapper:nth-child(even) {
+    clear: left;
+    margin-right: 2.5%;
 }
 
 .event .left {
@@ -418,15 +416,31 @@ nav.tags a span {
     width: 120em;
 }
 
-.popularEvents div {
+.popularEvents div {        
+    width: 96.666666666667%;
+    margin-left: 1.666666666667%;
+    margin-right: 1.666666666667%;
+/*
     width: 103em;
     margin-left: 8.5em;
+*/
 }
 
 .popularEvents article {
     position: relative;
+    width: 22.413793103448%;
+    margin-right: 3.448275862069%;
+    float: right;
+/*
     margin-right: 5.5em;
     width: 21.6em;
+*/
+}
+
+.popularEvents article:nth-child(4) {margin-right: 0;}
+
+.popularEvents span.locality {
+    right: 2.55555555555556em;
 }
 
 .popularEvents h4 {
