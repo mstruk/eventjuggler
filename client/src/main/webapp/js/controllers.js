@@ -10,7 +10,9 @@ function EventListCtrl($scope, Event, $routeParams, $location) {
         });
     });
 
-    $scope.popular = Event.getEventsPopular();
+    if (!($routeParams.user || $routeParams.query || $routeParams.tag)) {
+        $scope.popular = Event.getEventsPopular();
+    }
 
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
