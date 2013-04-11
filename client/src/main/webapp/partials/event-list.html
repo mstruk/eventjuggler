@@ -1,50 +1,25 @@
 <div class="container eventList">
 
-    <section>
+    <section ng-show="popular.length">
         <hgroup class="clearfix">
             <h3>Popular events</h3>
         </hgroup>
-        <!--
-<nav class="popularEvents">
-            <ul>
-                <li ng-repeat="event in (popular | limitTo:5)"><a href="#/events/{{event.id}}">{{event.title}}</a></li>
-            </ul>
-        </nav>
--->
+
         <div class="popularEvents clearfix">
-            <nav>
+            <!-- <nav>
                 <a href="#" class="prev disabled">Previous</a>
 				<a href="#" class="next disabled">Next</a>
-            </nav>
+            </nav> -->
             <div>
-                <article class="ng-scope event">
-                    <span class="date">5 May</span>
+                <article class="ng-scope event" ng-repeat="event in (popular | limitTo:4)">
+                    <span class="date">{{event.time | eventDate}}</span>
                     <span class="dateShadow"></span>
-    <!--                     <a href="#/events/{{event.id}}" class="mask clearfix" ng-background-image="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}"></a> -->
-                    <a href="#/events/{{event.id}}" class="mask clearfix" ng-background-image="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}">
-                        <img src="https://dl.dropbox.com/u/2730435/jfokus.png">        
-                    </a>
-    
+                    <a href="#/events/{{event.id}}" class="mask clearfix" ng-background-image="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}"></a>
                     <span class="locality" ng-show="event.location.city && event.location.country">
-                        <a href="#/events/{{event.id}}">Stockolm</a>, <a href="#/events/{{event.id}}">SE</a>
+                        <a href="#/events/{{event.id}}">{{event.location.city}}</a>, <a href="#/events/{{event.id}}">{{event.location.country}}</a>
                     </span>
                     <h4>
-                        <a href="#/events/{{event.id}}" ng-class="event.title.length > 40 && 'smaller'">Jfokus 2013</a>
-                    </h4>
-                </article>
-                <article class="ng-scope event">
-                    <span class="date">6 May</span>
-                    <span class="dateShadow"></span>
-    <!--                     <a href="#/events/{{event.id}}" class="mask clearfix" ng-background-image="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}"></a> -->
-                    <a href="#/events/{{event.id}}" class="mask clearfix" ng-background-image="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}">
-                        <img src="https://dl.dropbox.com/u/2730435/edge.jpg">        
-                    </a>
-    
-                    <span class="locality" ng-show="event.location.city && event.location.country">
-                        <a href="#/events/{{event.id}}">London</a>, <a href="#/events/{{event.id}}">UK</a>
-                    </span>
-                    <h4>
-                        <a href="#/events/{{event.id}}" ng-class="event.title.length > 40 && 'smaller'">Edge</a>
+                        <a href="#/events/{{event.id}}" ng-class="event.title.length > 40 && 'smaller'">{{event.title}}</a>
                     </h4>
                 </article>
             </div>
