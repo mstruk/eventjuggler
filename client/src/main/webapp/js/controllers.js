@@ -156,11 +156,16 @@ function sendMainPageError() {
 
 function UserCtrl($scope, User, $location) {
     $scope.user = User;
+}
 
+function LoginCtrl($scope, User, $location) {
+    $scope.username = null;
+    $scope.password = null;
+    
     $scope.login = function() {
         $scope.failed = false;
 
-        User.login(function() {
+        User.login($scope.username, $scope.password, function() {
             $('#loginModal').modal('hide');
             $location.path('/events');
         }, function() {

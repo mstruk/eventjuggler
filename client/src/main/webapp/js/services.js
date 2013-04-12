@@ -46,7 +46,9 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
         });
     };
 
-    user.login = function(success, error) {
+    user.login = function(username, password, success, error) {
+        user.username = username;
+        user.password = password;
         signinRes.save({
             userId : user.username,
             password : user.password

@@ -145,8 +145,7 @@ eventjugglerModule.directive('uiBackgroundImage', function() {
 eventjugglerModule.directive('uiGravatarSrc', function() {
     return function(scope, element, attrs) {
         attrs.$observe('uiGravatarSrc', function(value) {
-            if (value) {
-                console.debug(value);
+            if (value && value.con) {
                 var imageSrc = "http://www.gravatar.com/avatar/" + CryptoJS.MD5(value);
                 element[0].src = imageSrc;
             }

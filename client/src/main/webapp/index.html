@@ -28,6 +28,7 @@
     </head>
 
     <body ng-controller="UserCtrl">
+        <div ng-include src="'partials/login.html'"></div>
     
         <div id="top" ng-show="!user.loggedIn">
             <header class="container">
@@ -113,7 +114,5 @@
         <footer>
             <p>Copyright © 2009-2013. All rights reserved.</p>
         </footer>
-        
-        <div ng-include src="'partials/login.html'"></div>
     </body>
 </html>
