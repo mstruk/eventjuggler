@@ -46,7 +46,7 @@ eventjugglerModule.filter('substring', function() {
     };
 });
 
-eventjugglerModule.filter('removehtml', function () {
+eventjugglerModule.filter('removehtml', function() {
     return function(text) {
         return text && text.replace(/<(?:.|\n)*?>/gm, '');
     };
@@ -128,21 +128,28 @@ eventjugglerModule.factory('errorInterceptor', function($q, $window) {
     };
 });
 
-eventjugglerModule.directive('ngBackgroundImage', function($timeout, dateFilter) {
+eventjugglerModule.directive('uiBackgroundImage', function() {
+    return function(scope, element, attributes) {
+        scope.$watch(attributes.uiBackgroundImage, function() {
+            if (attributes.uiBackgroundImage != null) {
+                element.css({
+                    'background-image' : 'url(' + attributes.uiBackgroundImage + ')',
+                    'background-size' : 'cover',
+                    'background-position' : 'center'
+                });
+            }
+        });
+    };
+});
+
+eventjugglerModule.directive('uiGravatarSrc', function() {
     return function(scope, element, attrs) {
-        var backgroundImage = null;
-
-        function updateTime() {
-            element.css({
-                'background-image' : 'url(' + backgroundImage + ')',
-                'background-size' : 'cover',
-                'background-position': 'center' 
-            });
-        }
-
-        scope.$watch(attrs.ngBackgroundImage, function() {
-            backgroundImage = attrs.ngBackgroundImage;
-            updateTime();
+        attrs.$observe('uiGravatarSrc', function(value) {
+            if (value) {
+                console.debug(value);
+                var imageSrc = "http://www.gravatar.com/avatar/" + CryptoJS.MD5(value);
+                element[0].src = imageSrc;
+            }
         });
     };
 });

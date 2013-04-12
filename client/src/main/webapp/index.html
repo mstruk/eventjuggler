@@ -20,6 +20,8 @@
         <script src="lib/jquery/jquery-1.9.0.js"></script>
         <script src="lib/bootstrap/js/bootstrap.js"></script>
         
+        <script src="lib/crypto/md5.js"></script>
+        
         <script src="js/app.js"></script>
         <script src="js/controllers.js"></script>
         <script src="js/services.js"></script>
@@ -86,7 +88,7 @@
                             <a href="#/events/create">Create event</a>
                         </li>
                         <li class="userName">
-                            <a><img src="https://dl.dropbox.com/u/2730435/avatar.jpg" alt="profile picture">{{user.name}}</a>
+                            <a><img ui-gravatar-src="{{user.username}}" alt="profile picture">{{user.name}}</a>
                         </li>
                         <li>
                             <a ng-click="user.logout()">Logout</a>

@@ -14,7 +14,7 @@
                 <article class="ng-scope event" ng-repeat="event in (popular | limitTo:4)">
                     <span class="date">{{event.time | eventDate}}</span>
                     <span class="dateShadow"></span>
-                    <a href="#/events/{{event.id}}" class="mask clearfix" ng-background-image="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}"></a>
+                    <a href="#/events/{{event.id}}" class="mask clearfix" ui-background-image="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}"></a>
                     <span class="locality" ng-show="event.location.city && event.location.country">
                         <a href="#/events/{{event.id}}">{{event.location.city}}</a>, <a href="#/events/{{event.id}}">{{event.location.country}}</a>
                     </span>
@@ -50,7 +50,7 @@
             <article class="ng-scope event">
                 <div class="left">
                     <span class="date">{{event.time | eventDate}}</span> <span class="dateShadow"></span>
-                    <a href="#/events/{{event.id}}" class="mask clearfix" ng-background-image="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}"></a>
+                    <a href="#/events/{{event.id}}" class="mask clearfix" ui-background-image="{{event.imageId && '/eventjuggler-server/image/' + event.imageId}}"></a>
                     <span class="locality" ng-show="event.location.city && event.location.country">
                         <a href="#/events/{{event.id}}">{{event.location.city}}</a>, <a href="#/events/{{event.id}}">{{event.location.country | uppercase}}</a>
                     </span>
