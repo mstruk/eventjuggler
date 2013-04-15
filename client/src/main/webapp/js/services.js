@@ -36,13 +36,11 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
                 user.loggedIn = true;
 
                 if (success) {
-                    localStorage.setItem("logged-in", "true");
-                    
                     success();
-                } else {
-                    localStorage.removeItem("logged-in");
                 }
             }
+        }, function() { 
+            localStorage.removeItem("logged-in");
         });
     };
 
@@ -54,6 +52,8 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
             password : user.password
         }, function(response) {
             if (response.loggedIn) {
+                localStorage.setItem("logged-in", "true");
+
                 loadUserInfo(success);
             } else if (error) {
                 error();
@@ -66,8 +66,9 @@ eventjugglerServices.service('User', function($resource, $http, $cookieStore) {
         user.password = null;
         user.loggedIn = false;
 
-        logoutRes.get();
         localStorage.removeItem("logged-in");
+
+        logoutRes.get();
     };
 
     user.register = function(user, success, error) {
